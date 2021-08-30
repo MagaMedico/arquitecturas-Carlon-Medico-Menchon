@@ -26,13 +26,13 @@ public class Database {
 		//--Derby
 		//String uri = "jdbc:derby:Integrador_1_db;create=true";
 		//--MySQL
-		String uri = "jdbc:mysql://localhost:3306/Integrador_1_db";
+		String uri = "jdbc:mysql://localhost:3306/entregable1";
 		
 		try {
 			//--Derby
 			//Connection conn = DriverManager.getConnection(uri);
 			//--MySQL
-			Connection conn = DriverManager.getConnection(uri, "mag","123");
+			Connection conn = DriverManager.getConnection(uri, "root","");
 			
 			//--MySQL
 			conn.setAutoCommit(false);
