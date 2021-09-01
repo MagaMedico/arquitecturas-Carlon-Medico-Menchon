@@ -1,14 +1,21 @@
 package tp1.integrador.db;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+
 public class Database {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException, IOException {
 		
 		//--MySQL
 		String driver = "com.mysql.cj.jdbc.Driver";
@@ -32,29 +39,106 @@ public class Database {
 			//--Derby
 			//Connection conn = DriverManager.getConnection(uri);
 			//--MySQL
-			Connection conn = DriverManager.getConnection(uri, "root","");
-			
+			//Connection conn = DriverManager.getConnection(uri, "root","");
 			//--MySQL
-			conn.setAutoCommit(false);
-			createTables(conn);
+			//conn.setAutoCommit(false);
+			//createTables(conn);
 			//addPerson(conn, 1, "Juan", 20);
 			//addPerson(conn, 2, "Paula", 30);
-			conn.close();
+			
+			//Busca el archivo
+			CSVParser parserProducto = CSVFormat.DEFAULT.withHeader().parse(new FileReader("productos.csv"));
+			CSVParser parserCliente = CSVFormat.DEFAULT.withHeader().parse(new FileReader("clientes.csv"));
+			CSVParser parserFactura = CSVFormat.DEFAULT.withHeader().parse(new FileReader("facturas.csv"));
+			CSVParser parserFacturaProducto = CSVFormat.DEFAULT.withHeader().parse(new FileReader("facturas-productos.csv"));
+			
+			insertCliente(uri, parserCliente);
+			insertProducto(uri, parserProducto);
+			insertFactura(uri, parserFactura);
+			insertFacturaProducto(uri, parserFacturaProducto);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	private static void insertCliente(String uri, CSVParser parser) throws SQLException {
+		Connection conn = DriverManager.getConnection(uri, "root","");
+		conn.setAutoCommit(false);
+		for(CSVRecord row: parser) { 
+			int id_cliente = Integer.parseInt(row.get("idCliente"));
+			String nombre = row.get("nombre");
+			String email = row.get("email");
+			
+			String insert = "INSERT INTO Cliente (idCliente, nombre, email) VALUES (?, ?, ?)";
+			PreparedStatement ps = conn.prepareStatement(insert);
+			ps.setInt(1, id_cliente);
+			ps.setString(2, nombre);
+			ps.setString(3, email);
+			ps.executeUpdate();
+			conn.commit();
+			ps.close();
+		}
+		conn.close();
+	}
 
-	/*private static void addPerson(Connection conn, int id, String name, int years) throws SQLException {
-		String insert = "INSERT INTO persona (id, nombre, edad) VALUES (?, ?, ?)";
-		PreparedStatement ps = conn.prepareStatement(insert);
-		ps.setInt(1, id);
-		ps.setString(2, name);
-		ps.setInt(3, years);
-		ps.executeUpdate();
-		ps.close();
-		conn.commit();
-	}*/
+	private static void insertProducto(String uri, CSVParser parser) throws SQLException {
+		Connection conn = DriverManager.getConnection(uri, "root","");
+		conn.setAutoCommit(false);
+		for(CSVRecord row: parser) { 
+			int id_producto = Integer.parseInt(row.get("idProducto"));
+			String nombre = row.get("nombre");
+			Float valor = Float.parseFloat(row.get("valor"));
+			
+			String insert = "INSERT INTO Producto (idProducto, nombre, valor) VALUES (?, ?, ?)";
+			PreparedStatement ps = conn.prepareStatement(insert);
+			ps.setInt(1, id_producto);
+			ps.setString(2, nombre);
+			ps.setFloat(3, valor);
+			ps.executeUpdate();
+			conn.commit();
+			ps.close();
+		}
+		conn.close();
+	}
+	
+	private static void insertFactura(String uri, CSVParser parser) throws SQLException {
+		Connection conn = DriverManager.getConnection(uri, "root","");
+		conn.setAutoCommit(false);
+		for(CSVRecord row: parser) { 
+			int id_factura = Integer.parseInt(row.get("idFactura"));
+			int id_cliente = Integer.parseInt(row.get("idCliente"));
+			
+			String insert = "INSERT INTO Factura (idFactura, idCliente_FK) VALUES (?, ?)";
+			PreparedStatement ps = conn.prepareStatement(insert);
+			ps.setInt(1, id_factura);
+			ps.setInt(2, id_cliente);
+			ps.executeUpdate();
+			conn.commit();
+			ps.close();
+		}
+		conn.close();
+	}
+	
+	private static void insertFacturaProducto(String uri, CSVParser parser) throws SQLException {
+		Connection conn = DriverManager.getConnection(uri, "root","");
+		conn.setAutoCommit(false);
+		for(CSVRecord row: parser) { 
+			int id_factura = Integer.parseInt(row.get("idFactura"));
+			int id_producto = Integer.parseInt(row.get("idProducto"));
+			int cantidad = Integer.parseInt(row.get("cantidad"));
+			
+			String insert = "INSERT INTO Factura_Producto (idFactura, idProducto, cantidad) VALUES (?, ?, ?)";
+			PreparedStatement ps = conn.prepareStatement(insert);
+			ps.setInt(1, id_factura);
+			ps.setInt(2, id_producto);
+			ps.setInt(3, cantidad);
+			ps.executeUpdate();
+			conn.commit();
+			ps.close();
+		}
+		conn.close();
+	}
 
 	private static void createTables(Connection conn) throws SQLException {
 		
@@ -67,7 +151,7 @@ public class Database {
 		conn.prepareStatement(tablaCliente).execute();
 		//conn.commit();
 		
-
+		
 		String tablaFactura = "CREATE TABLE Factura("
 				+ "idFactura INT,"
 				+ "idCliente_FK INT,"
