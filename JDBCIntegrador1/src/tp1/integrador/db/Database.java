@@ -7,6 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.apache.commons.csv.CSVFormat;
@@ -183,5 +184,22 @@ public class Database {
 		conn.commit();
 		
 		
+	}
+	
+	//Ejercicio 3
+	public static String productoMasRecaudado(String uri) throws SQLException {//devolvería un producto
+		Connection conn = DriverManager.getConnection(uri, "root","");
+		conn.setAutoCommit(false);
+		
+		String select = "SELECT p.*, MAX(p.valor * fp.cantidad) as total"
+				+ "FROM producto p JOIN factura_producto fp ON (p.idProducto = fp.idProducto"
+				+ "AND (SELECT idFactura FROM factura WHERE idFactura = fp.idFactura) = fp.idFactura)";
+		PreparedStatement ps = conn.prepareStatement(select);
+		ResultSet rs = ps.executeQuery();
+		conn.commit();
+		ps.close();
+		conn.close();
+		//setearle los valores al producto y retornarlo
+		return select;
 	}
 }
