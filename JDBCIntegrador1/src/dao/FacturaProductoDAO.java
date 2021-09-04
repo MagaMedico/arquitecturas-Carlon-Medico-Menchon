@@ -1,27 +1,47 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 
 import factory.MySQLDAOFactory;
 import idao.IFacturaProducto;
-import model.FacturaProducto;
 
 public class FacturaProductoDAO implements IFacturaProducto{
 
 	private Connection conn;
 
+	public FacturaProductoDAO() throws SQLException {
+		this.createTable();
+	}
+	
 	@Override
-	public void insert(FacturaProducto facturaProducto) throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public void insertCSV(CSVParser parser) throws SQLException {
+		this.conn = MySQLDAOFactory.createConnection();
+		for(CSVRecord row: parser) { 
+			int id_factura = Integer.parseInt(row.get("idFactura"));
+			int id_producto = Integer.parseInt(row.get("idProducto"));
+			int cantidad = Integer.parseInt(row.get("cantidad"));
+			
+			String insert = "INSERT INTO Factura_Producto (idFactura, idProducto, cantidad) VALUES (?, ?, ?)";
+			PreparedStatement ps = this.conn.prepareStatement(insert);
+			ps.setInt(1, id_factura);
+			ps.setInt(2, id_producto);
+			ps.setInt(3, cantidad);
+			ps.executeUpdate();
+			this.conn.commit();
+			ps.close();
+		}
+		this.conn.close();
 	}
 
-	@Override
-	public void createTable() throws SQLException {
+	private void createTable() throws SQLException {
 		this.conn = MySQLDAOFactory.createConnection();
 		
-		String tablaFactura_Producto = "CREATE TABLE Factura_Producto("
+		String tablaFactura_Producto = "CREATE TABLE IF NOT EXISTS Factura_Producto("
 				+ "idFactura INT,"
 				+ "idProducto INT,"
 				+ "cantidad INT,"

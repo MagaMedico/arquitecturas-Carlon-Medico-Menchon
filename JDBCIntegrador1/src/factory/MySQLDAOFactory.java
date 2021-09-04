@@ -47,25 +47,21 @@ public class MySQLDAOFactory extends DAOFactory {
 
 	@Override
 	public ClienteDAO getClienteDAO() throws SQLException {
-
 		return new ClienteDAO();
 	}
 
 	@Override
-	public FacturaDAO getFacturaDAO() {
-
+	public FacturaDAO getFacturaDAO() throws SQLException {
 		return new FacturaDAO();
 	}
 
 	@Override
-	public FacturaProductoDAO getFacturaProductoDAO() {
-
+	public FacturaProductoDAO getFacturaProductoDAO() throws SQLException {
 		return new FacturaProductoDAO();
 	}
 
 	@Override
-	public ProductoDAO getProductoDAO() {
-
+	public ProductoDAO getProductoDAO() throws SQLException {
 		return new ProductoDAO();
 	}
 }
