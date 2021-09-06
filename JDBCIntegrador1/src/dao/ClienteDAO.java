@@ -10,17 +10,20 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import factory.*;
-import idao.ICliente;
+import imodel.ICliente;
 import model.Cliente;
 
 public class ClienteDAO implements ICliente{
 	
+	//Atributo de la clase
 	private Connection conn;
 	
+	//Constructor
 	public ClienteDAO() throws SQLException {
 		this.createTable();
 	}
 
+	//Implementa el método insert para insertar los datos que vienen por parametro en la tabla Cliente
 	@Override
 	public void insertCSV(CSVParser parser) throws SQLException {
 		this.conn = MySQLDAOFactory.createConnection();
@@ -41,6 +44,7 @@ public class ClienteDAO implements ICliente{
 		this.conn.close();
 	}
 	
+	//Implementa el método createTable crear la tabla Cliente si todavia no existe
 	@Override
 	public void createTable() throws SQLException {
 		this.conn = MySQLDAOFactory.createConnection();
@@ -55,6 +59,8 @@ public class ClienteDAO implements ICliente{
 		this.conn.close();
 	}
 
+	//Implementa de la interfaz ICliente el metodo para poder retornar la lista de clientes ordenada 
+	//por a cual se le facturó más
 	@Override
 	public ArrayList<Cliente> masFacturados() throws SQLException {
 		ArrayList<Cliente> clientes = new ArrayList<>();

@@ -8,16 +8,19 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import factory.*;
-import idao.IFacturaProducto;
+import imodel.IFacturaProducto;
 
 public class FacturaProductoDAO implements IFacturaProducto{
 
+	//Atributo de la clase
 	private Connection conn;
 
+	//Constructor
 	public FacturaProductoDAO() throws SQLException {
 		this.createTable();
 	}
 	
+	//Implementa el método insert para insertar los datos que vienen por parametro en la tabla FacturaProducto
 	@Override
 	public void insertCSV(CSVParser parser) throws SQLException {
 		this.conn = MySQLDAOFactory.createConnection();
@@ -38,6 +41,7 @@ public class FacturaProductoDAO implements IFacturaProducto{
 		this.conn.close();
 	}
 	
+	//Implementa el método createTable crear la tabla FacturaProducto si todavia no existe
 	@Override
 	public void createTable() throws SQLException {
 		this.conn = MySQLDAOFactory.createConnection();

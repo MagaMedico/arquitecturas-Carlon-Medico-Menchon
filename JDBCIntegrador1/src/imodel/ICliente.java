@@ -1,4 +1,4 @@
-package idao;
+package imodel;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

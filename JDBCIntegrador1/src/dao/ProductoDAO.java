@@ -9,17 +9,20 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import factory.*;
-import idao.IProducto;
+import imodel.IProducto;
 import model.Producto;
 
 public class ProductoDAO implements IProducto{
 	
+	//Atributo de la clase
 	private Connection conn;
 	
+	//Constructor
 	public ProductoDAO() throws SQLException {
 		this.createTable();
 	}
 	
+	//Implementa el método insert para insertar los datos que vienen por parametro en la tabla Producto
 	@Override
 	public void insertCSV(CSVParser parser) throws SQLException {
 		this.conn = MySQLDAOFactory.createConnection();
@@ -40,6 +43,22 @@ public class ProductoDAO implements IProducto{
 		this.conn.close();
 	}
 	
+	//Implementa el método createTable crear la tabla Producto si todavia no existe
+	@Override
+	public void createTable() throws SQLException {
+		this.conn = MySQLDAOFactory.createConnection();
+		String tablaProducto = "CREATE TABLE IF NOT EXISTS Producto("
+				+ "idProducto INT,"
+				+ "nombre VARCHAR(45),"
+				+ "valor FLOAT,"
+				+ "PRIMARY KEY(idProducto))";
+
+		this.conn.prepareStatement(tablaProducto).execute();
+		this.conn.commit();
+		this.conn.close();
+	}
+	
+	//Implementa de la interfaz IProducto el metodo para poder retornar el producto que más recaudó
 	@Override
 	public Producto productoMasRecaudado() throws SQLException {//devolvería un producto
 		Producto producto = null;
@@ -62,21 +81,4 @@ public class ProductoDAO implements IProducto{
 		
 		return producto;
 	}
-
-	@Override
-	public void createTable() throws SQLException {
-		this.conn = MySQLDAOFactory.createConnection();
-		String tablaProducto = "CREATE TABLE IF NOT EXISTS Producto("
-				+ "idProducto INT,"
-				+ "nombre VARCHAR(45),"
-				+ "valor FLOAT,"
-				+ "PRIMARY KEY(idProducto))";
-
-		this.conn.prepareStatement(tablaProducto).execute();
-		this.conn.commit();
-		this.conn.close();
-
-		
-	}
-
 }
