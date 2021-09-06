@@ -16,7 +16,6 @@ public class MySQLDAOFactory extends DAOFactory {
 	public static final String URI = "jdbc:mysql://localhost:3306/entregable1";
 	private static Connection conn;
 	
-
 	public MySQLDAOFactory() {
 		MySQLDAOFactory.registerDriver();
 	}

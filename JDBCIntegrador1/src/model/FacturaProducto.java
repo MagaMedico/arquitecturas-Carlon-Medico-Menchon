@@ -1,10 +1,12 @@
 package model;
 
 public class FacturaProducto {
+	//Atributos de clase
 	private int idFactura;
 	private int idProducto;
 	private int cantidad;
 	
+	//Constructores
 	public FacturaProducto() {
 		super();
 	}
@@ -16,6 +18,7 @@ public class FacturaProducto {
 		this.cantidad = cantidad;
 	}
 
+	//Getters y setters
 	public int getCantidad() {
 		return cantidad;
 	}
@@ -32,6 +35,7 @@ public class FacturaProducto {
 		return idProducto;
 	}
 
+	//toString para la impresión
 	@Override
 	public String toString() {
 		return "FacturaProducto [idFactura=" + idFactura + ", idProducto=" + idProducto + ", cantidad=" + cantidad

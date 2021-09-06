@@ -2,14 +2,10 @@ package idao;
 
 import java.sql.SQLException;
 
-import org.apache.commons.csv.CSVParser;
 
+import org.apache.commons.csv.CSVParser;
+//interface de FacturaProducto que contiene los métodos minimos que debe tener
 public interface IFacturaProducto {
-	
 	public void insertCSV(CSVParser parser) throws SQLException;
-	//public void insert(FacturaProducto facturaProducto) throws SQLException;
-	//public void update(T generic) throws SQLException;
-	//public void delete(T generic) throws SQLException;
-	//public ArrayList<T> read() throws SQLException;
-	//public void createTable() throws SQLException;
+	public void createTable() throws SQLException;
 }

@@ -1,9 +1,11 @@
 package model;
 
 public class Factura {
+	//Atributos de la clase
 	private int idFactura;
 	private int idCliente;
 	
+	//Constructores
 	public Factura() {
 		super();
 	}
@@ -14,6 +16,7 @@ public class Factura {
 		this.idCliente = idCliente;
 	}
 
+	//Getters y setters
 	public int getIdFactura() {
 		return idFactura;
 	}
@@ -22,6 +25,7 @@ public class Factura {
 		return idCliente;
 	}
 
+	//toString para la impresión
 	@Override
 	public String toString() {
 		return "Factura [idFactura=" + idFactura + ", idCliente=" + idCliente + "]";

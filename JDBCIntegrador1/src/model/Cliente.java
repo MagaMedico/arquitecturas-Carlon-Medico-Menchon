@@ -1,10 +1,12 @@
 package model;
 
 public class Cliente {
+	//Atributos de la clase
 	private int idCliente;
 	private String nombre;
 	private String email;
 	
+	//Constructores
 	public Cliente() {
 		super();
 	}
@@ -16,6 +18,7 @@ public class Cliente {
 		this.email = email;
 	}
 
+	//Getters y setters
 	public int getIdCliente() {
 		return idCliente;
 	}
@@ -35,7 +38,8 @@ public class Cliente {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	
+	//toString para la impresión
 	@Override
 	public String toString() {
 		return "Cliente [idCliente=" + idCliente + ", nombre=" + nombre + ", email=" + email + "]";

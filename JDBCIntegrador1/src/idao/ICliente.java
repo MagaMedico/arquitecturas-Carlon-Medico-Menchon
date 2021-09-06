@@ -1,15 +1,15 @@
 package idao;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.apache.commons.csv.CSVParser;
 
+import model.Cliente;
+
+//interface de Cliente que contiene los métodos minimos que debe tener
 public interface ICliente {
-	
 	public void insertCSV(CSVParser parser) throws SQLException;
-	//public void insert(Cliente cliente) throws SQLException;
-	//public void update(T generic) throws SQLException;
-	//public void delete(T generic) throws SQLException;
-	//public ArrayList<T> read() throws SQLException;
-	//private void createTable() throws SQLException;
+	public void createTable() throws SQLException;
+	public ArrayList<Cliente> masFacturados() throws SQLException;
 }

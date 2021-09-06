@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
-import factory.MySQLDAOFactory;
+import factory.*;
 import idao.IFactura;
 
 public class FacturaDAO implements IFactura{
@@ -35,8 +35,9 @@ public class FacturaDAO implements IFactura{
 		}
 		this.conn.close();
 	}
-
-	private void createTable() throws SQLException {
+	
+	@Override
+	public void createTable() throws SQLException {
 		this.conn = MySQLDAOFactory.createConnection();
 		String tablaFactura = "CREATE TABLE IF NOT EXISTS Factura("
 				+ "idFactura INT,"

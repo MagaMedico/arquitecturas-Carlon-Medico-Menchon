@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
-import factory.MySQLDAOFactory;
+import factory.*;
 import idao.IProducto;
 import model.Producto;
 
@@ -40,23 +40,31 @@ public class ProductoDAO implements IProducto{
 		this.conn.close();
 	}
 	
+	@Override
 	public Producto productoMasRecaudado() throws SQLException {//devolvería un producto
+		Producto producto = null;
 		this.conn = MySQLDAOFactory.createConnection();
 		
-		String select = "SELECT p.*, MAX(p.valor * fp.cantidad) as total"
-				+ "FROM producto p JOIN factura_producto fp ON (p.idProducto = fp.idProducto"
-				+ "AND (SELECT idFactura FROM factura WHERE idFactura = fp.idFactura) = fp.idFactura)";
+		String select = "SELECT p.*, SUM(p.valor * fp.cantidad) as total "
+				+ "FROM producto p JOIN factura_producto fp ON (p.idProducto = fp.idProducto) "
+				+ "WHERE p.idProducto = fp.idProducto "
+				+ "GROUP BY idProducto "
+				+ "ORDER BY `total` DESC "
+				+ "LIMIT 1";
 		PreparedStatement ps = this.conn.prepareStatement(select);
 		ResultSet rs = ps.executeQuery();
+		while(rs.next()) {
+			producto = new Producto(rs.getInt(1), rs.getString(2), rs.getFloat(3));
+		}
 		this.conn.commit();
 		ps.close();
 		this.conn.close();
 		
-		Producto producto = new Producto(rs.getInt(1), rs.getString(2), rs.getFloat(3));
 		return producto;
 	}
 
-	private void createTable() throws SQLException {
+	@Override
+	public void createTable() throws SQLException {
 		this.conn = MySQLDAOFactory.createConnection();
 		String tablaProducto = "CREATE TABLE IF NOT EXISTS Producto("
 				+ "idProducto INT,"
