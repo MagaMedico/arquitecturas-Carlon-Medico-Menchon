@@ -12,7 +12,20 @@ import org.apache.commons.csv.CSVParser;
 import dao.*;
 import factory.*;
 import model.Cliente;
-
+/*
+ * Este proyecto JAVA está configurado en un entorno de ejecución JavaSE-11.
+ * El tipo de tecnología de Base de Datos es MySQL.
+ * El manejador de dependencias es Maven: contiene dependencia de mysql-connector-java.
+ * 
+ * Requisitos:
+ * - Instalación de XAMPP.
+ * - Disponer del usuario root sin contraseña.
+ * 
+ * Acceso y utilización:
+ * - Habilitar los módulos de Apache y MySQL de XAMPP.
+ * - Con los modulos activos, se debe crear una Base de Datos vacía
+ * 	 dentro de http://localhost/phpmyadmin/ con el nombre de "entregable1".
+ */
 public class Main {
 
 	public static void main(String[] args) throws SQLException, FileNotFoundException, IOException {
