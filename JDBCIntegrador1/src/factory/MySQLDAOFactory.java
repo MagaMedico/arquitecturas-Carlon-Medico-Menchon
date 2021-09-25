@@ -53,13 +53,6 @@ public class MySQLDAOFactory extends DAOFactory {
 		}
 	}
 
-	//Cierra la conexión a la Base de Datos, previendo que exista y esté activa.
-	public static void closeConnection() throws SQLException {
-		if (conn != null && !conn.isClosed()) {
-			conn.close();
-		}
-	}
-
 	//Factory Methods: Instancia aquellos productos que se generan por medio de la fábrica.
 	//Creará los DAOs correspondientes.
 	@Override
