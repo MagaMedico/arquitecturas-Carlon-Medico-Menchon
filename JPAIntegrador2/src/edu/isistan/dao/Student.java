@@ -7,42 +7,42 @@ import javax.persistence.*;
 public class Student {
 	
 	@Id
-	private int DNI;
+	private Long DNI;
 	@Column(nullable=false)
 	private String name;
 	@Column(nullable=false)
 	private String lastName;
 	@Column(nullable=false)
-	private Date age;
+	private int age;
 	@Column(nullable=false)
 	private String gender;
 	@Column(nullable=false)
 	private String city;
 	@Column(nullable=false)
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int LU;
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CareerStudent> students;
-	@ManyToMany (mappedBy = "listStudents")
-	private List<Career> listCareers;
+	private Long LU;
+    @OneToMany(mappedBy = "career", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CareerStudent> careers;
+	/*@ManyToMany (mappedBy = "students")
+	private List<Career> careers;*/
 	
 	public Student() {
 		super();
 	}
-	public Student(int dNI, String name, String lastName, Date age, String gender, String city, int lU) {
+	public Student(Long dni, String name, String lastName, int age, String gender, String city, Long lU) {
 		super();
-		DNI = dNI;
+		this.DNI = dni;
 		this.name = name;
 		this.lastName = lastName;
 		this.age = age;
 		this.gender = gender;
 		this.city = city;
 		LU = lU;
-		this.listCareers = new ArrayList<Career>();
-		this.students = new ArrayList<CareerStudent>();
+		//this.careers = new ArrayList<Career>();
+		this.careers = new ArrayList<CareerStudent>();
 	}
 
-	public long getDNI() {
+	public Long getDNI() {
 		return DNI;
 	}
 	public String getName() {
@@ -57,10 +57,10 @@ public class Student {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public Date getAge() {
+	public int getAge() {
 		return age;
 	}
-	public void setAge(Date age) {
+	public void setAge(int age) {
 		this.age = age;
 	}
 	public String getGender() {
@@ -75,17 +75,17 @@ public class Student {
 	public void setCity(String city) {
 		this.city = city;
 	}
-	public int getUniversityNumber() {
+	public Long getUniversityNumber() {
 		return LU;
 	}
-	public void setUniversityNumber(int universityNumber) {
+	public void setUniversityNumber(Long universityNumber) {
 		this.LU = universityNumber;
 	}
-	public List<Career> getCareers() {
-		return listCareers;
+	/*public List<Career> getCareers() {
+		return careers;
 	}
 	public void addCarrers(Career career) {
-		listCareers.add(career);
-	}	
+		careers.add(career);
+	}*/
 	
 }

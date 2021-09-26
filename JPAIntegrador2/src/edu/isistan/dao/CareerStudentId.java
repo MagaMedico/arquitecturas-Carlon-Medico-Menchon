@@ -5,16 +5,21 @@ import java.util.Objects;
 
 import javax.persistence.*;
 
+@SuppressWarnings("serial")
 @Embeddable
 public class CareerStudentId implements Serializable {
  
-    @Column(name = "student_DNI")
-    private int studentId;
- 
+	@Column(name = "student_id")
+    private Long studentId;
     @Column(name = "career_id")
-    private int careerId;
+    private Long careerId;
  
     private CareerStudentId() {}
+    
+    public CareerStudentId(Long studentId, Long careerId) {
+    	this.studentId = studentId;
+    	this.careerId = careerId;
+    }
     
     @Override
     public boolean equals(Object o) {

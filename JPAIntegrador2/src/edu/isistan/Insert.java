@@ -1,30 +1,46 @@
 package edu.isistan;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.sql.PreparedStatement;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import edu.isistan.dao.*;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 
+import edu.isistan.dao.Career;
 
 public class Insert {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException, IOException {
 		
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("Example");
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		/*
-		Student s = new Student("Balcarce", "Favaloro"); em.persist(s);
-		Persona p1 = new Persona(44113202, "Cecilia", 19, d); 
-		Persona p2 = new Persona(12551830, "Susana", 63, d); em.persist(p1);	em.persist(p2);
-		Socio s1 = new Socio(44113202, "Premium");
-		Socio s2 = new Socio(12551830, "Vip"); em.persist(s1); em.persist(s2);
-		Turno t = new Turno(2021); em.persist(t);
-		t.addJugadores(p1); t.addJugadores(p2);*/
 		
-		em.getTransaction().commit();
-		em.close();	emf.close();
+		//Insertar los datos
+		CSVParser parserCareer = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./src/csv/career.csv"));
+		CSVParser parserStudent = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./src/csv/student.csv"));
+		CSVParser parserCareerStudent = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./src/csv/career_student.csv"));
+		
+		for(CSVRecord row: parserCareer) { 
+			Long id = Long.parseLong(row.get("id"));
+			String name = row.get("name");
+			int length = Integer.parseInt(row.get("length"));
+			
+			Career insert = new Career(id, name, length);
+			em.persist(insert);
+			em.getTransaction().commit();
+			em.close();	
+		}
+
+		
+		emf.close();
 		
 	}
 }

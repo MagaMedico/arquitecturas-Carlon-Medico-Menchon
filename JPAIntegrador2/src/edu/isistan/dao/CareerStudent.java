@@ -9,12 +9,12 @@ public class CareerStudent {
 
 	@EmbeddedId
     private CareerStudentId id;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("id")
-    private Career career;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("DNI")
+	@ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("studentId")
     private Student student;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("careerId")
+    private Career career;
     @Column
     private Integer graduation;
     @Column 
@@ -22,10 +22,13 @@ public class CareerStudent {
  
     private CareerStudent() {}
 
-	public CareerStudent(Career career, Student student) {
+	public CareerStudent(Student student, Career career, Integer graduation, int antiquity) {
 		super();
 		this.career = career;
 		this.student = student;
+		this.graduation = graduation;
+		this.antiquity = antiquity;
+		this.id = new CareerStudentId(student.getDNI(), career.getId());
 	}
 	
 	@Override
@@ -36,13 +39,13 @@ public class CareerStudent {
             return false;
  
         CareerStudent that = (CareerStudent) o;
-        return Objects.equals(career, that.career) &&
-               Objects.equals(student, that.student);
+        return Objects.equals(student, that.student) && 
+        	   Objects.equals(career, that.career);
     }
  
     @Override
     public int hashCode() {
-        return Objects.hash(career, student);
+        return Objects.hash(student, career);
     }
 	
 	public Career getCareer() {

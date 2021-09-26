@@ -7,8 +7,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import edu.isistan.dao.Student;
-import edu.isistan.dao.Socio;
-import edu.isistan.dao.Turno;
 
 public class Select {
 	
@@ -27,8 +25,8 @@ public class Select {
 		sociosMismoTurno.forEach(socios -> System.out.println(socios.toString()));*/
 		System.out.println("ESPACIO");
 		//Recuperar todas las personas que viven en una ciudad predeterminada
-		List<Turno> personaCalle = em.createQuery("SELECT p FROM Persona p JOIN Direccion d ON p.domicilio=d WHERE d.calle='viverra pede ac diam cras pellentesque'").getResultList();
-		personaCalle.forEach(pc -> System.out.println(pc.toString()));
+		//List<Turno> personaCalle = em.createQuery("SELECT p FROM Persona p JOIN Direccion d ON p.domicilio=d WHERE d.calle='viverra pede ac diam cras pellentesque'").getResultList();
+		//personaCalle.forEach(pc -> System.out.println(pc.toString()));
 		
 		em.getTransaction().commit();
 		em.close();	emf.close();
