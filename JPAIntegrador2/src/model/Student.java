@@ -4,7 +4,7 @@ import java.util.*;
 import javax.persistence.*;
 
 @Entity
-public class Student {
+public class Student{
 	
 	@Id
 	private Long DNI;
@@ -18,14 +18,10 @@ public class Student {
 	private String gender;
 	@Column(nullable=false)
 	private String city;
-	//@Column(nullable=false)
-	//@GeneratedValue(strategy=GenerationType.AUTO)	//solo posible su uso para IDs
 	@Column(unique=true)
 	private long LU;
     @OneToMany(mappedBy = "student", cascade = CascadeType.MERGE, orphanRemoval = true)
     private List<CareerStudent> careers;
-	/*@ManyToMany (mappedBy = "students")
-	private List<Career> careers;*/
 	
 	public Student() {
 		super();
@@ -39,7 +35,6 @@ public class Student {
 		this.gender = gender;
 		this.city = city;
 		this.LU = LU;
-		//this.careers = new ArrayList<Career>();
 		this.careers = new ArrayList<CareerStudent>();
 	}
 
@@ -82,11 +77,33 @@ public class Student {
 	public void setLU(Long LU) {
 		this.LU = LU;
 	}
-	/*public List<Career> getCareers() {
+	
+	public List<CareerStudent> getCareers() {
 		return careers;
 	}
-	public void addCarrers(Career career) {
-		careers.add(career);
-	}*/
 	
+	public void addCareer(Career c) {
+        CareerStudent cs = new CareerStudent(this, c);
+        careers.add(cs);
+        c.getStudents().add(cs);
+    }
+	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return Objects.equals(name, student.name);
+    }
+ 
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+	
+	@Override
+	public String toString() {
+		return "Student [DNI=" + DNI + ", name=" + name + ", lastName=" + lastName + ", age=" + age + ", gender="
+				+ gender + ", city=" + city + ", LU=" + LU + ", careers=" + careers.toString() + "]";
+	}
 }

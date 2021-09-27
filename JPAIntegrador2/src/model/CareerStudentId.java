@@ -21,7 +21,15 @@ public class CareerStudentId implements Serializable {
     	this.careerId = careerId;
     }
     
-    @Override
+    public Long getStudentId() {
+		return studentId;
+	}
+
+	public Long getCareerId() {
+		return careerId;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
  

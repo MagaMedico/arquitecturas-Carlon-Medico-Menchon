@@ -7,8 +7,7 @@ import javax.persistence.*;
 @Table(name = "career_student")
 public class CareerStudent {
 
-	//@EmbeddedId
-	@Id
+	@EmbeddedId
 	private CareerStudentId id;
 	@ManyToOne/*(fetch = FetchType.LAZY)*/
     @MapsId("studentId")
@@ -23,7 +22,11 @@ public class CareerStudent {
     @Column 
     private int antiquity;
  
-    private CareerStudent() {}
+    public CareerStudent(Student student, Career career) {
+    	super();
+		this.career = career;
+		this.student = student;
+    }
 
 	public CareerStudent(Student student, Career career, Integer graduation, int antiquity) {
 		super();
@@ -33,23 +36,6 @@ public class CareerStudent {
 		this.antiquity = antiquity;
 		this.id = new CareerStudentId(student.getDNI(), career.getId());
 	}
-	
-	@Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
- 
-        if (o == null || getClass() != o.getClass())
-            return false;
- 
-        CareerStudent that = (CareerStudent) o;
-        return Objects.equals(student, that.student) && 
-        	   Objects.equals(career, that.career);
-    }
- 
-    @Override
-    public int hashCode() {
-        return Objects.hash(student, career);
-    }
 	
 	public Career getCareer() {
 		return career;
@@ -79,4 +65,26 @@ public class CareerStudent {
 		return id;
 	}
 	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+ 
+        if (o == null || getClass() != o.getClass())
+            return false;
+ 
+        CareerStudent that = (CareerStudent) o;
+        return Objects.equals(student, that.student) && 
+        	   Objects.equals(career, that.career);
+    }
+ 
+    @Override
+    public int hashCode() {
+        return Objects.hash(student, career);
+    }
+
+	@Override
+	public String toString() {
+		return "CareerStudent [id=" + this.getId() + ", student=" + student.getDNI() + ", career=" + career.getId() + ", graduation=" + graduation
+				+ ", antiquity=" + antiquity + "]";
+	}
 }
