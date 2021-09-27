@@ -34,7 +34,7 @@ public class Main {
 		//Esto iría en cada DAO:
 		studentPersistence(em, parserStudent);
 		careerPersistence(em, parserCareer);
-		// career_studentPersistence(em, parserCareerStudent);
+		career_studentPersistence(em, parserCareerStudent);
 
 		
 		//Cierre del manejador de entidades
@@ -55,7 +55,13 @@ public class Main {
 			int graduation = Integer.parseInt(row.get("antiquity"));
 			Long career_id = Long.parseLong(row.get("career"));
 			Long student_DNI = Long.parseLong(row.get("student"));
-			//------Debería buscar al estudiante y a la carrera y traer los datos?
+	
+			//Busca al estudiante y a la carrera por sus PK y trae los datos
+			Student student = em.find(Student.class, student_DNI);
+			Career career = em.find(Career.class, career_id);
+			
+			CareerStudent insert = new CareerStudent(student, career, graduation, antiquity);
+			em.persist(insert);
 			/*CareerStudent insert = new CareerStudent(student_DNI, career_id, graduation, antiquity);
 			em.persist(insert);*/
 			em.getTransaction().commit();
