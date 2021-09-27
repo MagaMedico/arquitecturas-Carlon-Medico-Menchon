@@ -1,4 +1,4 @@
-package edu.isistan.dao;
+package model;
 
 import java.io.Serializable;
 import java.util.Objects;

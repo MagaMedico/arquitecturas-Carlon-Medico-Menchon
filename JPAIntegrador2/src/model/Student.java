@@ -1,4 +1,4 @@
-package edu.isistan.dao;
+package model;
 import java.util.*;
 
 import javax.persistence.*;
@@ -18,9 +18,10 @@ public class Student {
 	private String gender;
 	@Column(nullable=false)
 	private String city;
-	@Column(nullable=false)
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long LU;
+	//@Column(nullable=false)
+	//@GeneratedValue(strategy=GenerationType.AUTO)	//solo posible su uso para IDs
+	@Column(unique=true)
+	private long LU;
     @OneToMany(mappedBy = "career", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CareerStudent> careers;
 	/*@ManyToMany (mappedBy = "students")
@@ -29,7 +30,7 @@ public class Student {
 	public Student() {
 		super();
 	}
-	public Student(Long dni, String name, String lastName, int age, String gender, String city, Long lU) {
+	public Student(Long dni, String name, String lastName, int age, String gender, String city, long LU) {
 		super();
 		this.DNI = dni;
 		this.name = name;
@@ -37,7 +38,7 @@ public class Student {
 		this.age = age;
 		this.gender = gender;
 		this.city = city;
-		LU = lU;
+		this.LU = LU;
 		//this.careers = new ArrayList<Career>();
 		this.careers = new ArrayList<CareerStudent>();
 	}
@@ -75,11 +76,11 @@ public class Student {
 	public void setCity(String city) {
 		this.city = city;
 	}
-	public Long getUniversityNumber() {
+	public long getLU() {
 		return LU;
 	}
-	public void setUniversityNumber(Long universityNumber) {
-		this.LU = universityNumber;
+	public void setLU(Long LU) {
+		this.LU = LU;
 	}
 	/*public List<Career> getCareers() {
 		return careers;

@@ -1,4 +1,4 @@
-package edu.isistan.dao;
+package model;
 
 import java.util.*;
 
@@ -31,9 +31,9 @@ public class Career {
 	private ArrayList<Student> graduates;*/
 	public Career() {}
 	
-	public Career(Long id, String name, int length) {
+	public Career(/*Long id, */String name, int length) {
 		super();
-		this.id = id;
+		//this.id = id;
 		this.name = name;
 		this.length = length;
 		//this.students = new ArrayList<Student>();

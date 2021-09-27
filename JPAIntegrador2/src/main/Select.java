@@ -1,4 +1,4 @@
-package edu.isistan;
+package main;
 
 import java.util.*;
 
@@ -6,7 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import edu.isistan.dao.Student;
+import model.Student;
 
 public class Select {
 	
