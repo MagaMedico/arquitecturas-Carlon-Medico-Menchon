@@ -22,7 +22,7 @@ public class Student {
 	//@GeneratedValue(strategy=GenerationType.AUTO)	//solo posible su uso para IDs
 	@Column(unique=true)
 	private long LU;
-    @OneToMany(mappedBy = "career", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.MERGE, orphanRemoval = true)
     private List<CareerStudent> careers;
 	/*@ManyToMany (mappedBy = "students")
 	private List<Career> careers;*/

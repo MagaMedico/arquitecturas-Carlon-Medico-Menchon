@@ -22,7 +22,7 @@ public class Career {
 	private String name;
 	@Column
 	private int length;
-	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "career", cascade = CascadeType.MERGE, orphanRemoval = true)
     private List<CareerStudent> students;
 	/*@ManyToMany
 	private List<Student> students;*/

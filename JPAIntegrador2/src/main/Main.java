@@ -52,14 +52,18 @@ public class Main {
 			em.getTransaction().begin();
 
 			int antiquity = Integer.parseInt(row.get("antiquity"));
-			int graduation = Integer.parseInt(row.get("antiquity"));
+			Integer graduation = null;
+			if(row.get("graduation") != ""){
+				graduation = Integer.parseInt(row.get("graduation"));
+			}
+			//Integer graduation = Integer.parseInt(row.get("graduation"));
 			Long career_id = Long.parseLong(row.get("career"));
 			Long student_DNI = Long.parseLong(row.get("student"));
 	
 			//Busca al estudiante y a la carrera por sus PK y trae los datos
 			Student student = em.find(Student.class, student_DNI);
-			Career career = em.find(Career.class, career_id);
 			
+			Career career = em.find(Career.class, career_id);
 			CareerStudent insert = new CareerStudent(student, career, graduation, antiquity);
 			em.persist(insert);
 			/*CareerStudent insert = new CareerStudent(student_DNI, career_id, graduation, antiquity);

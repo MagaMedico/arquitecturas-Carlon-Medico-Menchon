@@ -7,13 +7,16 @@ import javax.persistence.*;
 @Table(name = "career_student")
 public class CareerStudent {
 
-	@EmbeddedId
-    private CareerStudentId id;
-	@ManyToOne(fetch = FetchType.LAZY)
+	//@EmbeddedId
+	@Id
+	private CareerStudentId id;
+	@ManyToOne/*(fetch = FetchType.LAZY)*/
     @MapsId("studentId")
+	@JoinColumn(name = "student_id")
     private Student student;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne/*(fetch = FetchType.LAZY)*/
     @MapsId("careerId")
+    @JoinColumn(name = "career_id")
     private Career career;
     @Column
     private Integer graduation;
