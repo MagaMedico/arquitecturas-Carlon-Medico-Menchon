@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -28,6 +30,15 @@ public class CareerDAO implements ICareer{
 			em.persist(insert);
 			em.getTransaction().commit();
 		}
+	}
+
+	@Override
+	public List<Career> getCareersOrderByStudents(EntityManager em) {
+		em.getTransaction().begin();
+		@SuppressWarnings("unchecked")
+		List<Career> careers = em.createQuery("SELECT c.name, COUNT(s) FROM Career c JOIN c.students s ").getResultList();
+		em.getTransaction().commit();
+		return careers;
 	}
 	
 }

@@ -65,9 +65,10 @@ public class StudentDAO implements IStudent{
 
 	// Ejercicio 2) d) recuperar un estudiante, en base a su número de libreta universitaria.
 	@Override
-	public Student getStudentByLU(EntityManager em, int LU) {
+	public Student getStudentByLU(EntityManager em, Long LU) {
 		em.getTransaction().begin();
-		Student s = (Student) em.createQuery("SELECT * FROM Student s WHERE s.LU = ").getSingleResult();
+		Student s = (Student) em.createQuery("SELECT s FROM Student s WHERE s.LU = :lu").
+				    setParameter("lu", LU).getSingleResult();
 		em.getTransaction().commit();
 		return s;
 	}

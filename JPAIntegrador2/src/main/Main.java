@@ -14,6 +14,7 @@ import org.apache.commons.csv.CSVParser;
 import dao.CareerDAO;
 import dao.CareerStudentDAO;
 import dao.StudentDAO;
+import model.Career;
 import model.Student;
 
 public class Main {
@@ -49,12 +50,19 @@ public class Main {
 		//student.insertStudent(em, 44113202, "Mariela", "Dominguez", 50, "Female", 500124, "Balcarce");
 		//Inciso b
 		//careerStudent.addStudent(em, student, career);
-		/*
-		//Inciso e
+		/*Inciso d
+		System.out.println("Inciso d");
+		Student studentByLU = student.getStudentByLU(em, (long) 208077);
+		System.out.println(studentByLU.toString());
+		/*Inciso e
 		System.out.println("Inciso e");
 		List<Student> studentsByGender = student.getStudentsByGender(em, "Female");
-		studentsByGender.forEach(s -> System.out.println(s));
-		//Inciso g
+		studentsByGender.forEach(s -> System.out.println(s));*/
+		//Inciso f
+		//System.out.println("Inciso f");
+		//List<Career> careers = career.getCareersOrderByStudents(em);
+		//careers.forEach(c -> System.out.println(c));
+		/*Inciso g
 		System.out.println("Inciso g");
 		List<Student> studentsByCareerFilterCity = careerStudent.getStudentsByCareerFilterCity(em, (long) 10, "Qŭshkŭpir");
 		//Deberia retornar: 20381505
