@@ -27,23 +27,29 @@ public class Main {
 		//Inicialización de la persistencia
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory(TYPE);
 		EntityManager em = emf.createEntityManager();
-		
+		/*
 		//Insertar los datos
 		CSVParser parserCareer = CSVFormat.DEFAULT.withHeader().parse(new FileReader(CSV_CAREER));
 		CSVParser parserStudent = CSVFormat.DEFAULT.withHeader().parse(new FileReader(CSV_STUDENT));
 		CSVParser parserCareerStudent = CSVFormat.DEFAULT.withHeader().parse(new FileReader(CSV_CAREER_STUDENT));
-		
+		*/
 		//Instanciación de los dao's
 		CareerDAO career = new CareerDAO();
 		StudentDAO student = new StudentDAO();
 		CareerStudentDAO careerStudent = new CareerStudentDAO();
-
+		/*
 		//Persistencia de CSVs
 		student.studentPersistence(em, parserStudent);
 		career.careerPersistence(em, parserCareer);
 		careerStudent.career_studentPersistence(em, parserCareerStudent);
+		*/
 		
 		//Pruebas de consultas ejercicio 2
+		//Inciso a
+		//student.insertStudent(em, 44113202, "Mariela", "Dominguez", 50, "Female", 500124, "Balcarce");
+		//Inciso b
+		//careerStudent.addStudent(em, student, career);
+		/*
 		//Inciso e
 		System.out.println("Inciso e");
 		List<Student> studentsByGender = student.getStudentsByGender(em, "Female");
@@ -53,7 +59,7 @@ public class Main {
 		List<Student> studentsByCareerFilterCity = careerStudent.getStudentsByCareerFilterCity(em, (long) 10, "QÅ­shkÅ­pir");
 		//Deberia retornar: 20381505
 		studentsByCareerFilterCity.forEach(s -> System.out.println(s));
-		
+		*/
 		//Cierre del manejador de entidades
 		em.close();	
 		emf.close();

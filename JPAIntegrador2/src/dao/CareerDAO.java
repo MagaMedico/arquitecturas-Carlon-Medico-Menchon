@@ -1,11 +1,13 @@
 package dao;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import imodel.ICareer;
 import model.Career;
+import model.Student;
 
 public class CareerDAO implements ICareer{
 	final static String NAME = "name";
@@ -27,4 +29,5 @@ public class CareerDAO implements ICareer{
 			em.getTransaction().commit();
 		}
 	}
+	
 }

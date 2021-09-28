@@ -3,6 +3,7 @@ package dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -39,6 +40,27 @@ public class StudentDAO implements IStudent{
 			em.persist(insert);
 			em.getTransaction().commit();
 		}
+	}
+	
+	@Override
+	//Ejercicio 2) a) dar de alta un estudiante.
+	public void insertStudent(EntityManager em, long DNI, String name, String lastname, int age, String gender, int LU, String city) {
+			
+		Query query = em.createNativeQuery("INSERT INTO Student (DNI, name, lastname, age, gender, city, LU) "
+				+ "VALUES (:DNI, :name, :lastname, :age, :gender, :city, :LU)");
+		
+		em.getTransaction().begin();
+		
+		query.setParameter("DNI", DNI);
+		query.setParameter("name", name);
+		query.setParameter("lastname", lastname);
+		query.setParameter("age", age);
+		query.setParameter("gender", gender);
+		query.setParameter("city", city);
+		query.setParameter("LU", LU);
+		
+		query.executeUpdate();
+		em.getTransaction().commit();
 	}
 
 	// Ejercicio 2) d) recuperar un estudiante, en base a su número de libreta universitaria.
