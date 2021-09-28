@@ -3,6 +3,7 @@ package main;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,6 +14,7 @@ import org.apache.commons.csv.CSVParser;
 import dao.CareerDAO;
 import dao.CareerStudentDAO;
 import dao.StudentDAO;
+import model.Student;
 
 public class Main {
 
@@ -25,29 +27,32 @@ public class Main {
 		//Inicialización de la persistencia
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory(TYPE);
 		EntityManager em = emf.createEntityManager();
-		//em.getTransaction().begin();
 		
 		//Insertar los datos
 		CSVParser parserCareer = CSVFormat.DEFAULT.withHeader().parse(new FileReader(CSV_CAREER));
 		CSVParser parserStudent = CSVFormat.DEFAULT.withHeader().parse(new FileReader(CSV_STUDENT));
 		CSVParser parserCareerStudent = CSVFormat.DEFAULT.withHeader().parse(new FileReader(CSV_CAREER_STUDENT));
 		
-		//Instancio los dao's
+		//Instanciación de los dao's
 		CareerDAO career = new CareerDAO();
 		StudentDAO student = new StudentDAO();
 		CareerStudentDAO careerStudent = new CareerStudentDAO();
 
+		//Persistencia de CSVs
 		student.studentPersistence(em, parserStudent);
 		career.careerPersistence(em, parserCareer);
 		careerStudent.career_studentPersistence(em, parserCareerStudent);
 		
+		//Pruebas de consultas ejercicio 2
+		//Inciso e
+		System.out.println("Inciso e");
+		List<Student> studentsByGender = student.getStudentsByGender(em, "Female");
+		studentsByGender.forEach(s -> System.out.println(s));
+		//Inciso g
+		
 		//Cierre del manejador de entidades
 		em.close();	
 		emf.close();
-		
-		/*em.getTransaction().commit();
-		em.close();
-		emf.close();*/
 		
 	}
 

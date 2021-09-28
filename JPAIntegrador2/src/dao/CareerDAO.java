@@ -13,11 +13,12 @@ public class CareerDAO implements ICareer{
 	
 	public CareerDAO() { }
 	
+	//Persistencia CSV de Career
 	@Override
 	public void careerPersistence(EntityManager em, CSVParser parserCareer) {
-		//Persistencia CSV de Career
 		for(CSVRecord row: parserCareer) { 
 			em.getTransaction().begin();
+			
 			String name = row.get(NAME);
 			int length = Integer.parseInt(row.get(LENGTH));
 					

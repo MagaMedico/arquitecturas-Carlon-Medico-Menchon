@@ -22,6 +22,8 @@ public class CareerStudent {
     @Column 
     private int antiquity;
  
+    public CareerStudent() {	}
+    
     public CareerStudent(Student student, Career career) {
     	super();
 		this.career = career;

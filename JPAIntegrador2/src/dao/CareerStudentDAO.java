@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.apache.commons.csv.CSVParser;
@@ -18,9 +20,10 @@ public class CareerStudentDAO implements ICareerStudent{
 	
 	public CareerStudentDAO() { }
 	
+	//Persistencia CSV de career_student
 	@Override
 	public void career_studentPersistence(EntityManager em, CSVParser parserCareerStudent) {
-		//Persistencia CSV de career_student
+		
 		for(CSVRecord row: parserCareerStudent) { 
 			em.getTransaction().begin();
 
@@ -42,5 +45,18 @@ public class CareerStudentDAO implements ICareerStudent{
 			em.persist(insert);
 			em.getTransaction().commit();
 		}
+	}
+	// Ejercicio 2) g) recuperar los estudiantes de una determinada carrera, filtrado por ciudad de residencia.
+	@Override
+	public List<Student> getStudentsByCareerFilterCity(EntityManager em, Long career_id, String city) {
+		em.getTransaction().begin();
+			
+		@SuppressWarnings("unchecked")
+		List<Student> students = em.createQuery("SELECT cs.student FROM CareerStudent cs WHERE cs.career_id = :c "
+												+ "AND cs.")
+									.setParameter("c", career_id).getResultList();
+		em.getTransaction().commit();
+
+		return students;
 	}
 }
