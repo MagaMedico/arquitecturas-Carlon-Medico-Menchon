@@ -49,6 +49,10 @@ public class Main {
 		List<Student> studentsByGender = student.getStudentsByGender(em, "Female");
 		studentsByGender.forEach(s -> System.out.println(s));
 		//Inciso g
+		System.out.println("Inciso g");
+		List<Student> studentsByCareerFilterCity = careerStudent.getStudentsByCareerFilterCity(em, (long) 10, "Qŭshkŭpir");
+		//Deberia retornar: 20381505
+		studentsByCareerFilterCity.forEach(s -> System.out.println(s));
 		
 		//Cierre del manejador de entidades
 		em.close();	

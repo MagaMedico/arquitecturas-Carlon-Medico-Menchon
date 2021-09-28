@@ -46,15 +46,28 @@ public class CareerStudentDAO implements ICareerStudent{
 			em.getTransaction().commit();
 		}
 	}
+		//----------------------------------------------No se si va acá o iría en StudentDAO
 	// Ejercicio 2) g) recuperar los estudiantes de una determinada carrera, filtrado por ciudad de residencia.
 	@Override
 	public List<Student> getStudentsByCareerFilterCity(EntityManager em, Long career_id, String city) {
 		em.getTransaction().begin();
 			
 		@SuppressWarnings("unchecked")
-		List<Student> students = em.createQuery("SELECT cs.student FROM CareerStudent cs WHERE cs.career_id = :c "
-												+ "AND cs.")
-									.setParameter("c", career_id).getResultList();
+		List<Student> students = em.createQuery("SELECT DISTINCT(s) FROM Student s, CareerStudent cs "
+												+ "WHERE cs.career.id = :career "
+												+ "AND s.city = :city")
+		/*List<Student> students = em.createQuery("SELECT s FROM CareerStudent s "
+												+ "JOIN Student s "
+												+ "WHERE cs.career_id = :career "
+												+ "AND s.city = :city")*/
+		/*List<Student> students = em.createQuery("SELECT DISTINCT cs.student FROM CareerStudent cs JOIN Student s WHERE cs.career_id = :career "
+												+ "AND s.city = :city")*/
+		/*List<Student> students = em.createQuery("SELECT DISTINCT s FROM Career c "
+												+ "JOIN c.students s WHERE c.id = :career "
+												+ "AND s.city = :city")*/
+									.setParameter("career", career_id)
+									.setParameter("city", city)
+									.getResultList();
 		em.getTransaction().commit();
 
 		return students;

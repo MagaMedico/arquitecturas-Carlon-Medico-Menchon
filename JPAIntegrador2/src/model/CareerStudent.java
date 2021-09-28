@@ -3,7 +3,7 @@ package model;
 import java.util.*;
 import javax.persistence.*;
 
-@Entity(name = "CareerStudents")
+@Entity/*(name = "CareerStudents")*/
 @Table(name = "career_student")
 public class CareerStudent {
 
