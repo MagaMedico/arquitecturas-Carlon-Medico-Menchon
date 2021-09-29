@@ -49,7 +49,10 @@ public class Main {
 		//Inciso a
 		//student.insertStudent(em, 44113202, "Mariela", "Dominguez", 50, "Female", 500124, "Balcarce");
 		//Inciso b
-		//careerStudent.addStudent(em, student, career);
+		//careerStudent.addStudent(em, 44113202, 10);
+		//Inciso c
+		//List<Student> studentsOrderBy = student.getStudentsWithOrderBy(em);
+		//studentsOrderBy.forEach(s -> System.out.println(s));
 		/*Inciso d
 		System.out.println("Inciso d");
 		Student studentByLU = student.getStudentByLU(em, (long) 208077);

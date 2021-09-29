@@ -59,6 +59,11 @@ public class Career {
         students.add(cs);
         s.getCareers().add(cs);
     }
+	
+	public void addStudent(CareerStudent cs) {
+		students.add(cs);
+		cs.getStudent().getCareers().add(cs);
+	}
 
 	public Long getId() {
 		return id;

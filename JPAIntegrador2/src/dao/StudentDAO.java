@@ -62,6 +62,16 @@ public class StudentDAO implements IStudent{
 		query.executeUpdate();
 		em.getTransaction().commit();
 	}
+	
+	// Ejercicio 2) c) recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple.
+	@Override
+	public List<Student> getStudentsWithOrderBy(EntityManager em){
+		em.getTransaction().begin();
+		Query queryStudents = em.createQuery("SELECT s FROM Student s ORDER BY lastname");
+		List<Student> students = queryStudents.getResultList();
+		em.getTransaction().commit();
+		return students;
+	}
 
 	// Ejercicio 2) d) recuperar un estudiante, en base a su número de libreta universitaria.
 	@Override

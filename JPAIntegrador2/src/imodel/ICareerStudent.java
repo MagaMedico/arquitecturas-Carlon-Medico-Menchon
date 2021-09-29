@@ -11,6 +11,6 @@ import model.Student;
 public interface ICareerStudent {
 	
 	public void career_studentPersistence(EntityManager em, CSVParser parserCareerStudent);
-	public void addStudent(EntityManager em, Student student, Career career);
+	public void addStudent(EntityManager em, long idStudent, long idCareer);
 	public List<Student> getStudentsByCareerFilterCity(EntityManager em, Long career_id, String city);
 }

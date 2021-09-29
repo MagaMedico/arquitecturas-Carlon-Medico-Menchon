@@ -48,22 +48,25 @@ public class CareerStudentDAO implements ICareerStudent{
 		}
 	}
 	
-	public void addStudent(EntityManager em, Student student, Career career) {
-		Query query = em.createNativeQuery("INSERT INTO CarrerStudent (career_id, student_id, antiquity, graduation) "
+	public void addStudent(EntityManager em, long idStudent, long idCareer) {
+		Query query = em.createNativeQuery("INSERT INTO career_student (career_id, student_id, antiquity, graduation) "
 				+ "VALUES (:career_id, :student_id, :antiquity, :graduation)");
 		
 		em.getTransaction().begin();
 		
-		query.setParameter("career_id", career.getId());
-		query.setParameter("student_id", student.getDNI());
+		query.setParameter("career_id", idCareer);
+		query.setParameter("student_id", idStudent);
 		query.setParameter("antiquity", 0);
 		query.setParameter("graduation", null);
 		
+		Student student = em.find(Student.class, idStudent);
+		Career career = em.find(Career.class, idCareer);
+		CareerStudent cs = new CareerStudent(student, career);
+		
+		career.addStudent(cs);
+		
 		query.executeUpdate();
 		em.getTransaction().commit();
-		
-		//No se si esto va
-		//career.addStudent(student);
 	}
 		//----------------------------------------------No se si va acá o iría en StudentDAO
 	// Ejercicio 2) g) recuperar los estudiantes de una determinada carrera, filtrado por ciudad de residencia.

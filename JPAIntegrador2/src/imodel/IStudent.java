@@ -10,6 +10,7 @@ import model.Student;
 public interface IStudent {
 	public void studentPersistence(EntityManager em, CSVParser parserStudent);
 	public void insertStudent(EntityManager em, long DNI, String name, String lastname, int age, String gender, int LU, String city);
+	public List<Student> getStudentsWithOrderBy(EntityManager em);
 	public Student getStudentByLU(EntityManager em, Long LU);
 	public List<Student> getStudentsByGender(EntityManager em, String gender);
 }
