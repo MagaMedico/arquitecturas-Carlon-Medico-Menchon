@@ -14,6 +14,8 @@ public class CareerStudentId implements Serializable {
     @Column(name = "career_id")
     private Long careerId;
  
+    public CareerStudentId() {	}
+    
     public CareerStudentId(Long studentId, Long careerId) {
     	this.studentId = studentId;
     	this.careerId = careerId;

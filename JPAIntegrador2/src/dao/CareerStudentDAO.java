@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -8,6 +9,7 @@ import javax.persistence.Query;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
+import dto.ReportDTO;
 import imodel.ICareerStudent;
 import model.Career;
 import model.CareerStudent;
@@ -18,6 +20,7 @@ public class CareerStudentDAO implements ICareerStudent{
 	final static String GRADUATION = "graduation";
 	final static String CAREER = "career";
 	final static String STUDENT = "student";
+	final static String CITY = "city";
 	
 	public CareerStudentDAO() { }
 	
@@ -88,11 +91,49 @@ public class CareerStudentDAO implements ICareerStudent{
 												+ "JOIN c.students s WHERE c.id = :career "
 												+ "AND s.city = :city")*/
 									.setParameter(CAREER, career_id)
-									.setParameter("city", city)
+									.setParameter(CITY, city)
 									.getResultList();
 		
 		em.getTransaction().commit();
 
 		return students;
+	}
+	
+	//3) Generar un reporte de las carreras, que
+	//para cada carrera incluya información de los
+	//inscriptos y egresados por año.
+	//Se deben ordenar las carreras alfabéticamente,
+	//y presentar los años de manera cronológica.
+	@Override
+	public List<ReportDTO> getReport(EntityManager em) {
+		em.getTransaction().begin();
+		
+		List<ReportDTO> reports = new ArrayList<>();
+		List<Career> career = em.createQuery("SELECT DISTINCT c FROM Career c JOIN c.students s WHERE size(s) > 0 ORDER BY c.name").getResultList();
+		List<Student> student_graduates;
+		List<Student> student_registered;
+		for(Career c: career) {
+			//Se genera reporte de una carrera
+			ReportDTO reportCareer = new ReportDTO(c);
+			
+			//Se le setean los estudiantes graduados e inscriptos correspondientes
+			student_graduates = em.createQuery("SELECT cs.student FROM CareerStudent cs WHERE cs.career = :career AND cs.graduation != NULL ORDER BY cs.graduation").setParameter(CAREER, c).getResultList();
+			reportCareer.setGraduates(student_graduates);
+			System.out.println("GRADUATES");
+			student_graduates.forEach(s -> System.out.println(s));
+			student_registered = em.createQuery("SELECT cs.student FROM CareerStudent cs WHERE cs.career = :career AND cs.graduation ORDER BY cs.antiquity")
+												.setParameter(CAREER, c).getResultList();
+			reportCareer.setRegistered(student_registered);
+			System.out.println("INSCRIPTOS");
+			student_registered.forEach(sr -> System.out.println(sr));
+			
+		}
+		
+		 //= em.createQuery("SELECT c.students FROM Career c WHERE c.id = :career").setParameter(CAREER, c).getResultList()
+		
+		
+		
+		em.getTransaction().commit();
+		return null;
 	}
 }

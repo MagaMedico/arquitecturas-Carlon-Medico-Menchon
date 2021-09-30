@@ -71,6 +71,10 @@ public class Main {
 		//Deberia retornar: 20381505
 		studentsByCareerFilterCity.forEach(s -> System.out.println(s));*/
 		
+		//-----------ASDASDAS
+		careerStudent.getReport(em);
+		
+		
 		//Cierre del manejador de entidades
 		em.close();	
 		emf.close();
