@@ -14,8 +14,6 @@ public class CareerStudentId implements Serializable {
     @Column(name = "career_id")
     private Long careerId;
  
-    private CareerStudentId() {}
-    
     public CareerStudentId(Long studentId, Long careerId) {
     	this.studentId = studentId;
     	this.careerId = careerId;
@@ -45,4 +43,9 @@ public class CareerStudentId implements Serializable {
     public int hashCode() {
         return Objects.hash(careerId, studentId);
     }
+
+	@Override
+	public String toString() {
+		return "CareerStudentId [studentId=" + studentId + ", careerId=" + careerId + "]";
+	}
 }

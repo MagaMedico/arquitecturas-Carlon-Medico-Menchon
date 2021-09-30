@@ -59,11 +59,6 @@ public class Career {
         students.add(cs);
         s.getCareers().add(cs);
     }
-	
-	public void addStudent(CareerStudent cs) {
-		students.add(cs);
-		cs.getStudent().getCareers().add(cs);
-	}
 
 	public Long getId() {
 		return id;
@@ -84,7 +79,6 @@ public class Career {
 
 	@Override
 	public String toString() {
-		return "hola";
-		//return "Career [id=" + id + ", name=" + name + ", length=" + length + ", students=" + students.toString() + "]";
+		return "Career [id=" + id + ", name=" + name + ", length=" + length + ", students=" + students.toString() + "]";
 	}
 }

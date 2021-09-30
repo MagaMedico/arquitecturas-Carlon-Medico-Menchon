@@ -3,13 +3,10 @@ package dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
-
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import imodel.ICareer;
 import model.Career;
-import model.Student;
 
 public class CareerDAO implements ICareer{
 	final static String NAME = "name";
@@ -36,7 +33,7 @@ public class CareerDAO implements ICareer{
 	public List<Career> getCareersOrderByStudents(EntityManager em) {
 		em.getTransaction().begin();
 		@SuppressWarnings("unchecked")
-		List<Career> careers = em.createQuery("SELECT c.name, COUNT(s) FROM Career c JOIN c.students s ").getResultList();
+		List<Career> careers = em.createQuery("SELECT DISTINCT c FROM Career c JOIN c.students s WHERE size(s) > 0 ORDER BY size(s)").getResultList();
 		em.getTransaction().commit();
 		return careers;
 	}

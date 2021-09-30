@@ -30,7 +30,7 @@ public class CareerStudentDAO implements ICareerStudent{
 
 			int antiquity = Integer.parseInt(row.get(ANTIQUITY));
 			Integer graduation = null;
-			if(!row.get("graduation").equals("")){
+			if(!row.get(GRADUATION).equals("")){
 				graduation = Integer.parseInt(row.get(GRADUATION));
 			}
 			Long career_id = Long.parseLong(row.get(CAREER));
@@ -47,23 +47,23 @@ public class CareerStudentDAO implements ICareerStudent{
 			em.getTransaction().commit();
 		}
 	}
-	
+	//Inciso b
 	public void addStudent(EntityManager em, long idStudent, long idCareer) {
 		Query query = em.createNativeQuery("INSERT INTO career_student (career_id, student_id, antiquity, graduation) "
-				+ "VALUES (:career_id, :student_id, :antiquity, :graduation)");
-		
+				+ "VALUES (:career, :student, :antiquity, :graduation)");
+	
 		em.getTransaction().begin();
 		
-		query.setParameter("career_id", idCareer);
-		query.setParameter("student_id", idStudent);
-		query.setParameter("antiquity", 0);
-		query.setParameter("graduation", null);
+		query.setParameter(CAREER, idCareer);
+		query.setParameter(STUDENT, idStudent);
+		query.setParameter(ANTIQUITY, 0);
+		query.setParameter(GRADUATION, null);
 		
 		Student student = em.find(Student.class, idStudent);
 		Career career = em.find(Career.class, idCareer);
-		CareerStudent cs = new CareerStudent(student, career);
 		
-		career.addStudent(cs);
+		career.addStudent(student);
+		student.addCareer(career);
 		
 		query.executeUpdate();
 		em.getTransaction().commit();
@@ -87,9 +87,10 @@ public class CareerStudentDAO implements ICareerStudent{
 		/*List<Student> students = em.createQuery("SELECT DISTINCT s FROM Career c "
 												+ "JOIN c.students s WHERE c.id = :career "
 												+ "AND s.city = :city")*/
-									.setParameter("career", career_id)
+									.setParameter(CAREER, career_id)
 									.setParameter("city", city)
 									.getResultList();
+		
 		em.getTransaction().commit();
 
 		return students;

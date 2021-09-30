@@ -50,27 +50,27 @@ public class Main {
 		//student.insertStudent(em, 44113202, "Mariela", "Dominguez", 50, "Female", 500124, "Balcarce");
 		//Inciso b
 		//careerStudent.addStudent(em, 44113202, 10);
-		//Inciso c
-		//List<Student> studentsOrderBy = student.getStudentsWithOrderBy(em);
-		//studentsOrderBy.forEach(s -> System.out.println(s));
-		/*Inciso d
+		/*Inciso c
+		List<Student> studentsOrderBy = student.getStudentsWithOrderBy(em);
+		studentsOrderBy.forEach(s -> System.out.println(s));
+		//Inciso d
 		System.out.println("Inciso d");
 		Student studentByLU = student.getStudentByLU(em, (long) 208077);
 		System.out.println(studentByLU.toString());
-		/*Inciso e
+		//Inciso e
 		System.out.println("Inciso e");
 		List<Student> studentsByGender = student.getStudentsByGender(em, "Female");
-		studentsByGender.forEach(s -> System.out.println(s));*/
+		studentsByGender.forEach(s -> System.out.println(s));
 		//Inciso f
-		//System.out.println("Inciso f");
-		//List<Career> careers = career.getCareersOrderByStudents(em);
-		//careers.forEach(c -> System.out.println(c));
-		/*Inciso g
+		System.out.println("Inciso f");
+		List<Career> careers = career.getCareersOrderByStudents(em);
+		careers.forEach(c -> System.out.println(c));
+		//Inciso g
 		System.out.println("Inciso g");
 		List<Student> studentsByCareerFilterCity = careerStudent.getStudentsByCareerFilterCity(em, (long) 10, "Qŭshkŭpir");
 		//Deberia retornar: 20381505
-		studentsByCareerFilterCity.forEach(s -> System.out.println(s));
-		*/
+		studentsByCareerFilterCity.forEach(s -> System.out.println(s));*/
+		
 		//Cierre del manejador de entidades
 		em.close();	
 		emf.close();

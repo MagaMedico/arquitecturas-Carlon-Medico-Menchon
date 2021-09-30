@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import org.apache.commons.csv.CSVParser;
 
-import model.Career;
 import model.Student;
 
 public interface ICareerStudent {

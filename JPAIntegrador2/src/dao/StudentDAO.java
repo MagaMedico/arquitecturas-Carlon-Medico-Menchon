@@ -47,17 +47,17 @@ public class StudentDAO implements IStudent{
 	public void insertStudent(EntityManager em, long DNI, String name, String lastname, int age, String gender, int LU, String city) {
 			
 		Query query = em.createNativeQuery("INSERT INTO Student (DNI, name, lastname, age, gender, city, LU) "
-				+ "VALUES (:DNI, :name, :lastname, :age, :gender, :city, :LU)");
+				+ "VALUES (:DNI, :name, :lastName, :age, :gender, :city, :LU)");
 		
 		em.getTransaction().begin();
 		
-		query.setParameter("DNI", DNI);
-		query.setParameter("name", name);
-		query.setParameter("lastname", lastname);
-		query.setParameter("age", age);
-		query.setParameter("gender", gender);
-		query.setParameter("city", city);
-		query.setParameter("LU", LU);
+		query.setParameter(ID, DNI);
+		query.setParameter(NAME, name);
+		query.setParameter(LAST_NAME, lastname);
+		query.setParameter(AGE, age);
+		query.setParameter(GENDER, gender);
+		query.setParameter(CITY, city);
+		query.setParameter(ACADEMIC_TRANSCRIPT, LU);
 		
 		query.executeUpdate();
 		em.getTransaction().commit();
@@ -67,8 +67,8 @@ public class StudentDAO implements IStudent{
 	@Override
 	public List<Student> getStudentsWithOrderBy(EntityManager em){
 		em.getTransaction().begin();
-		Query queryStudents = em.createQuery("SELECT s FROM Student s ORDER BY lastname");
-		List<Student> students = queryStudents.getResultList();
+		@SuppressWarnings("unchecked")
+		List<Student> students = em.createQuery("SELECT s FROM Student s ORDER BY lastname").getResultList();
 		em.getTransaction().commit();
 		return students;
 	}
@@ -77,8 +77,8 @@ public class StudentDAO implements IStudent{
 	@Override
 	public Student getStudentByLU(EntityManager em, Long LU) {
 		em.getTransaction().begin();
-		Student s = (Student) em.createQuery("SELECT s FROM Student s WHERE s.LU = :lu").
-				    setParameter("lu", LU).getSingleResult();
+		Student s = (Student) em.createQuery("SELECT s FROM Student s WHERE s.LU = :LU").
+				    setParameter(ACADEMIC_TRANSCRIPT, LU).getSingleResult();
 		em.getTransaction().commit();
 		return s;
 	}
@@ -89,8 +89,8 @@ public class StudentDAO implements IStudent{
 		em.getTransaction().begin();
 		
 		@SuppressWarnings("unchecked")
-		List<Student> students = em.createQuery("SELECT s FROM Student s WHERE s.gender = :g")
-								.setParameter("g", gender).getResultList();
+		List<Student> students = em.createQuery("SELECT s FROM Student s WHERE s.gender = :gender")
+								.setParameter(GENDER, gender).getResultList();
 		em.getTransaction().commit();
 
 		return students;
