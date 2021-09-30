@@ -14,6 +14,7 @@ import org.apache.commons.csv.CSVParser;
 import dao.CareerDAO;
 import dao.CareerStudentDAO;
 import dao.StudentDAO;
+import dto.ReportDTO;
 import model.Career;
 import model.Student;
 
@@ -72,8 +73,14 @@ public class Main {
 		studentsByCareerFilterCity.forEach(s -> System.out.println(s));*/
 		
 		//-----------ASDASDAS
-		careerStudent.getReport(em);
-		
+		List<ReportDTO> reports = careerStudent.getReport(em);
+		int cont = 0;
+		for(ReportDTO r: reports) {
+			if(cont == 0) {
+				System.out.println(r);
+				cont++;
+			}
+		}
 		
 		//Cierre del manejador de entidades
 		em.close();	

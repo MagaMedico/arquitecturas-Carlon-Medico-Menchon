@@ -104,6 +104,6 @@ public class Student{
 	@Override
 	public String toString() {
 		return "Student [DNI=" + DNI + ", name=" + name + ", lastName=" + lastName + ", age=" + age + ", gender="
-				+ gender + ", city=" + city + ", LU=" + LU + ", careers=" + careers.toString() + "]";
+				+ gender + ", city=" + city + ", LU=" + LU + "]";
 	}
 }

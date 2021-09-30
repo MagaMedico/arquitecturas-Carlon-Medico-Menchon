@@ -10,6 +10,7 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import dto.ReportDTO;
+import dto.ReportYearDTO;
 import imodel.ICareerStudent;
 import model.Career;
 import model.CareerStudent;
@@ -81,15 +82,6 @@ public class CareerStudentDAO implements ICareerStudent{
 		List<Student> students = em.createQuery("SELECT DISTINCT(s) FROM Student s, CareerStudent cs "
 												+ "WHERE cs.career.id = :career "
 												+ "AND s.city = :city")
-		/*List<Student> students = em.createQuery("SELECT s FROM CareerStudent s "
-												+ "JOIN Student s "
-												+ "WHERE cs.career_id = :career "
-												+ "AND s.city = :city")*/
-		/*List<Student> students = em.createQuery("SELECT DISTINCT cs.student FROM CareerStudent cs JOIN Student s WHERE cs.career_id = :career "
-												+ "AND s.city = :city")*/
-		/*List<Student> students = em.createQuery("SELECT DISTINCT s FROM Career c "
-												+ "JOIN c.students s WHERE c.id = :career "
-												+ "AND s.city = :city")*/
 									.setParameter(CAREER, career_id)
 									.setParameter(CITY, city)
 									.getResultList();
@@ -104,36 +96,49 @@ public class CareerStudentDAO implements ICareerStudent{
 	//inscriptos y egresados por año.
 	//Se deben ordenar las carreras alfabéticamente,
 	//y presentar los años de manera cronológica.
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<ReportDTO> getReport(EntityManager em) {
 		em.getTransaction().begin();
 		
-		List<ReportDTO> reports = new ArrayList<>();
+		List<ReportDTO> reports = new ArrayList<ReportDTO>();
 		List<Career> career = em.createQuery("SELECT DISTINCT c FROM Career c JOIN c.students s WHERE size(s) > 0 ORDER BY c.name").getResultList();
-		List<Student> student_graduates;
+		List<Student> student_graduated;
 		List<Student> student_registered;
+		List<Integer> years;
 		for(Career c: career) {
 			//Se genera reporte de una carrera
+			
 			ReportDTO reportCareer = new ReportDTO(c);
 			
-			//Se le setean los estudiantes graduados e inscriptos correspondientes
-			student_graduates = em.createQuery("SELECT cs.student FROM CareerStudent cs WHERE cs.career = :career AND cs.graduation != NULL ORDER BY cs.graduation").setParameter(CAREER, c).getResultList();
-			reportCareer.setGraduates(student_graduates);
-			System.out.println("GRADUATES");
-			student_graduates.forEach(s -> System.out.println(s));
-			student_registered = em.createQuery("SELECT cs.student FROM CareerStudent cs WHERE cs.career = :career AND cs.graduation ORDER BY cs.antiquity")
-												.setParameter(CAREER, c).getResultList();
-			reportCareer.setRegistered(student_registered);
-			System.out.println("INSCRIPTOS");
-			student_registered.forEach(sr -> System.out.println(sr));
-			
-		}
-		
-		 //= em.createQuery("SELECT c.students FROM Career c WHERE c.id = :career").setParameter(CAREER, c).getResultList()
-		
-		
+		    years = em.createQuery("SELECT cs.graduation FROM CareerStudent cs WHERE cs.career = :career AND cs.graduation != NULL ORDER BY cs.graduation")
+				  .setParameter(CAREER, c).getResultList();
+			years.addAll(em.createQuery("SELECT DISTINCT(year(current_date) - cs.antiquity) AS year FROM CareerStudent cs WHERE cs.career = :career ORDER BY year ASC")
+					  .setParameter(CAREER, c).getResultList());
+			List<ReportYearDTO> reportsByYear = new ArrayList<ReportYearDTO>();
+			for(Integer i: years) {
+				
+				ReportYearDTO reportByYear = new ReportYearDTO(i);
+				
+				//Se le setean los estudiantes graduados e inscriptos correspondientes
+				student_graduated = em.createQuery("SELECT cs.student FROM CareerStudent cs WHERE cs.career = :career AND cs.graduation = :y ")
+									.setParameter(CAREER, c).setParameter("y", i)
+									.getResultList();
+				reportByYear.setGraduated(student_graduated);
+				
+				student_registered = em.createQuery("SELECT cs.student FROM CareerStudent cs WHERE cs.career = :career AND cs.antiquity = :antiquity ORDER BY cs.antiquity")
+									.setParameter(CAREER, c).setParameter("antiquity", 2021-i)
+									.getResultList();
+				reportByYear.setRegistered(student_registered);
+				
+				reportsByYear.add(reportByYear);
+			}
+			//Agrego el reporte a la lista de reportes
+			reportCareer.addReportsByYear(reportsByYear);
+			reports.add(reportCareer);
+		}	
 		
 		em.getTransaction().commit();
-		return null;
+		return reports;
 	}
 }
