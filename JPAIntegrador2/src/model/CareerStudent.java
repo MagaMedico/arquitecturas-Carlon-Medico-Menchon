@@ -3,10 +3,18 @@ package model;
 import java.util.*;
 import javax.persistence.*;
 
+/*
+	@author Cecilia Carlón: ceciliacarlon2@gmail.com
+			Magalí Médico: magamedico@gmail.com
+			Magalí Menchón: magalimenchon@gmail.com	
+	@version unica
+*/
+
 @Entity/*(name = "CareerStudents")*/
 @Table(name = "career_student")
 public class CareerStudent {
 
+	//@description Atributos
 	@EmbeddedId
 	private CareerStudentId id;
 	@ManyToOne/*(fetch = FetchType.LAZY)*/
@@ -22,6 +30,7 @@ public class CareerStudent {
     @Column 
     private int antiquity;
  
+    //@description Constructores
     public CareerStudent() {	}
     
     public CareerStudent(Student student, Career career) {
@@ -39,6 +48,7 @@ public class CareerStudent {
 		this.id = new CareerStudentId(student.getDNI(), career.getId());
 	}
 	
+	//@description Getters y setters
 	public Career getCareer() {
 		return career;
 	}
@@ -67,6 +77,7 @@ public class CareerStudent {
 		return id;
 	}
 	
+	//@description se hace un override del equals para adaptarlo a esta clase.
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -79,11 +90,13 @@ public class CareerStudent {
         	   Objects.equals(career, that.career);
     }
  
+	//@description se hace un override del hashCode para adaptarlo a esta clase.
     @Override
     public int hashCode() {
         return Objects.hash(student, career);
     }
 
+    //@description se hace un override del toString para adaptarlo a esta clase.
 	@Override
 	public String toString() {
 		return "CareerStudent [id=" + this.getId() + ", student=" + student.getDNI() + ", career=" + career.getId() + ", graduation=" + graduation

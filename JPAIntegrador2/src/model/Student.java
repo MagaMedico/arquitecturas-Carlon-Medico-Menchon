@@ -3,9 +3,17 @@ import java.util.*;
 
 import javax.persistence.*;
 
+/*
+	@author Cecilia Carlón: ceciliacarlon2@gmail.com
+			Magalí Médico: magamedico@gmail.com
+			Magalí Menchón: magalimenchon@gmail.com	
+	@version unica
+*/
+
 @Entity
 public class Student{
 	
+	//@description Atributos
 	@Id
 	private Long DNI;
 	@Column(nullable=false)
@@ -23,6 +31,7 @@ public class Student{
     @OneToMany(mappedBy = "student", cascade = CascadeType.MERGE, orphanRemoval = true)
     private List<CareerStudent> careers;
 	
+    //@description Constructores
 	public Student() {
 		super();
 	}
@@ -38,6 +47,7 @@ public class Student{
 		this.careers = new ArrayList<CareerStudent>();
 	}
 
+	//@description Getters y setters
 	public Long getDNI() {
 		return DNI;
 	}
@@ -82,12 +92,19 @@ public class Student{
 		return careers;
 	}
 	
+	/*
+		@param1 del tipo @see Career
+		@return del tipo void
+		@description crea un @see CareerStudent, agrega la carrera actual en la lista del estudiante y 
+		agrega a la lista de estudiantes el nuevo CareerStudent.
+	 */
 	public void addCareer(Career c) {
         CareerStudent cs = new CareerStudent(this, c);
         careers.add(cs);
         c.getStudents().add(cs);
     }
 	
+	//@description se hace un override del equals para adaptarlo a esta clase.
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -96,11 +113,13 @@ public class Student{
         return Objects.equals(name, student.name);
     }
  
+	//@description se hace un override del hashCode para adaptarlo a esta clase.
     @Override
     public int hashCode() {
         return Objects.hash(name);
     }
 	
+    //@description se hace un override del toString para adaptarlo a esta clase.
 	@Override
 	public String toString() {
 		return "Student [DNI=" + DNI + ", name=" + name + ", lastName=" + lastName + ", age=" + age + ", gender="

@@ -9,11 +9,18 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+/*
+	@author Cecilia Carlón: ceciliacarlon2@gmail.com
+			Magalí Médico: magamedico@gmail.com
+			Magalí Menchón: magalimenchon@gmail.com	
+	@version unica
+*/
+
 @Entity
 @NaturalIdCache
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Career {
-	
+	//@description Atributos
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
@@ -25,6 +32,7 @@ public class Career {
 	@OneToMany(mappedBy = "career", cascade = CascadeType.MERGE, orphanRemoval = true)
     private List<CareerStudent> students;
 	
+	//@description Constructores
 	public Career() {}
 	
 	public Career(String name, int length) {
@@ -34,6 +42,7 @@ public class Career {
 		this.students = new ArrayList<CareerStudent>();
 	}
 
+	//@description Getters y Setters
 	public String getName() {
 		return name;
 	}
@@ -53,17 +62,24 @@ public class Career {
 	public List<CareerStudent> getStudents() {
 		return students;
 	}
+	
+	public Long getId() {
+		return id;
+	}
 
+	/*
+		@param1 del tipo @see Student
+		@return del tipo void
+		@description crea un @see CareerStudent, agrega la carrera actual en la lista del estudiante y 
+		agrega a la lista de estudiantes el nuevo CareerStudent.
+	*/
 	public void addStudent(Student s) {
         CareerStudent cs = new CareerStudent(s, this);
         students.add(cs);
         s.getCareers().add(cs);
     }
-
-	public Long getId() {
-		return id;
-	}
 	
+	//@description se hace un override del equals para adaptarlo a esta clase.
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -72,11 +88,13 @@ public class Career {
         return Objects.equals(name, career.name);
     }
  
+	//@description se hace un override del hashCode para adaptarlo a esta clase.
     @Override
     public int hashCode() {
         return Objects.hash(name);
     }
 
+    //@description se hace un override del toString para adaptarlo a esta clase.
 	@Override
 	public String toString() {
 		return "Career [id=" + id + ", name=" + name + ", length=" + length + "]";
