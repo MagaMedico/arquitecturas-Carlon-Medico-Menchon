@@ -10,18 +10,18 @@ import javax.persistence.*;
 	@version unica
 */
 
-@Entity/*(name = "CareerStudents")*/
+@Entity
 @Table(name = "career_student")
 public class CareerStudent {
 
 	//@description Atributos
 	@EmbeddedId
 	private CareerStudentId id;
-	@ManyToOne/*(fetch = FetchType.LAZY)*/
+	@ManyToOne
     @MapsId("studentId")
 	@JoinColumn(name = "student_id")
     private Student student;
-    @ManyToOne/*(fetch = FetchType.LAZY)*/
+    @ManyToOne
     @MapsId("careerId")
     @JoinColumn(name = "career_id")
     private Career career;
@@ -38,7 +38,7 @@ public class CareerStudent {
 		this.career = career;
 		this.student = student;
     }
-
+    
 	public CareerStudent(Student student, Career career, Integer graduation, int antiquity) {
 		super();
 		this.career = career;

@@ -15,17 +15,43 @@ import imodel.ICareerStudent;
 import model.Career;
 import model.CareerStudent;
 import model.Student;
-
+/**
+ * 
+ * @author Cecilia Carlón: ceciliacarlon2@gmail.com
+		   Magalí Médico: magamedico@gmail.com
+		   Magalí Menchón: magalimenchon@gmail.com	
+	@version unica
+	@description Implementa la lógica de comportamiento de los métodos especificados
+	en la interfaz @see ICarrerStudent. De esta forma define el los métodos relacionados
+	con la base de datos de la entidad @see CareerStudent @see CareerStudentId
+ *
+ */
 public class CareerStudentDAO implements ICareerStudent{
+	
+	/**
+	 * Constantes de la clase
+	 */
 	final static String ANTIQUITY = "antiquity";
 	final static String GRADUATION = "graduation";
 	final static String CAREER = "career";
 	final static String STUDENT = "student";
 	final static String CITY = "city";
 	
+	/**
+	 * Constructor vacío necesario para JPA
+	 */
 	public CareerStudentDAO() { }
 	
-	//Persistencia CSV de career_student
+	/**
+	 * Dado un archivo CSV recorre todas sus filas y setea
+	 * los datos recibidos de tipo String (de ser necesario parseados) a la
+	 * tabla career_student de la base de datos, mediante la persistencia dada por el
+	 * EntityManager y la entidad @see CareerStudent.
+	 * Además, busca el estudiante y carrera correspondiente en @see Student y
+	 * @see Career respectivamente, y agrega a cada una a la lista
+	 * que define la relación que luego utilizará JPA para crear las tablas
+	 * de cada entidad.
+	 */
 	@Override
 	public void career_studentPersistence(EntityManager em, CSVParser parserCareerStudent) {
 		
@@ -51,7 +77,17 @@ public class CareerStudentDAO implements ICareerStudent{
 			em.getTransaction().commit();
 		}
 	}
-	//Inciso b
+	/**
+	 * Ejercicio 2) b) matricular un estudiante en una carrera
+	 * Inserta un registro que relaciona un estudiante a una carrera
+	 * mediante una consulta de SQL en la tabla career_student seteando los datos
+	 * recibidos por parámetro.
+	 * Además, busca el estudiante y carrera correspondiente en @see Student y
+	 * @see Career respectivamente, y agrega a cada una a la lista
+	 * que define la relación que luego utilizará JPA para crear las tablas
+	 * de cada entidad.
+	 * @see EntityManager
+	 */
 	public void addStudent(EntityManager em, long idStudent, long idCareer) {
 		Query query = em.createNativeQuery("INSERT INTO career_student (career_id, student_id, antiquity, graduation) "
 				+ "VALUES (:career, :student, :antiquity, :graduation)");
@@ -72,8 +108,14 @@ public class CareerStudentDAO implements ICareerStudent{
 		query.executeUpdate();
 		em.getTransaction().commit();
 	}
-		//----------------------------------------------No se si va acá o iría en StudentDAO
-	// Ejercicio 2) g) recuperar los estudiantes de una determinada carrera, filtrado por ciudad de residencia.
+
+	
+	/**
+	 *  Ejercicio 2) g) recuperar los estudiantes de una determinada carrera, filtrado por ciudad de residencia.
+	 * Retora una lista estudiantes de una determinada ciudad, obtenida mediante una consulta JPQL
+	 * que filtra los estudiantes asociados a una determinada carrera de determinada ciudad.
+	 * @see EntityManager
+	 */
 	@Override
 	public List<Student> getStudentsByCareerFilterCity(EntityManager em, Long career_id, String city) {
 		em.getTransaction().begin();
@@ -91,11 +133,20 @@ public class CareerStudentDAO implements ICareerStudent{
 		return students;
 	}
 	
-	//3) Generar un reporte de las carreras, que
-	//para cada carrera incluya información de los
-	//inscriptos y egresados por año.
-	//Se deben ordenar las carreras alfabéticamente,
-	//y presentar los años de manera cronológica.
+	/**
+	 * Ejercicio 3) Generar un reporte de las carreras, que para cada carrera
+	 * incluya información de los inscriptos y egresados por año.
+	 * Se deben ordenar las carreras alfabéticamente, y presentar los años
+	 * de manera cronológica.
+	 * Retorna una lista de reportes @see ReportDTO; cada uno de estos contiene a su
+	 * vez una carrera y los reportes por año de la misma @see ReportDTOByYear,
+	 * compuesta por el dato del año de ese reporte y dos listas de inscriptos y
+	 * egresados de ese año.
+	 * Estos datos se obtienen mediante una consulta JPQL para traer los nombres de las
+	 * distintas carreras con al menos algún inscripto ordenadas alfabeticamente,
+	 * luego por cada carrera se obtienen los años años posibles de graduación e inscripción,
+	 * y mediante estos se van obteniendo las listas de estudiantes.
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<ReportDTO> getReport(EntityManager em) {
@@ -107,6 +158,7 @@ public class CareerStudentDAO implements ICareerStudent{
 		List<Student> student_registered;
 		List<Integer> years;
 		for(Career c: career) {
+			
 			//Se genera reporte de una carrera
 			
 			ReportDTO reportCareer = new ReportDTO(c);
@@ -133,11 +185,11 @@ public class CareerStudentDAO implements ICareerStudent{
 				
 				reportsByYear.add(reportByYear);
 			}
-			//Agrego el reporte a la lista de reportes
+			//Se agrega el reporte a la lista de reportes
 			reportCareer.addReportsByYear(reportsByYear);
 			reports.add(reportCareer);
 		}	
-		
+	
 		em.getTransaction().commit();
 		return reports;
 	}

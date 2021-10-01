@@ -12,20 +12,25 @@ import model.Career;
 			Magalí Médico: magamedico@gmail.com
 			Magalí Menchón: magalimenchon@gmail.com	
 	@version unica
+	@description Interfaz que especifica qué lógica de comportamiento deberá
+	describir aquella clase que la implemente.
 */
-
 public interface ICareer {
-	/*
-		@param1 del tipo EntityManager para poder establecer la conexión
-		@param2 del tipo CSVParser para poder insertar los datos
-		@return del tipo void
-		@description recibe una lista de datos para poder insertar en la base de datos.
-	*/
+	
+	/**
+	 * 
+	 * @param em del tipo EntityManager para poder establecer la conexión
+	 * @param parserCareer del tipo CSVParser para poder insertar los datos
+	 * @return del tipo void
+	 * @description recibe una lista de datos para poder insertar en la base de datos.
+	 */
 	public void careerPersistence(EntityManager em, CSVParser parserCareer);
-	/*
-		@param1 del tipo EntityManager para poder establecer la conexión
-		@return del tipo List<Career>
-		@description obtiene todas las carreras ordenadas por la cantidad de estudiantes que estas tengan.
-	*/
+	
+	/**
+	 * 
+	 * @param em del tipo EntityManager para poder establecer la conexión
+	 * @return del tipo List<Career>
+	 * @description obtiene todas las carreras ordenadas por la cantidad de estudiantes que estas tengan.
+	 */
 	public List<Career> getCareersOrderByStudents(EntityManager em);
 }

@@ -92,11 +92,12 @@ public class Student{
 		return careers;
 	}
 	
-	/*
-		@param1 del tipo @see Career
-		@return del tipo void
-		@description crea un @see CareerStudent, agrega la carrera actual en la lista del estudiante y 
-		agrega a la lista de estudiantes el nuevo CareerStudent.
+	/**
+	 * 
+	 * @param c del tipo @see Career
+	 * @return del tipo void
+	 * @description crea un @see CareerStudent, agrega la carrera actual en la lista del estudiante y 
+	 * agrega a la lista de estudiantes el nuevo CareerStudent.
 	 */
 	public void addCareer(Career c) {
         CareerStudent cs = new CareerStudent(this, c);

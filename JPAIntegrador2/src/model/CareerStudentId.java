@@ -10,6 +10,8 @@ import javax.persistence.*;
 			Magalí Médico: magamedico@gmail.com
 			Magalí Menchón: magalimenchon@gmail.com	
 	@version unica
+	@see Embeddable
+	@see Serializable
 */
 
 @SuppressWarnings("serial")

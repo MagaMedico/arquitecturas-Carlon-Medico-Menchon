@@ -9,9 +9,24 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import imodel.IStudent;
+import model.Career;
 import model.Student;
-
+/**
+ * 
+ * @author Cecilia Carlón: ceciliacarlon2@gmail.com
+		   Magalí Médico: magamedico@gmail.com
+		   Magalí Menchón: magalimenchon@gmail.com	
+	@version unica
+	Implementa la lógica de comportamiento de los métodos especificados
+	en la interfaz @see IStudent. De esta forma define el los métodos relacionados
+	con la base de datos de la entidad @see Student
+ *
+ */
 public class StudentDAO implements IStudent{
+	
+	/**
+	 * Constantes de la clase
+	 */
 	final static String ID = "DNI";
 	final static String NAME = "name";
 	final static String LAST_NAME = "lastName";
@@ -20,8 +35,17 @@ public class StudentDAO implements IStudent{
 	final static String CITY = "city";
 	final static String ACADEMIC_TRANSCRIPT = "LU";
 	
+	/**
+	 * Constructor vacío necesario para JPA
+	 */
 	public StudentDAO() { }
 	
+	/**
+	 * Dado un archivo CSV recorre todas sus filas y setea
+	 * los datos recibidos de tipo String (de ser necesario parseados) a la
+	 * tabla student de la base de datos, mediante la persistencia dada por el
+	 * EntityManager y la entidad @see Student.
+	 */
 	@Override
 	public void studentPersistence(EntityManager em, CSVParser parserStudent) {
 		//Persistencia CSV de Student
@@ -42,8 +66,13 @@ public class StudentDAO implements IStudent{
 		}
 	}
 	
+	/**
+	 * Ejercicio 2) a) dar de alta un estudiante.
+	 * Inserta un registro con los datos recibidos por parámetro en la tabla
+	 * student mediante una consulta SQL mediante una transacción.
+	 * @see EntityManager
+	 */
 	@Override
-	//Ejercicio 2) a) dar de alta un estudiante.
 	public void insertStudent(EntityManager em, long DNI, String name, String lastname, int age, String gender, int LU, String city) {
 			
 		Query query = em.createNativeQuery("INSERT INTO Student (DNI, name, lastname, age, gender, city, LU) "
@@ -63,7 +92,12 @@ public class StudentDAO implements IStudent{
 		em.getTransaction().commit();
 	}
 	
-	// Ejercicio 2) c) recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple.
+
+	/**
+	 * Ejercicio 2) c) recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple.
+	 * Retorna una lista de estudiantes, obtenida mediante una consulta JPQL mediante
+	 * la entidad @see Student ordenada por apellido.
+	 */
 	@Override
 	public List<Student> getStudentsWithOrderBy(EntityManager em){
 		em.getTransaction().begin();
@@ -73,7 +107,12 @@ public class StudentDAO implements IStudent{
 		return students;
 	}
 
-	// Ejercicio 2) d) recuperar un estudiante, en base a su número de libreta universitaria.
+
+	/**
+	 * Ejercicio 2) d) recuperar un estudiante, en base a su número de libreta universitaria.
+	 * Retorna un estudiante obtenido de la base de datos mediante su LU único.
+	 * @see Student
+	 */
 	@Override
 	public Student getStudentByLU(EntityManager em, Long LU) {
 		em.getTransaction().begin();
@@ -83,7 +122,12 @@ public class StudentDAO implements IStudent{
 		return s;
 	}
 	
-	// Ejercicio 2) e) recuperar todos los estudiantes, en base a su género.
+	/**
+	 * Ejercicio 2) e) recuperar todos los estudiantes, en base a su género.
+	 * Retorna una lista de estudiantes obtenida de la base de datos con una consulta
+	 * JPQL filtrando por un género recibido por parámetro.
+	 * @see Student
+	 */
 	@Override
 	public List<Student> getStudentsByGender(EntityManager em, String gender) {
 		em.getTransaction().begin();
