@@ -53,20 +53,20 @@ public class Main {
 		EntityManager em = emf.createEntityManager();
 		
 		//Insertar los datos
-		CSVParser parserCareer = CSVFormat.DEFAULT.withHeader().parse(new FileReader(CSV_CAREER));
+		/*CSVParser parserCareer = CSVFormat.DEFAULT.withHeader().parse(new FileReader(CSV_CAREER));
 		CSVParser parserStudent = CSVFormat.DEFAULT.withHeader().parse(new FileReader(CSV_STUDENT));
 		CSVParser parserCareerStudent = CSVFormat.DEFAULT.withHeader().parse(new FileReader(CSV_CAREER_STUDENT));
-		
+		*/
 		//Instanciación de los dao's
 		CareerDAO career = new CareerDAO();
 		StudentDAO student = new StudentDAO();
 		CareerStudentDAO careerStudent = new CareerStudentDAO();
 		
 		//Persistencia de CSVs
-		student.studentPersistence(em, parserStudent);
+		/*student.studentPersistence(em, parserStudent);
 		career.careerPersistence(em, parserCareer);
 		careerStudent.career_studentPersistence(em, parserCareerStudent);
-		
+		*/
 		//Menú
 		Scanner sn = new Scanner(System.in);
 		boolean out = false;
@@ -91,6 +91,7 @@ public class Main {
 		 
 		            switch (option) {
 		            	case 1:
+		            		 try {
 		            		System.out.println("a) Dar de alta un estudiante \n" + "Ingrese: ");
 		            		Scanner entry = new Scanner (System.in);
 		                    	
@@ -99,37 +100,46 @@ public class Main {
 			                        
 			                System.out.println("\n DNI");
 			                String DNIEntry = entry.nextLine();
+			                //parser
 			                long DNI = Long.parseLong(DNIEntry);
 			                        
 			                System.out.println("\n Apellido");
 			                String lastName = entry.nextLine();
 			                        
 			                System.out.println("\n Edad");
-			                String ageEntry = entry.nextLine();
-			                int age = Integer.parseInt(ageEntry);
-			                        
+			                int ageEntry = entry.nextInt();
+			              //parser
+			                	// age = Integer.parseInt(ageEntry);
+			     
 			                System.out.println("\n Género");
 			                String gender = entry.nextLine();
 			                        
 			                System.out.println("\n Número de libreta universitaria:");
 			                String LUEntry = entry.nextLine();
+			              //parser
 			                int LU = Integer.parseInt(LUEntry);
 			                        
 			                System.out.println("\n Ciudad");
 			                String city = entry.nextLine();
 		                        
-			                student.insertStudent(em, DNI, name, lastName, age, gender, LU, city);
+			                student.insertStudent(em, DNI, name, lastName, ageEntry, gender, LU, city);
 			                break;
+		            		 } catch (Exception e) {
+					                System.out.println("Debe insertar un número");
+					                sn.next();
+					         }
 		            	case 2:
 		            		System.out.println("b) Matricular un estudiante en una carrera \n" + "Ingrese: ");
 		            		Scanner entry2 = new Scanner (System.in);
 		                    	
 		                    System.out.println("\n DNI del estudiante: ");
-		                    DNIEntry = entry2.nextLine();
-		                    DNI = Long.parseLong(DNIEntry);
+		                    String DNIEntry = entry2.nextLine();
+		                  //parser
+		                    long DNI = Long.parseLong(DNIEntry);
 		                        
 		                    System.out.println("\n Identificador de la carrera: ");
 		                    String idCareerEntry = entry2.nextLine();
+		                  //parser
 		                    long idCareer = Long.parseLong(idCareerEntry);
 		                        
 		                    careerStudent.addStudent(em, DNI, idCareer);
@@ -146,7 +156,8 @@ public class Main {
 		                    Scanner entry3 = new Scanner (System.in);
 		                    	
 		                    System.out.println("\n Número de libreta universitaria:");
-		                    LUEntry = entry3.nextLine();
+		                    String LUEntry = entry3.nextLine();
+		                  //parser
 		                    long LU3 = Long.parseLong(LUEntry);
 		                    	
 		                    Student studentByLU = student.getStudentByLU(em, LU3);
@@ -158,7 +169,7 @@ public class Main {
 		                    Scanner entry4 = new Scanner (System.in);
 		                    	
 		                    System.out.println("\n Género:");
-		                    gender = entry4.nextLine();
+		                    String gender = entry4.nextLine();
 		                    	
 		                    List<Student> studentsByGender = student.getStudentsByGender(em, gender);
 		                	studentsByGender.forEach(s -> System.out.println(s));
@@ -179,7 +190,7 @@ public class Main {
 		                    idCareer = Long.parseLong(idCareerEntry);
 		                    	
 		                    System.out.println("\n Ciudad");
-		                    city = entry5.nextLine();
+		                    String city = entry5.nextLine();
 		                        
 		                    List<Student> studentsByCareerFilterCity = careerStudent.getStudentsByCareerFilterCity(em, idCareer, city);
 		                	studentsByCareerFilterCity.forEach(s -> System.out.println(s));
@@ -189,10 +200,10 @@ public class Main {
 		                    			+ "inscriptos y egresados por año. Se deben ordenar las carreras alfabéticamente, y presentar\r\n"
 		                    			+ "los años de manera cronológica.\n");
 		                    	
-		                    List<ReportDTO> reports = careerStudent.getReport(em);
+		                    List<Object> reports = careerStudent.getReport(em);
 		                		
 		                    int cont = 0;
-		                	for(ReportDTO r: reports) {
+		                	for(Object r: reports) {
 		                		if(cont == 0) {
 		                			System.out.println(r);
 		                			cont++;

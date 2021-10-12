@@ -1,35 +1,57 @@
 package dto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import model.Career;
 import model.Student;
 
 public class ReportDTO {
-	
 	private Career career;
-	private List<ReportYearDTO> reports;
+	private Integer year;
+	private List<Student> graduated;
+	private List<Student> registered;
 	
-	public ReportDTO(Career career) {
+	public ReportDTO(Career career, Integer year, List<Student> graduated, List<Student> registered) {
 		this.career = career;
-		this.reports = new ArrayList<ReportYearDTO>();
+		this.year = year;
+		this.graduated = graduated;
+		this.registered = registered;
 	}
 	
-	public ReportDTO() {
-		super();
+	public Integer getYears() {
+		return year;
+	}
+
+	public void setYear(Integer year) {
+		this.year = year;
+	}
+
+	public List<Student> getGraduates() {
+		return graduated;
 	}
 	
-	public Career getCareer() {
-		return career;
+	public List<Student> getRegistered() {
+		return registered;
 	}
 	
-	public void addReportsByYear(List<ReportYearDTO> reports) {
-		this.reports = reports; 
+	public void addGratuate(Student graduate) {
+		this.graduated.add(graduate);
+	}
+	
+	public void addRegistered(Student registered) {
+		this.graduated.add(registered);
+	}
+
+	public void setGraduated(List<Student> graduated) {
+		this.graduated = graduated;
+	}
+
+	public void setRegistered(List<Student> registered) {
+		this.registered = registered;
 	}
 
 	@Override
 	public String toString() {
-		return "ReportDTO [career=" + career.getName() + "\n reports=" + reports + "]";
+		return "\n" + career + "\n" + year + "\n graduated=" + graduated + "\n registered=" + registered;
 	}
 }

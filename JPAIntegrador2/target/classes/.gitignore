@@ -1,6 +1,5 @@
 /META-INF/
-/edu/
+/dao/
+/dto/
 /imodel/
 /main/
-/model/
-/dao/

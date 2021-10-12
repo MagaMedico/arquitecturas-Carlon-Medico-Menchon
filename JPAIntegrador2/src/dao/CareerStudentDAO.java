@@ -10,7 +10,7 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import dto.ReportDTO;
-import dto.ReportYearDTO;
+import dto.ReportDTO;
 import imodel.ICareerStudent;
 import model.Career;
 import model.CareerStudent;
@@ -138,59 +138,38 @@ public class CareerStudentDAO implements ICareerStudent{
 	 * incluya información de los inscriptos y egresados por año.
 	 * Se deben ordenar las carreras alfabéticamente, y presentar los años
 	 * de manera cronológica.
-	 * Retorna una lista de reportes @see ReportDTO; cada uno de estos contiene a su
-	 * vez una carrera y los reportes por año de la misma @see ReportDTOByYear,
-	 * compuesta por el dato del año de ese reporte y dos listas de inscriptos y
-	 * egresados de ese año.
-	 * Estos datos se obtienen mediante una consulta JPQL para traer los nombres de las
-	 * distintas carreras con al menos algún inscripto ordenadas alfabeticamente,
-	 * luego por cada carrera se obtienen los años años posibles de graduación e inscripción,
-	 * y mediante estos se van obteniendo las listas de estudiantes.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ReportDTO> getReport(EntityManager em) {
+	public List<Object> getReport(EntityManager em) {
 		em.getTransaction().begin();
 		
 		List<ReportDTO> reports = new ArrayList<ReportDTO>();
-		List<Career> career = em.createQuery("SELECT DISTINCT c FROM Career c JOIN c.students s WHERE size(s) > 0 ORDER BY c.name").getResultList();
-		List<Student> student_graduated;
-		List<Student> student_registered;
-		List<Integer> years;
-		for(Career c: career) {
-			
-			//Se genera reporte de una carrera
-			
-			ReportDTO reportCareer = new ReportDTO(c);
-			
-		    years = em.createQuery("SELECT cs.graduation FROM CareerStudent cs WHERE cs.career = :career AND cs.graduation != NULL ORDER BY cs.graduation")
-				  .setParameter(CAREER, c).getResultList();
-			years.addAll(em.createQuery("SELECT DISTINCT(year(current_date) - cs.antiquity) AS year FROM CareerStudent cs WHERE cs.career = :career ORDER BY year ASC")
-					  .setParameter(CAREER, c).getResultList());
-			List<ReportYearDTO> reportsByYear = new ArrayList<ReportYearDTO>();
-			for(Integer i: years) {
-				
-				ReportYearDTO reportByYear = new ReportYearDTO(i);
-				
-				//Se le setean los estudiantes graduados e inscriptos correspondientes
-				student_graduated = em.createQuery("SELECT cs.student FROM CareerStudent cs WHERE cs.career = :career AND cs.graduation = :y ")
-									.setParameter(CAREER, c).setParameter("y", i)
-									.getResultList();
-				reportByYear.setGraduated(student_graduated);
-				
-				student_registered = em.createQuery("SELECT cs.student FROM CareerStudent cs WHERE cs.career = :career AND cs.antiquity = :antiquity ORDER BY cs.antiquity")
-									.setParameter(CAREER, c).setParameter("antiquity", 2021-i)
-									.getResultList();
-				reportByYear.setRegistered(student_registered);
-				
-				reportsByYear.add(reportByYear);
-			}
-			//Se agrega el reporte a la lista de reportes
-			reportCareer.addReportsByYear(reportsByYear);
-			reports.add(reportCareer);
-		}	
+		
+		List<Object> query = em.createNativeQuery(""
+				+ "/* años de graduacion */"
+				+ "SELECT name, graduation years, NULL enrolled, cs.student_id graduate "
+				+ "FROM career c "
+				+ "INNER JOIN  career_student cs "
+				+ "ON c.id= cs.career_id "
+				+ "WHERE cs.graduation IS NOT NULL "
+				+ "UNION ALL "
+				+ "/* años de inscriptos no graduados */"
+				+ "SELECT name, YEAR(CURDATE()) - cs.antiquity years, cs.student_id enrolled, NULL graduate "
+				+ "FROM career c INNER JOIN  career_student cs "
+				+ "ON c.id= cs.career_id "
+				+ "WHERE cs.graduation IS NULL"
+				+ "UNION ALL "
+				+ "/* años de inscriptos graduados */"
+				+ "SELECT name, (graduation - cs.antiquity) years, cs.student_id enrolled, NULL graduate "
+				+ "FROM career c "
+				+ "INNER JOIN  career_student cs "
+				+ "ON c.id= cs.career_id "
+				+ "WHERE cs.graduation IS NOT NULL "
+				+ "ORDER BY name, years, enrolled DESC")
+				.getResultList();
 	
 		em.getTransaction().commit();
-		return reports;
+		return query;
 	}
 }

@@ -75,8 +75,19 @@ public class StudentDAO implements IStudent{
 	@Override
 	public void insertStudent(EntityManager em, long DNI, String name, String lastname, int age, String gender, int LU, String city) {
 			
-		Query query = em.createNativeQuery("INSERT INTO Student (DNI, name, lastname, age, gender, city, LU) "
-				+ "VALUES (:DNI, :name, :lastName, :age, :gender, :city, :LU)");
+		
+		Student s = em.find(Student.class, DNI);
+		Query query = null;
+		if(s != null) {
+			query = em.createNativeQuery("UPDATE Student "
+					+ "SET name = :name, lastname = :lastName, "
+					+ "age = :age, gender = :gender, LU = :LU, city = :city "
+					+ "WHERE DNI = :DNI");
+		}
+		else {
+			query = em.createNativeQuery("INSERT INTO Student (DNI, name, lastname, age, gender, city, LU) "
+					+ "VALUES (:DNI, :name, :lastName, :age, :gender, :city, :LU)");
+		}
 		
 		em.getTransaction().begin();
 		
