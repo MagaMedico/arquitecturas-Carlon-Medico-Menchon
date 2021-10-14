@@ -53,20 +53,20 @@ public class Main {
 		EntityManager em = emf.createEntityManager();
 		
 		//Insertar los datos
-		/*CSVParser parserCareer = CSVFormat.DEFAULT.withHeader().parse(new FileReader(CSV_CAREER));
+		CSVParser parserCareer = CSVFormat.DEFAULT.withHeader().parse(new FileReader(CSV_CAREER));
 		CSVParser parserStudent = CSVFormat.DEFAULT.withHeader().parse(new FileReader(CSV_STUDENT));
 		CSVParser parserCareerStudent = CSVFormat.DEFAULT.withHeader().parse(new FileReader(CSV_CAREER_STUDENT));
-		*/
+		
 		//Instanciación de los dao's
 		CareerDAO career = new CareerDAO();
 		StudentDAO student = new StudentDAO();
 		CareerStudentDAO careerStudent = new CareerStudentDAO();
 		
 		//Persistencia de CSVs
-		/*student.studentPersistence(em, parserStudent);
+		student.studentPersistence(em, parserStudent);
 		career.careerPersistence(em, parserCareer);
 		careerStudent.career_studentPersistence(em, parserCareerStudent);
-		*/
+
 		//Menú
 		Scanner sn = new Scanner(System.in);
 		boolean out = false;
@@ -200,15 +200,10 @@ public class Main {
 		                    			+ "inscriptos y egresados por año. Se deben ordenar las carreras alfabéticamente, y presentar\r\n"
 		                    			+ "los años de manera cronológica.\n");
 		                    	
-		                    List<Object> reports = careerStudent.getReport(em);
-		                		
-		                    int cont = 0;
-		                	for(Object r: reports) {
-		                		if(cont == 0) {
-		                			System.out.println(r);
-		                			cont++;
-		                		}
-		                	}
+		                    List<ReportDTO> reports = careerStudent.getReport(em);
+		                	
+		                    reports.forEach(s -> System.out.println(s));
+		                    
 		                    break;
 		                case 9:
 		                    out = true;

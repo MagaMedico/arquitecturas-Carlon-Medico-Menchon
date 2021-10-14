@@ -1,52 +1,53 @@
 package dto;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import model.Career;
 import model.Student;
 
 public class ReportDTO {
-	private Career career;
-	private Integer year;
-	private List<Student> graduated;
-	private List<Student> registered;
+	private String career;
+	private BigInteger year;
+	private BigInteger graduated;
+	private BigInteger registered;
 	
-	public ReportDTO(Career career, Integer year, List<Student> graduated, List<Student> registered) {
+	public ReportDTO(String career, BigInteger year, BigInteger graduated, BigInteger registered) {
 		this.career = career;
 		this.year = year;
 		this.graduated = graduated;
 		this.registered = registered;
 	}
 	
-	public Integer getYears() {
+	public BigInteger getYears() {
 		return year;
 	}
 
-	public void setYear(Integer year) {
+	public void setYear(BigInteger year) {
 		this.year = year;
 	}
+	
+	public String getCareer() {
+		return career;
+	}
 
-	public List<Student> getGraduates() {
+	public void setCareer(String career) {
+		this.career = career;
+	}
+
+	public BigInteger getGraduated() {
 		return graduated;
 	}
-	
-	public List<Student> getRegistered() {
-		return registered;
-	}
-	
-	public void addGratuate(Student graduate) {
-		this.graduated.add(graduate);
-	}
-	
-	public void addRegistered(Student registered) {
-		this.graduated.add(registered);
-	}
 
-	public void setGraduated(List<Student> graduated) {
+	public void setGraduated(BigInteger graduated) {
 		this.graduated = graduated;
 	}
 
-	public void setRegistered(List<Student> registered) {
+	public BigInteger getRegistered() {
+		return registered;
+	}
+
+	public void setRegistered(BigInteger registered) {
 		this.registered = registered;
 	}
 

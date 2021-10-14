@@ -1,8 +1,9 @@
 package dao;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 import java.util.List;
-
+import java.math.BigInteger;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -141,26 +142,20 @@ public class CareerStudentDAO implements ICareerStudent{
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Object> getReport(EntityManager em) {
+	public List<ReportDTO> getReport(EntityManager em) {
 		em.getTransaction().begin();
 		
-		List<ReportDTO> reports = new ArrayList<ReportDTO>();
-		
-		List<Object> query = em.createNativeQuery(""
-				+ "/* años de graduacion */"
-				+ "SELECT name, graduation years, NULL enrolled, cs.student_id graduate "
+		List<Object[]> query = em.createNativeQuery("SELECT name, graduation years, NULL enrolled, cs.student_id graduate "
 				+ "FROM career c "
 				+ "INNER JOIN  career_student cs "
 				+ "ON c.id= cs.career_id "
 				+ "WHERE cs.graduation IS NOT NULL "
 				+ "UNION ALL "
-				+ "/* años de inscriptos no graduados */"
 				+ "SELECT name, YEAR(CURDATE()) - cs.antiquity years, cs.student_id enrolled, NULL graduate "
 				+ "FROM career c INNER JOIN  career_student cs "
 				+ "ON c.id= cs.career_id "
-				+ "WHERE cs.graduation IS NULL"
+				+ "WHERE cs.graduation IS NULL "
 				+ "UNION ALL "
-				+ "/* años de inscriptos graduados */"
 				+ "SELECT name, (graduation - cs.antiquity) years, cs.student_id enrolled, NULL graduate "
 				+ "FROM career c "
 				+ "INNER JOIN  career_student cs "
@@ -168,8 +163,10 @@ public class CareerStudentDAO implements ICareerStudent{
 				+ "WHERE cs.graduation IS NOT NULL "
 				+ "ORDER BY name, years, enrolled DESC")
 				.getResultList();
-	
+		
+		List<ReportDTO> reports = query.stream().map(o -> new ReportDTO((String)o[0], (BigInteger)o[1], (BigInteger)o[2], (BigInteger)o[3])).collect(Collectors.toList());
+		
 		em.getTransaction().commit();
-		return query;
+		return reports;
 	}
 }

@@ -52,5 +52,5 @@ public interface ICareerStudent {
 	 * @return del tipo List<ReportDTO>
 	 * @description obtiene el reporte de la clase @see CareerStudent.
 	 */
-	public List<Object> getReport(EntityManager em);
+	public List<ReportDTO> getReport(EntityManager em);
 }
