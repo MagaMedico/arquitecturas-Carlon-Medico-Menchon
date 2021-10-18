@@ -39,7 +39,7 @@ public interface IStudent {
 	 * @return del tipo void
 	 * @description inserta un nuevo estudiante en la base de datos con los datos pasados por parámetro.
 	 */
-	public void insertStudent(long DNI, String name, String lastname, int age, String gender, int LU, String city);
+	public boolean insertStudent(long DNI, String name, String lastname, int age, String gender, long LU, String city);
 
 	/**
 	 * 

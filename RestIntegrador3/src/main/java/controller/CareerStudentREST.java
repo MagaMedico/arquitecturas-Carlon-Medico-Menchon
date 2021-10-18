@@ -1,8 +1,15 @@
 package controller;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import dao.CareerStudentDAO;
 import model.*;
@@ -26,11 +33,28 @@ public class CareerStudentREST {
 		return CareerStudentDAO.getInstance().getStudentsByCareerFilterCity(career_id, city);
 	}
 	
+	/**
+	 * Ejercicio 2) b) matricular un estudiante en una carrera
+	 * @param JSON con los datos necesario para la tabla CareerStudent: career_id y student_id
+	 * @return Un mensaje informando si el estudiante se ingreso con exito o no
+	 * @see Student
+	 * @see Career
+	 */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String addStudent(Student student) {
-		System.out.println(student.toString());
+	public String addStudentIntoCareer(String studentCareer) throws FileNotFoundException, IOException, ParseException {
+		// se parcea "studentJSON"
+        Object obj = new JSONParser().parse(new FileReader(studentCareer));
+          
+        // se castea obj a JSONObject
+        JSONObject jo = (JSONObject) obj;
+          
+        // se obtienen todos las columnas y se las pone en variables
+        long careerId = (long) jo.get("career_id");
+        long studentId = (long) jo.get("student_id");
+        CareerStudentDAO.getInstance().addStudent(studentId, careerId);
+        //Se debe chequear si se inserto o no (transformando el return de addStudent a boolean
 		return "El estudiante se a insertado con exito";
 	}
 }

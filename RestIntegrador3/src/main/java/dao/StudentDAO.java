@@ -85,8 +85,9 @@ public class StudentDAO implements IStudent{
 	 * student mediante una consulta SQL mediante una transacción.
 	 * @see EntityManager
 	 */
+	@SuppressWarnings("null")
 	@Override
-	public void insertStudent(long DNI, String name, String lastname, int age, String gender, int LU, String city) {
+	public boolean insertStudent(long DNI, String name, String lastname, int age, String gender, long LU, String city) {
 			
 		
 		Student s = this.em.find(Student.class, DNI);
@@ -104,16 +105,25 @@ public class StudentDAO implements IStudent{
 		
 		this.em.getTransaction().begin();
 		
-		query.setParameter(ID, DNI);
-		query.setParameter(NAME, name);
-		query.setParameter(LAST_NAME, lastname);
-		query.setParameter(AGE, age);
-		query.setParameter(GENDER, gender);
-		query.setParameter(CITY, city);
-		query.setParameter(ACADEMIC_TRANSCRIPT, LU);
+		if(query != null) {
+			query.setParameter(ID, DNI);
+			query.setParameter(NAME, name);
+			query.setParameter(LAST_NAME, lastname);
+			query.setParameter(AGE, age);
+			query.setParameter(GENDER, gender);
+			query.setParameter(CITY, city);
+			query.setParameter(ACADEMIC_TRANSCRIPT, LU);
+			
+			query.executeUpdate();
+			this.em.getTransaction().commit();
+			
+			return true;
+		}else {
+			query.executeUpdate();
+			this.em.getTransaction().commit();
+			return false;
+		}
 		
-		query.executeUpdate();
-		this.em.getTransaction().commit();
 	}
 	
 
@@ -131,6 +141,10 @@ public class StudentDAO implements IStudent{
 		return students;
 	}
 	
+	/**
+	 * Retorna una lista de estudiantes, obtenida mediante una consulta JPQL mediante
+	 * la entidad @see Student.
+	 */
 	@Override
 	public List<Student> getStudents(){
 		this.em.getTransaction().begin();
