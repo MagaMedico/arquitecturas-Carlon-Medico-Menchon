@@ -12,6 +12,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import dao.CareerStudentDAO;
+import dto.ReportDTO;
 import model.*;
 
 @Path("/careerStudent")
@@ -43,18 +44,19 @@ public class CareerStudentREST {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String addStudentIntoCareer(String studentCareer) throws FileNotFoundException, IOException, ParseException {
-		// se parcea "studentJSON"
-        Object obj = new JSONParser().parse(new FileReader(studentCareer));
-          
-        // se castea obj a JSONObject
-        JSONObject jo = (JSONObject) obj;
-          
-        // se obtienen todos las columnas y se las pone en variables
-        long careerId = (long) jo.get("career_id");
-        long studentId = (long) jo.get("student_id");
+	public String addStudentIntoCareer(CareerStudentId cs) {
+		long careerId = cs.getCareerId();
+		long studentId = cs.getStudentId();
+		
         CareerStudentDAO.getInstance().addStudent(studentId, careerId);
         //Se debe chequear si se inserto o no (transformando el return de addStudent a boolean
 		return "El estudiante se a insertado con exito";
+	}
+	
+	@GET
+	@Path("/report")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<ReportDTO> getReport(){
+		return CareerStudentDAO.getInstance().getReport();
 	}
 }

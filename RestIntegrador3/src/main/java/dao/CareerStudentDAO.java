@@ -10,6 +10,7 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import dto.ReportDTO;
+import emf.EMF;
 import imodel.ICareerStudent;
 import model.Career;
 import model.CareerStudent;
@@ -39,7 +40,7 @@ public class CareerStudentDAO implements ICareerStudent{
 	/** 
 	 * Atributos de la clase
 	 */
-	private EntityManager em;
+	private EntityManager em = EMF.createEntityManager();
 	private static CareerStudentDAO cs;
 	
 	/**

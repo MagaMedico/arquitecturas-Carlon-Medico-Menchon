@@ -5,6 +5,8 @@ import java.util.Objects;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
+
 /*
 	@author Cecilia Carlón: ceciliacarlon2@gmail.com
 			Magalí Médico: magamedico@gmail.com
@@ -13,7 +15,7 @@ import javax.persistence.*;
 	@see Embeddable
 	@see Serializable
 */
-
+@JsonIgnoreType
 @SuppressWarnings("serial")
 @Embeddable
 public class CareerStudentId implements Serializable {

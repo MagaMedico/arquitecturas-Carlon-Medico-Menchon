@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
+
+import javax.persistence.EntityManager;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
@@ -20,17 +22,10 @@ public class StudentREST {
 	public StudentREST() {}
 
 	@GET
+	@Path("/all")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Student> getStudents(){
 		return StudentDAO.getInstance().getStudents();
-	}
-	
-	@GET
-	@Path("/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Student getStudent(@PathParam("id") int i){
-		/*return new Student(i, "Name_"+i, "Apellido_"+i);*/
-		return null;
 	}
 	
 	/**
@@ -42,26 +37,20 @@ public class StudentREST {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String addStudent(String studentJSON) throws FileNotFoundException, IOException, ParseException {
-		// se parcea "studentJSON"
-        Object obj = new JSONParser().parse(new FileReader(studentJSON));
-          
-        // se castea obj a JSONObject
-        JSONObject jo = (JSONObject) obj;
-          
-        // se obtienen todos las columnas y se las pone en variables
-        long dni = (long) jo.get("DNI");
-        String name = (String) jo.get("name");
-        String lastName = (String) jo.get("lastName");
-        int age = (int) jo.get("age");
-        String gender = (String) jo.get("gender");
-        String city = (String) jo.get("city");
-        long lu = (long) jo.get("LU");
+	public String addStudent(Student student) {
 
-        boolean insertado = StudentDAO.getInstance().insertStudent(dni, name, lastName, age, gender, lu, city);
-		if (insertado) return "El estudiante se a insertado con exito";
-		else return "El estudiante no se ha podido insertar";
-        
+	    long dni = student.getDNI();
+	    String name = student.getName();
+	    String lastName = student.getLastName();
+	    int age = student.getAge();
+	    String gender = student.getGender();
+	    String city = student.getCity();
+	    long lu = student.getLU();
+	
+	    boolean insertado = StudentDAO.getInstance().insertStudent(dni, name, lastName, age, gender, lu, city);
+			if (insertado) return "El estudiante se a insertado con exito";
+			else return "El estudiante no se ha podido insertar";
+
 	}
 	
 	/**
@@ -70,10 +59,22 @@ public class StudentREST {
 	 * @see Student
 	 */
 	@GET
-	@Path("/{orderedBy}")
+	@Path("/orderedBy")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Student> getStudentsOrderedBy(){
 		return StudentDAO.getInstance().getStudentsWithOrderBy();
+	}
+	
+	/**
+	 * Ejercicio 2) d) recuperar un estudiante, en base a su número de libreta universitaria.
+	 * Retorna un estudiante obtenido de la base de datos mediante su LU único.
+	 * @see Student
+	 */
+	@GET
+	@Path("/LU/{LU}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Student getStudentByLU(@PathParam("LU") Long LU) {
+		return StudentDAO.getInstance().getStudentByLU(LU);
 	}
 	
 	/**
@@ -83,7 +84,7 @@ public class StudentREST {
 	 * @see Student
 	 */
 	@GET
-	@Path("/{gender}")
+	@Path("/gender/{gender}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Student> getStudentsByGender(@PathParam("gender") String gender){
 		return StudentDAO.getInstance().getStudentsByGender(gender);

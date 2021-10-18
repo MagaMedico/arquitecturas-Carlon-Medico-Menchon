@@ -3,6 +3,9 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /*
 	@author Cecilia Carlón: ceciliacarlon2@gmail.com
 			Magalí Médico: magamedico@gmail.com
@@ -13,7 +16,7 @@ import javax.persistence.*;
 @Entity
 public class Student{
 	
-	//@description Atributos
+	//Atributos
 	@Id
 	private Long DNI;
 	@Column(nullable=false)
@@ -29,9 +32,11 @@ public class Student{
 	@Column(unique=true)
 	private long LU;
     @OneToMany(mappedBy = "student", cascade = CascadeType.MERGE, orphanRemoval = true)
+    @JsonManagedReference
+    @JsonIgnore
     private List<CareerStudent> careers;
 	
-    //@description Constructores
+    //Constructores
 	public Student() {
 		super();
 	}
@@ -47,7 +52,10 @@ public class Student{
 		this.careers = new ArrayList<CareerStudent>();
 	}
 
-	//@description Getters y setters
+	//Getters y setters
+	public void setDNI(long dni) {
+		this.DNI = dni;
+	}
 	public Long getDNI() {
 		return DNI;
 	}
@@ -93,7 +101,6 @@ public class Student{
 	}
 	
 	/**
-	 * 
 	 * @param c del tipo @see Career
 	 * @return del tipo void
 	 * @description crea un @see CareerStudent, agrega la carrera actual en la lista del estudiante y 
@@ -105,7 +112,7 @@ public class Student{
         c.getStudents().add(cs);
     }
 	
-	//@description se hace un override del equals para adaptarlo a esta clase.
+	//se hace un override del equals para adaptarlo a esta clase.
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -114,7 +121,7 @@ public class Student{
         return Objects.equals(name, student.name);
     }
  
-	//@description se hace un override del hashCode para adaptarlo a esta clase.
+	//se hace un override del hashCode para adaptarlo a esta clase.
     @Override
     public int hashCode() {
         return Objects.hash(name);

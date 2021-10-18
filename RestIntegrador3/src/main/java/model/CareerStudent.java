@@ -3,6 +3,9 @@ package model;
 import java.util.*;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /*
 	@author Cecilia Carlón: ceciliacarlon2@gmail.com
 			Magalí Médico: magamedico@gmail.com
@@ -20,10 +23,12 @@ public class CareerStudent {
 	@ManyToOne
     @MapsId("studentId")
 	@JoinColumn(name = "student_id")
+	@JsonBackReference
     private Student student;
     @ManyToOne
     @MapsId("careerId")
     @JoinColumn(name = "career_id")
+    @JsonBackReference
     private Career career;
     @Column
     private Integer graduation;
@@ -75,6 +80,12 @@ public class CareerStudent {
 	}
 	public CareerStudentId getId() {
 		return id;
+	}
+	public long getCareerId(){
+		return this.career.getId();
+	}
+	public long getStudentId(){
+		return this.student.getDNI();
 	}
 	
 	//@description se hace un override del equals para adaptarlo a esta clase.

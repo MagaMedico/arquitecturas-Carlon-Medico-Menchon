@@ -53,9 +53,9 @@ public class Main {
 		EntityManager em = emf.createEntityManager();
 		
 		//Insertar los datos
-		CSVParser parserCareer = CSVFormat.DEFAULT.withHeader().parse(new FileReader(CSV_CAREER));
-		CSVParser parserStudent = CSVFormat.DEFAULT.withHeader().parse(new FileReader(CSV_STUDENT));
-		CSVParser parserCareerStudent = CSVFormat.DEFAULT.withHeader().parse(new FileReader(CSV_CAREER_STUDENT));
+		//CSVParser parserCareer = CSVFormat.DEFAULT.withHeader().parse(new FileReader(CSV_CAREER));
+		//CSVParser parserStudent = CSVFormat.DEFAULT.withHeader().parse(new FileReader(CSV_STUDENT));
+		//CSVParser parserCareerStudent = CSVFormat.DEFAULT.withHeader().parse(new FileReader(CSV_CAREER_STUDENT));
 		
 		//Instanciación de los dao's
 		CareerDAO career = new CareerDAO();
@@ -63,9 +63,9 @@ public class Main {
 		CareerStudentDAO careerStudent = new CareerStudentDAO();
 		
 		//Persistencia de CSVs
-		student.studentPersistence(em, parserStudent);
-		career.careerPersistence(em, parserCareer);
-		careerStudent.career_studentPersistence(em, parserCareerStudent);
+		//student.studentPersistence(em, parserStudent);
+		//career.careerPersistence(em, parserCareer);
+		//careerStudent.career_studentPersistence(em, parserCareerStudent);
 
 		//Menú
 		Scanner sn = new Scanner(System.in);

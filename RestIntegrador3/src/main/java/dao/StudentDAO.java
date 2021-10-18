@@ -136,7 +136,7 @@ public class StudentDAO implements IStudent{
 	public List<Student> getStudentsWithOrderBy(){
 		this.em.getTransaction().begin();
 		@SuppressWarnings("unchecked")
-		List<Student> students = this.em.createQuery("SELECT s FROM Student s ORDER BY lastname").getResultList();
+		List<Student> students = this.em.createQuery("SELECT s FROM Student s ORDER BY s.lastName").getResultList();
 		this.em.getTransaction().commit();
 		return students;
 	}
@@ -149,7 +149,7 @@ public class StudentDAO implements IStudent{
 	public List<Student> getStudents(){
 		this.em.getTransaction().begin();
 		@SuppressWarnings("unchecked")
-		List<Student> students = this.em.createNativeQuery("SELECT * FROM Student").getResultList();
+		List<Student> students = this.em.createQuery("SELECT s FROM Student s").getResultList();
 		this.em.getTransaction().commit();
 		return students;
 	}
@@ -163,7 +163,7 @@ public class StudentDAO implements IStudent{
 	@Override
 	public Student getStudentByLU(Long LU) {
 		this.em.getTransaction().begin();
-		Student s = (Student) this.em.createQuery("SELECT s FROM Student s WHERE s.LU = :LU").
+		Student s = (Student) this.em.createQuery("SELECT DISTINCT s FROM Student s WHERE s.LU = :LU").
 				    setParameter(ACADEMIC_TRANSCRIPT, LU).getSingleResult();
 		this.em.getTransaction().commit();
 		return s;

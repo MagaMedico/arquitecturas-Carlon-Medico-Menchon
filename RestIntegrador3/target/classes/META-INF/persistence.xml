@@ -1,29 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1"
-	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-	
-	<persistence-unit name="JPA">		
+
+	<persistence-unit name="JPA">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-		
+
 		<class>main.java.dao.Student</class>
 		<class>main.java.dao.Career</class>
 		<class>main.java.dao.CareerStudent</class>
 		<class>main.java.dao.CareerStudentId</class>
-		
+
 		<properties>
-			
-			<!-- Propiedades de configuracion de JDBC para MySQL --> 
-			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/entregable2?createDatabaseIfNotExist=true" />
+
+			<!-- Propiedades de configuracion de JDBC para MySQL -->
+			<property name="javax.persistence.jdbc.driver"
+				value="com.mysql.cj.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:mysql://localhost:3306/entregable2?createDatabaseIfNotExist=true" />
 			<property name="javax.persistence.jdbc.user" value="root" />
 			<property name="javax.persistence.jdbc.password" value="" />
-			
-			<!-- Propiedad para la generacion automatica del esquema de base de datos para MySQL-->
+
+			<!-- Propiedad para la generacion automatica del esquema de base de datos 
+				para MySQL -->
 			<property name="hibernate.hbm2ddl.auto" value="update" />
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
-			<property name="show_sql" value="true"/>
-			
+			<property name="hibernate.dialect"
+				value="org.hibernate.dialect.MySQL8Dialect" />
+			<property name="show_sql" value="true" />
+
 		</properties>
 	</persistence-unit>
 

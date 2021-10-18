@@ -5,6 +5,10 @@ import java.util.*;
 import javax.persistence.*;
 
 import org.hibernate.annotations.NaturalIdCache;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -30,6 +34,8 @@ public class Career {
 	@Column
 	private int length;
 	@OneToMany(mappedBy = "career", cascade = CascadeType.MERGE, orphanRemoval = true)
+	@JsonManagedReference
+	@JsonIgnore
     private List<CareerStudent> students;
 	
 	//@description Constructores

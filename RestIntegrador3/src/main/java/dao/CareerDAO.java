@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+
+import emf.EMF;
 import imodel.ICareer;
 import model.Career;
 /**
@@ -28,7 +30,7 @@ public class CareerDAO implements ICareer{
 	/** 
 	 * Atributos de la clase
 	 */
-	private EntityManager em;
+	private EntityManager em = EMF.createEntityManager();
 	private static CareerDAO career;
 	
 	/**
