@@ -181,9 +181,10 @@ public class CareerStudentDAO implements ICareerStudent{
 		return reports;
 	}
 	
+
 	public static CareerStudentDAO getInstance() {
 		if(cs == null)
-		cs = new CareerStudentDAO();
+			cs = new CareerStudentDAO();
 		return cs;
 	}
 }

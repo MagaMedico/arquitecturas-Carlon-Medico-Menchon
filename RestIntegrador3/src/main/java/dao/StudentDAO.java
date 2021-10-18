@@ -1,6 +1,5 @@
 package dao;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -174,9 +173,10 @@ public class StudentDAO implements IStudent{
 		return students;
 	}
 	
+
 	public static StudentDAO getInstance() {
 		if(student == null)
-		student = new StudentDAO();
+			student = new StudentDAO();
 		return student;
 	}
 	

@@ -1,13 +1,10 @@
 package emf;
 
-import java.sql.SQLException;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.*;
 
-import dao.*;
 
 public class EMF implements ServletContextListener {
 	
@@ -27,7 +24,7 @@ public class EMF implements ServletContextListener {
 	}
 
 	public static EntityManager createEntityManager() {
-		emf = Persistence.createEntityManagerFactory(TYPE);
+		
 		if (emf == null) {
 			throw new IllegalStateException("Context is not initialized yet.");
 		}

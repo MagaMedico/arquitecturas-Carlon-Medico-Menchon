@@ -2,8 +2,6 @@ package imodel;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-
 import org.apache.commons.csv.CSVParser;
 
 import model.Career;
@@ -34,4 +32,5 @@ public interface ICareer {
 	 * @description obtiene todas las carreras ordenadas por la cantidad de estudiantes que estas tengan.
 	 */
 	public List<Career> getCareersOrderByStudents();
+
 }

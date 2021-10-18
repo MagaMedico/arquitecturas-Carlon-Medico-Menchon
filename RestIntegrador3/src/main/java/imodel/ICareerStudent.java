@@ -2,7 +2,6 @@ package imodel;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import org.apache.commons.csv.CSVParser;
 
 import dto.ReportDTO;
@@ -53,4 +52,5 @@ public interface ICareerStudent {
 	 * @description obtiene el reporte de la clase @see CareerStudent.
 	 */
 	public List<ReportDTO> getReport();
+
 }
