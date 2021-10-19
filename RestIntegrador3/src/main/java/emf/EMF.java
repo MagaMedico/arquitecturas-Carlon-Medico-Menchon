@@ -5,7 +5,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.*;
 
-
 public class EMF implements ServletContextListener {
 	
 	private static EntityManagerFactory emf;
