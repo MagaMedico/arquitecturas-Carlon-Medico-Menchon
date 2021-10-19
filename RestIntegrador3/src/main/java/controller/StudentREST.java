@@ -22,7 +22,6 @@ public class StudentREST {
 	public StudentREST() {}
 
 	@GET
-	@Path("/all")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Student> getStudents(){
 		return StudentDAO.getInstance().getStudents();
@@ -71,7 +70,7 @@ public class StudentREST {
 	 * @see Student
 	 */
 	@GET
-	@Path("/LU/{LU}")
+	@Path("/LU-{LU}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Student getStudentByLU(@PathParam("LU") Long LU) {
 		return StudentDAO.getInstance().getStudentByLU(LU);
@@ -84,7 +83,7 @@ public class StudentREST {
 	 * @see Student
 	 */
 	@GET
-	@Path("/gender/{gender}")
+	@Path("/{gender}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Student> getStudentsByGender(@PathParam("gender") String gender){
 		return StudentDAO.getInstance().getStudentsByGender(gender);

@@ -1,22 +1,79 @@
 <html>
-	<h1>Integrador 3</h1>
-	<ul>
-		<li><a href="http://localhost:8080/RestIntegrador3/rest/students/all">Obtener todos los estudiantes</a></li>
-		<li><a href="http://localhost:8080/RestIntegrador3/rest/students/orderedBy">Obtener todos los estudiantes bajo un criterio de ordenamiento</a></li>
-		<li><a href="http://localhost:8080/RestIntegrador3/rest/careers/orderByStudents">Obtener las carreras ordenadas por estudiantes</a></li>
-		<li><a href="http://localhost:8080/RestIntegrador3/rest/careerStudent/report">Obtener reporte</a></li>
-	</ul>
-	<form>
-		<div>
-			<label>Insertar un estudiante en una carrera:</label>
-			<br>
-			<input type="text" name="studentId" id="studentId" placeholder="DNI del estudiante" required>
-			<br>
-			<input type="text" name="careerId" id="carrerId" placeholder="ID de la carrera" required>
-			<br>
-			<input type="button" id="btnInsertCS" value="ENVIAR">
-		</div>
-	</form>
-	<footer>Developed by Cecilia Carlón, Magalí Menchon y Magalí Médico</footer>
-	<script type="text/javascript" src="main.js"></script>
+	<body id="body">
+		<h1>Integrador 3</h1>
+		<ul>
+			<li><a href="http://localhost:8080/RestIntegrador3/rest/students">Obtener todos los estudiantes</a></li>
+			<li><a href="http://localhost:8080/RestIntegrador3/rest/students/orderedBy">Obtener todos los estudiantes ordenados alfabeticamente por apellido</a></li>
+			<li><a href="http://localhost:8080/RestIntegrador3/rest/careers/orderByStudents">Obtener las carreras ordenadas por cantidad de estudiantes</a></li>
+			<li><a href="http://localhost:8080/RestIntegrador3/rest/careerStudent/report">Obtener un reporte de los estudiante graduado e inscriptos por carrera ordenado por año</a></li>
+		</ul>
+		<form>
+			<div>
+				<label>Buscar un estudiante por LU:</label>
+				<br>
+				<input type="text" name="LU" id="LU" placeholder="LU del estudiante" required>
+				<br>
+				<input type="button" id="btnFindStudent" value="ENVIAR">
+			</div>
+		</form>
+		<div id="result"></div>
+		<form>
+			<div>
+				<label>Buscar estudiantes por genero:</label>
+				<br>
+				<input type="text" name="gender" id="gender" placeholder="genero del estudiante" required>
+				<br>
+				<input type="button" id="btnFindGender" value="ENVIAR">
+			</div>
+		</form>
+		<div id="resultGender"></div>
+		<form>
+			<div>
+				<label>Recuperar los estudiantes de una determinada carrera, filtrado por ciudad:</label>
+				<br>
+				<input type="text" name="career" id="career" placeholder="id de la carrera" required>
+				<br>
+				<input type="text" name="city" id="city" placeholder="nombre de la ciudad" required>
+				<br>
+				<input type="button" id="btnCareerCity" value="ENVIAR">
+			</div>
+		</form>
+		<div id="resultCareerCity"></div>
+		<form>
+			<div>
+				<label>Insertar un estudiante en una carrera:</label>
+				<br>
+				<input type="text" name="studentId" id="studentId" placeholder="DNI del estudiante" required>
+				<br>
+				<input type="text" name="careerId" id="carrerId" placeholder="ID de la carrera" required>
+				<br>
+				<input type="button" id="btnInsertCS" value="ENVIAR">
+			</div>
+		</form>
+		<p id="contenedor"></p>
+		<form>
+			<div>
+				<label>Insertar un estudiante:</label>
+				<br>
+				<input type="text" name="dni" id="dni" placeholder="DNI del estudiante" required>
+				<br>
+				<input type="text" name="name" id="name" placeholder="nombre de la estudiante" required>
+				<br>
+				<input type="text" name="lastName" id="lastName" placeholder="apellido de la estudiante" required>
+				<br>
+				<input type="text" name="age" id="age" placeholder="edad de la estudiante" required>
+				<br>
+				<input type="text" name="gender" id="genderS" placeholder="genero de la estudiante" required>
+				<br>
+				<input type="text" name="city" id="cityS" placeholder="ciudad de la estudiante" required>
+				<br>
+				<input type="text" name="lu" id="lu" placeholder="LU de la estudiante" required>
+				<br>
+				<input type="button" id="btnInsertStudent" value="ENVIAR">
+			</div>
+		</form>
+		<p id="contenedorInsert"></p>
+		<footer>Developed by Cecilia Carlón, Magalí Menchon y Magalí Médico</footer>
+		<script type="text/javascript" src="main.js"></script>
+	</body>
 </html>
