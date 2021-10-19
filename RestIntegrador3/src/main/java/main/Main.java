@@ -1,4 +1,4 @@
-package model;
+package main;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -12,11 +12,24 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
+import model.Career;
+import model.CareerStudent;
+import model.Student;
+/**
+ * 
+ * @author Cecilia Carlón: ceciliacarlon2@gmail.com
+		   Magalí Médico: magamedico@gmail.com
+		   Magalí Menchón: magalimenchon@gmail.com	
+	@version unica
+	Requisitos: Se debe ejecutar el main como una aplicación Java 
+	para persistir los datos de los CSVs y para crear la Base de Datos entregable3.
+ *
+ */
 public class Main {
 
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		/*final String TYPE = "JPA";
+		final String TYPE = "JPA";
 		
 		//Inicialización de la persistencia
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory(TYPE);
@@ -38,7 +51,7 @@ public class Main {
 		career_studentPersistence(em, parserCareerStudent);
 		
 		em.close();	
-		emf.close();	*/
+		emf.close();
 	}
 	/**
 	 * Dado un archivo CSV recorre todas sus filas y setea
