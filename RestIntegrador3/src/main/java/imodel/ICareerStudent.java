@@ -2,8 +2,6 @@ package imodel;
 
 import java.util.List;
 
-import org.apache.commons.csv.CSVParser;
-
 import dto.ReportDTO;
 import model.Student;
 /**
@@ -15,16 +13,6 @@ import model.Student;
    describir aquella clase que la implemente.
  */
 public interface ICareerStudent {
-
-	/**
-	 * 
-	 * @param em del tipo EntityManager para poder establecer la conexión
-	 * @param parserCareerStudent del tipo CSVParser para poder insertar los datos
-	 * @return del tipo void
-	 * @description recibe una lista de datos para poder insertar en la base de datos.
-	 */
-	public void career_studentPersistence(CSVParser parserCareerStudent);
-
 	/**
 	 * 
 	 * @param em del tipo EntityManager para poder establecer la conexión

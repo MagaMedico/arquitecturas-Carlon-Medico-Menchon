@@ -1,15 +1,8 @@
 package controller;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.List;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import dao.CareerStudentDAO;
 import dto.ReportDTO;

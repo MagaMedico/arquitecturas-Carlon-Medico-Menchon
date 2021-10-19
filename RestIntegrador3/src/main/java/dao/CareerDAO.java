@@ -3,8 +3,6 @@ package dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
 
 import emf.EMF;
 import imodel.ICareer;
@@ -43,26 +41,6 @@ public class CareerDAO implements ICareer{
 	 */
 	public CareerDAO(EntityManager em) { 
 		this.em = em;
-	}
-	
-	/**
-	 * Dado un archivo CSV recorre todas sus filas y setea
-	 * los datos recibidos de tipo String (de ser necesario parseados) a la
-	 * tabla career de la base de datos, mediante la persistencia dada por el
-	 * EntityManager y la entidad @see Career
-	 */
-	@Override
-	public void careerPersistence(CSVParser parserCareer) {
-		for(CSVRecord row: parserCareer) { 
-			this.em.getTransaction().begin();
-			
-			String name = row.get(NAME);
-			int length = Integer.parseInt(row.get(LENGTH));
-					
-			Career insert = new Career(name, length);
-			this.em.persist(insert);
-			this.em.getTransaction().commit();
-		}
 	}
 
 	/**

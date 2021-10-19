@@ -61,11 +61,11 @@ document.getElementById("btnInsertStudent").addEventListener("click", () => {
     })
       .then((r) => {
         if (!r.ok) {
-          contenedor.innerHTML = "Couldn't send data";
+          contenedor.innerHTML = "No se ha podido insertar el usuario, revise los datos ingresados e intente nuevamente";
         }
       })
       .then(() => {
-        contenedor.innerHTML = "Se inserto el usuario";
+        contenedor.innerHTML = "Se ha insertado el usuario con exito";
       })
       .catch((e) => {
         console.log(e);
@@ -84,15 +84,12 @@ document.getElementById("btnFindStudent").addEventListener("click", () => {
         mode: 'cors'
 	})
       .then((r) => {
-	console.log(r);
         if (!r.ok) {
           contenedor.innerHTML = "No existe el estudiante con la LU = "+lu;
         }
 		return r.json();
       })
       .then((json) => {
-          contenedor.innerHTML = '';
-		  console.log(json);
           contenedor.innerHTML = JSON.stringify(json, undefined, 2);
       })
       .catch((e) => {
@@ -112,15 +109,12 @@ document.getElementById("btnFindGender").addEventListener("click", () => {
         mode: 'cors'
 	})
       .then((r) => {
-	console.log(r);
         if (!r.ok) {
-          contenedor.innerHTML = "Couldn't send data";
+          contenedor.innerHTML = "No se han encontrado usuarios con el genero " + gender;
         }
 		return r.json();
       })
       .then((json) => {
-          contenedor.innerHTML = '';
-		  console.log(json);
           contenedor.innerHTML = JSON.stringify(json, undefined, 2);
       })
       .catch((e) => {
@@ -128,7 +122,7 @@ document.getElementById("btnFindGender").addEventListener("click", () => {
       });
 });
 
-//Obtiene los estudiantes que vayan a la carrera y esten en la ciudad pasa por URL
+//Obtiene los estudiantes que vayan a la carrera y esten en la ciudad pasada por URL
 document.getElementById("btnCareerCity").addEventListener("click", () => {
 	let career = document.getElementById("career").value;
 	let city = document.getElementById("city").value;
@@ -141,15 +135,12 @@ document.getElementById("btnCareerCity").addEventListener("click", () => {
         mode: 'cors'
 	})
       .then((r) => {
-	console.log(r);
         if (!r.ok) {
-          contenedor.innerHTML = "Couldn't send data";
-        }
+          contenedor.innerHTML = "No existe un estudiante en la carrera " + carrer + " que resida en la ciudad " + city;
+        } 
 		return r.json();
       })
       .then((json) => {
-          contenedor.innerHTML = '';
-		  console.log(json);
           contenedor.innerHTML = JSON.stringify(json, undefined, 2);
       })
       .catch((e) => {

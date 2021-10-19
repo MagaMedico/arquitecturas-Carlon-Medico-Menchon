@@ -5,9 +5,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
-
 import emf.EMF;
 import imodel.IStudent;
 import model.Student;
@@ -51,32 +48,6 @@ public class StudentDAO implements IStudent{
 	 */
 	public StudentDAO(EntityManager em) { 
 		this.em = em;
-	}
-	
-	/**
-	 * Dado un archivo CSV recorre todas sus filas y setea
-	 * los datos recibidos de tipo String (de ser necesario parseados) a la
-	 * tabla student de la base de datos, mediante la persistencia dada por el
-	 * EntityManager y la entidad @see Student.
-	 */
-	@Override
-	public void studentPersistence(CSVParser parserStudent) {
-		//Persistencia CSV de Student
-		for(CSVRecord row: parserStudent) { 
-			this.em.getTransaction().begin();
-			
-			Long DNI = Long.parseLong(row.get(ID));
-			String name = row.get(NAME);
-			String lastName = row.get(LAST_NAME);
-			int age = Integer.parseInt(row.get(AGE));
-			String gender = row.get(GENDER);
-			String city = row.get(CITY);
-			long LU = Long.parseLong(row.get(ACADEMIC_TRANSCRIPT));
-			
-			Student insert = new Student(DNI, name, lastName, age, gender, city, LU);
-			this.em.persist(insert);
-			this.em.getTransaction().commit();
-		}
 	}
 	
 	/**
@@ -161,10 +132,11 @@ public class StudentDAO implements IStudent{
 	 * @see Student
 	 */
 	@Override
-	public Student getStudentByLU(Long LU) {
+	public List<Student> getStudentByLU(Long LU) {
 		this.em.getTransaction().begin();
-		Student s = (Student) this.em.createQuery("SELECT DISTINCT s FROM Student s WHERE s.LU = :LU").
-				    setParameter(ACADEMIC_TRANSCRIPT, LU).getSingleResult();
+		@SuppressWarnings("unchecked")
+		List<Student> s = this.em.createQuery("SELECT s FROM Student s WHERE s.LU = :LU").
+				    setParameter(ACADEMIC_TRANSCRIPT, LU).getResultList();
 		this.em.getTransaction().commit();
 		return s;
 	}
@@ -178,7 +150,7 @@ public class StudentDAO implements IStudent{
 	@Override
 	public List<Student> getStudentsByGender(String gender) {
 		this.em.getTransaction().begin();
-		
+
 		@SuppressWarnings("unchecked")
 		List<Student> students = this.em.createQuery("SELECT s FROM Student s WHERE s.gender = :gender")
 								.setParameter(GENDER, gender).getResultList();

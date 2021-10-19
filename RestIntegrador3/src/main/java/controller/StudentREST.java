@@ -1,17 +1,9 @@
 package controller;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import dao.StudentDAO;
 import model.*;
@@ -72,7 +64,7 @@ public class StudentREST {
 	@GET
 	@Path("/LU-{LU}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Student getStudentByLU(@PathParam("LU") Long LU) {
+	public List<Student> getStudentByLU(@PathParam("LU") Long LU) {
 		return StudentDAO.getInstance().getStudentByLU(LU);
 	}
 	

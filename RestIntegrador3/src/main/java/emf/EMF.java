@@ -4,7 +4,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.*;
+import javax.servlet.annotation.WebListener;
 
+@WebListener
 public class EMF implements ServletContextListener {
 	
 	private static EntityManagerFactory emf;
@@ -23,7 +25,6 @@ public class EMF implements ServletContextListener {
 	}
 
 	public static EntityManager createEntityManager() {
-		emf = Persistence.createEntityManagerFactory(TYPE);
 		if (emf == null) {
 			throw new IllegalStateException("Context is not initialized yet.");
 		}

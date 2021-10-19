@@ -19,15 +19,6 @@ public interface ICareer {
 	/**
 	 * 
 	 * @param em del tipo EntityManager para poder establecer la conexión
-	 * @param parserCareer del tipo CSVParser para poder insertar los datos
-	 * @return del tipo void
-	 * @description recibe una lista de datos para poder insertar en la base de datos.
-	 */
-	public void careerPersistence(CSVParser parserCareer);
-	
-	/**
-	 * 
-	 * @param em del tipo EntityManager para poder establecer la conexión
 	 * @return del tipo List<Career>
 	 * @description obtiene todas las carreras ordenadas por la cantidad de estudiantes que estas tengan.
 	 */

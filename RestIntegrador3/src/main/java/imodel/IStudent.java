@@ -2,8 +2,6 @@ package imodel;
 
 import java.util.List;
 
-import org.apache.commons.csv.CSVParser;
-
 import model.Student;
 
 /*
@@ -15,15 +13,6 @@ import model.Student;
 	describir aquella clase que la implemente.
 */
 public interface IStudent {
-	
-	/**
-	 * 
-	 * @param em del tipo EntityManager para poder establecer la conexión
-	 * @param parserStudent del tipo CSVParser para poder insertar los datos
-	 * @return del tipo void
-	 * @description recibe una lista de datos para poder insertar en la base de datos.
-	 */
-	public void studentPersistence(CSVParser parserStudent);
 	
 	/**
 	 * 
@@ -58,7 +47,7 @@ public interface IStudent {
 	 * @see Student
 	 * @description obtiene todos los estudiantes que figuren con el mismo genero que el valor pasado por parámetro.
 	 */
-	public Student getStudentByLU(Long LU);
+	public List<Student> getStudentByLU(Long LU);
 
 	/**
 	 * 
@@ -70,5 +59,9 @@ public interface IStudent {
 	 */
 	public List<Student> getStudentsByGender(String gender);
 
+	/**
+	 * Retorna una lista de estudiantes, obtenida mediante una consulta JPQL mediante
+	 * la entidad @see Student.
+	 */
 	List<Student> getStudents();
 }

@@ -6,14 +6,10 @@ import java.math.BigInteger;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
-
 import dto.ReportDTO;
 import emf.EMF;
 import imodel.ICareerStudent;
 import model.Career;
-import model.CareerStudent;
 import model.Student;
 /**
  * 
@@ -55,41 +51,6 @@ public class CareerStudentDAO implements ICareerStudent{
 		this.em = em;
 	}
 	
-	/**
-	 * Dado un archivo CSV recorre todas sus filas y setea
-	 * los datos recibidos de tipo String (de ser necesario parseados) a la
-	 * tabla career_student de la base de datos, mediante la persistencia dada por el
-	 * EntityManager y la entidad @see CareerStudent.
-	 * Además, busca el estudiante y carrera correspondiente en @see Student y
-	 * @see Career respectivamente, y agrega a cada una a la lista
-	 * que define la relación que luego utilizará JPA para crear las tablas
-	 * de cada entidad.
-	 */
-	@Override
-	public void career_studentPersistence(CSVParser parserCareerStudent) {
-		
-		for(CSVRecord row: parserCareerStudent) { 
-			this.em.getTransaction().begin();
-
-			int antiquity = Integer.parseInt(row.get(ANTIQUITY));
-			Integer graduation = null;
-			if(!row.get(GRADUATION).equals("")){
-				graduation = Integer.parseInt(row.get(GRADUATION));
-			}
-			Long career_id = Long.parseLong(row.get(CAREER));
-			Long student_DNI = Long.parseLong(row.get(STUDENT));
-	
-			//Busca al estudiante y a la carrera por sus PK y trae los datos
-			Student student = this.em.find(Student.class, student_DNI);
-			Career career = this.em.find(Career.class, career_id);
-			student.addCareer(career);
-			career.addStudent(student);
-			
-			CareerStudent insert = new CareerStudent(student, career, graduation, antiquity);
-			this.em.persist(insert);
-			this.em.getTransaction().commit();
-		}
-	}
 	/**
 	 * Ejercicio 2) b) matricular un estudiante en una carrera
 	 * Inserta un registro que relaciona un estudiante a una carrera
