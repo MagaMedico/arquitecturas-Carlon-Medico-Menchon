@@ -1,5 +1,6 @@
  "use strict";
 
+//Matricular a un estudiante, inscribir a un estudiante a una carrera
 document.getElementById("btnInsertCS").addEventListener("click", () => {
 	let student = document.getElementById("studentId").value;
 	let career = document.getElementById("carrerId").value;
@@ -19,7 +20,7 @@ document.getElementById("btnInsertCS").addEventListener("click", () => {
     })
       .then((r) => {
         if (!r.ok) {
-          contenedor.innerHTML = "Couldn't send data";
+          contenedor.innerHTML = "No se pudo matricular el usuario en la carrera. Revise los datos e ingrese nuevamente";
         }
       })
       .then(() => {
@@ -30,6 +31,7 @@ document.getElementById("btnInsertCS").addEventListener("click", () => {
       });
 });
 
+//Insertar un estudiante nuevo
 document.getElementById("btnInsertStudent").addEventListener("click", () => {
 	let dni = document.getElementById("dni").value;
 	let name = document.getElementById("name").value;
@@ -70,6 +72,7 @@ document.getElementById("btnInsertStudent").addEventListener("click", () => {
       });
 });
 
+//Obtener el estudiante que tenga la LU pasada por URL
 document.getElementById("btnFindStudent").addEventListener("click", () => {
 	let lu = document.getElementById("LU").value;
 
@@ -83,20 +86,21 @@ document.getElementById("btnFindStudent").addEventListener("click", () => {
       .then((r) => {
 	console.log(r);
         if (!r.ok) {
-          contenedor.innerHTML = "Couldn't send data";
+          contenedor.innerHTML = "No existe el estudiante con la LU = "+lu;
         }
 		return r.json();
       })
       .then((json) => {
           contenedor.innerHTML = '';
 		  console.log(json);
-          contenedor.innerHTML = JSON.stringify(json);
+          contenedor.innerHTML = JSON.stringify(json, undefined, 2);
       })
       .catch((e) => {
         console.log(e);
       });
 });
 
+//Obtiene los estudiantes que tengan el género pasado por URL
 document.getElementById("btnFindGender").addEventListener("click", () => {
 	let gender = document.getElementById("gender").value;
 
@@ -117,13 +121,14 @@ document.getElementById("btnFindGender").addEventListener("click", () => {
       .then((json) => {
           contenedor.innerHTML = '';
 		  console.log(json);
-          contenedor.innerHTML = JSON.stringify(json);
+          contenedor.innerHTML = JSON.stringify(json, undefined, 2);
       })
       .catch((e) => {
         console.log(e);
       });
 });
 
+//Obtiene los estudiantes que vayan a la carrera y esten en la ciudad pasa por URL
 document.getElementById("btnCareerCity").addEventListener("click", () => {
 	let career = document.getElementById("career").value;
 	let city = document.getElementById("city").value;
@@ -145,7 +150,7 @@ document.getElementById("btnCareerCity").addEventListener("click", () => {
       .then((json) => {
           contenedor.innerHTML = '';
 		  console.log(json);
-          contenedor.innerHTML = JSON.stringify(json);
+          contenedor.innerHTML = JSON.stringify(json, undefined, 2);
       })
       .catch((e) => {
         console.log(e);
