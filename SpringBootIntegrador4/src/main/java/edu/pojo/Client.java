@@ -13,16 +13,16 @@ public class Client {
 	private String name;
 	@Column(nullable=false)
 	private String lastname;
-	@OneToMany(mappedBy = "product", cascade = CascadeType.MERGE, orphanRemoval = true)
-	private List<Product> products;
+	@OneToMany(mappedBy = "bill", cascade = CascadeType.MERGE, orphanRemoval = true)
+	private List<Bill> bills;
 	
 	public Client() { }
-	public Client(long dNI, String name, String lastname, List<Product> products) {
+	public Client(long dNI, String name, String lastname, List<Bill> bills) {
 		super();
 		DNI = dNI;
 		this.name = name;
 		this.lastname = lastname;
-		this.products = products;
+		this.bills = bills;
 	}
 
 	public String getName() {
@@ -37,11 +37,11 @@ public class Client {
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
-	public List<Product> getProducts() {
-		return products;
+	public List<Bill> getbills() {
+		return bills;
 	}
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setbills(List<Bill> bills) {
+		this.bills = bills;
 	}
 	public long getDNI() {
 		return DNI;
