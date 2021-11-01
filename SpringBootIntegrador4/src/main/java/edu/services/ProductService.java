@@ -20,15 +20,22 @@ public class ProductService {
 	}
 	
 	@Transactional
-	public boolean insert() {
+	public boolean insert(Product p) {
+		this.products.save(p);
 		return true;
 	}
 	@Transactional
-	public boolean update() {
+	public boolean update(String name, int unitPrice, long id) {
+		this.products.setUserInfoById(name, unitPrice, id);
 		return true;
 	}
 	@Transactional
-	public boolean delete() {
+	public boolean delete(Long id) {
+		this.products.deleteById(id);
 		return true;
+	}
+
+	public Product findProduct(long id) {
+		return this.products.getById(id);
 	}
 }

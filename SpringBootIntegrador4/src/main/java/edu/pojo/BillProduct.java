@@ -19,7 +19,7 @@ public class BillProduct {
     @MapsId("productId")
 	@JoinColumn(name = "product_Id")
 	@JsonBackReference
-    private Product producto;
+    private Product product;
     @ManyToOne
     @MapsId("billId")
     @JoinColumn(name = "bill_id")
@@ -32,20 +32,20 @@ public class BillProduct {
  
     //@description Constructores
 
-	public BillProduct(Product producto, Bill bill, Date date, int quantity) {
+	public BillProduct(Product product, Bill bill, Date date, int quantity) {
 		super();
-		this.producto = producto;
+		this.product = product;
 		this.bill = bill;
 		this.date = date;
 		this.quantity = quantity;
 	}
 
-	public Product getProducto() {
-		return producto;
+	public Product getProduct() {
+		return product;
 	}
 
-	public void setProducto(Product producto) {
-		this.producto = producto;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 	public Bill getBill() {
@@ -74,7 +74,7 @@ public class BillProduct {
 
 	@Override
 	public String toString() {
-		return "Bill [producto=" + producto + ", bill=" + bill + ", date=" + date + ", quantity=" + quantity + "]";
+		return "Bill [producto=" + product + ", bill=" + bill + ", date=" + date + ", quantity=" + quantity + "]";
 	}
 	
 	/*//@description se hace un override del equals para adaptarlo a esta clase.

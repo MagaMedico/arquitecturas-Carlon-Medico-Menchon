@@ -20,7 +20,8 @@ public class BillProductService {
 	}
 	
 	@Transactional
-	public boolean insert() {
+	public boolean insert(BillProduct bp) {
+		this.bills.save(bp);
 		return true;
 	}
 	@Transactional
@@ -28,7 +29,8 @@ public class BillProductService {
 		return true;
 	}
 	@Transactional
-	public boolean delete() {
+	public boolean delete(BillProduct bp) {
+		this.bills.delete(bp);
 		return true;
 	}
 }

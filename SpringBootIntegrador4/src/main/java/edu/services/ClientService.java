@@ -20,7 +20,8 @@ public class ClientService {
 	}
 	
 	@Transactional
-	public boolean insert() {
+	public boolean insert(Client c) {
+		this.clients.save(c);
 		return true;
 	}
 	@Transactional
@@ -28,7 +29,8 @@ public class ClientService {
 		return true;
 	}
 	@Transactional
-	public boolean delete() {
+	public boolean delete(long id) {
+		this.clients.deleteById(id);
 		return true;
 	}
 }
