@@ -1,4 +1,4 @@
-package edu.controllers;
+package edu.grocery.controllers;
 
 import java.util.List;
 
@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.pojo.Client;
-import edu.pojo.Product;
-import edu.services.ClientService;
+import edu.grocery.pojo.Client;
+import edu.grocery.pojo.Product;
+import edu.grocery.services.ClientService;
 
 @RestController
 @RequestMapping("/clients")

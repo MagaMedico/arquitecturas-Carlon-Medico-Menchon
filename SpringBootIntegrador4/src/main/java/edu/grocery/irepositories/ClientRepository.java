@@ -1,9 +1,9 @@
-package edu.irepositories;
+package edu.grocery.irepositories;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import edu.pojo.Client;
+import edu.grocery.pojo.Client;
 
 public interface ClientRepository extends JpaRepository<Client, Object>  {
 

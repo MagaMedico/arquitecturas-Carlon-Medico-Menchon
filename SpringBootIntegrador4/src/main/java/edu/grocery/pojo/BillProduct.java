@@ -1,9 +1,10 @@
-package edu.pojo;
+package edu.grocery.pojo;
 
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -15,6 +16,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name = "bill_product")
 public class BillProduct {
 
+	@Id
+	private int id;
 	@ManyToOne
     @MapsId("productId")
 	@JoinColumn(name = "product_Id")

@@ -1,4 +1,4 @@
-package edu.controllers;
+package edu.grocery.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import edu.pojo.Product;
-import edu.services.ProductService;
+import edu.grocery.pojo.Product;
+import edu.grocery.services.ProductService;
 
 @RestController
 @RequestMapping("/products")

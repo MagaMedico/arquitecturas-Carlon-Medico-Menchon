@@ -1,4 +1,6 @@
-package edu.pojo;
+package edu.grocery.pojo;
+
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -12,6 +14,8 @@ public class Product {
 	private String name;
 	@Column
 	private int unitPrice;
+	@OneToMany(mappedBy = "product", cascade = CascadeType.MERGE, orphanRemoval = true)
+	private List<BillProduct> bill;
 	
 	public Product() { }
 	public Product(String name, int unitPrice) {

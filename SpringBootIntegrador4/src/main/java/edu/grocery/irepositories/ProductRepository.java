@@ -1,10 +1,10 @@
-package edu.irepositories;
+package edu.grocery.irepositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-import edu.pojo.Product;
+import edu.grocery.pojo.Product;
 
 public interface ProductRepository extends JpaRepository<Product, Object> {
 

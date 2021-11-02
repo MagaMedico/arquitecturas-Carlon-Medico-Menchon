@@ -5,8 +5,8 @@ import java.util.stream.IntStream;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.*;
 
-import edu.irepositories.ProductRepository;
-import edu.pojo.Product;
+import edu.grocery.irepositories.ProductRepository;
+import edu.grocery.pojo.Product;
 
 @Configuration
 public class DBFiller {

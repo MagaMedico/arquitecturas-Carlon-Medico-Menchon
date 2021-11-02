@@ -1,4 +1,4 @@
-package edu.services;
+package edu.grocery.services;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import edu.irepositories.BillProductRepository;
-import edu.pojo.BillProduct;
+import edu.grocery.irepositories.BillProductRepository;
+import edu.grocery.pojo.BillProduct;
 
 @Service
 public class BillProductService {

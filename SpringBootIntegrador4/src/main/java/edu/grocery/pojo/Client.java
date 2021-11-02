@@ -1,4 +1,4 @@
-package edu.pojo;
+package edu.grocery.pojo;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public class Client {
 	private String name;
 	@Column(nullable=false)
 	private String lastname;
-	@OneToMany(mappedBy = "bill", cascade = CascadeType.MERGE, orphanRemoval = true)
+	@OneToMany(mappedBy = "billP", cascade = CascadeType.MERGE, orphanRemoval = true)
 	private List<Bill> bills;
 	
 	public Client() { }

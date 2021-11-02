@@ -1,18 +1,37 @@
-package edu.pojo;
+package edu.grocery.pojo;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreType;
 
+@Entity
 @JsonIgnoreType
 public class Bill{
  
 	//@description Atributos
-	@Column(name = "client_id")
-    private Long clientId;
+	@Id
     @Column(name = "bill_id")
     private Long billId;
- 
+	@Column(name = "client_id")
+    private Long clientId;
+	@ManyToOne
+	@MapsId("bill")
+	@JoinColumn(name = "client_DNI")
+	@JsonBackReference
+    private Client client;
+	@OneToMany(mappedBy = "bill", cascade = CascadeType.MERGE, orphanRemoval = true)
+	private List<BillProduct> billP;
+	
     //@description Constructores
     public Bill() {	}
     
