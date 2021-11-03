@@ -20,7 +20,7 @@ public class BillProduct {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	private long id;
 	@ManyToOne
     @MapsId("productId")
 	@JoinColumn(name = "product_Id")

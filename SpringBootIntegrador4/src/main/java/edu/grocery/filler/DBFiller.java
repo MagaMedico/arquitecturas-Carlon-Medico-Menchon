@@ -31,15 +31,13 @@ public class DBFiller {
 				clients.save(c);
 				DNI = DNI + 100;
 			});
-			DNI = 1000;
-			IntStream.range(0, 10).forEach(i -> {
-				Product p = new Product("P"+i, 100);
-				Bill b = new Bill (clients.getById(DNI));
-				Date d = new Date(2014, 02, 11);
-				BillProduct bp = new BillProduct(products.getById((long)i), b, d, i);
-				bills.save(bp);
-				DNI = DNI + 100;
-			});
+			/*
+			long i = 1;
+			int quantityp = 5;
+			Bill b = new Bill (clients.getById(DNI));
+			Date d = new Date(2014, 02, 11);
+			BillProduct bp = new BillProduct(products.getById((long)i), b, d, quantityp);
+			bills.save(bp);*/
 		};
 	}
 }

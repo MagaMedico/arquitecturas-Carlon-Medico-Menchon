@@ -33,7 +33,7 @@ public class BillProductService {
 		return true;
 	}
 	@Transactional
-	public boolean delete(Long id) {
+	public boolean delete(long id) {
 		this.bills.deleteById(id);
 		return true;
 	}
