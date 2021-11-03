@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.grocery.pojo.Client;
-import edu.grocery.pojo.Product;
 import edu.grocery.services.ClientService;
 
 @RestController
@@ -39,20 +38,20 @@ public class ClientController {
 		else return new ResponseEntity<>(client, HttpStatus.OK);
 	}
 	
-	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<?> deleteClient(@PathVariable("id") Long id) {
-		boolean ok = this.serviceClient.delete(id);
+	@DeleteMapping(value = "/{DNI}")
+	public ResponseEntity<?> deleteClient(@PathVariable("DNI") Long dni) {
+		boolean ok = this.serviceClient.delete(dni);
 		if(!ok) return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-		else return new ResponseEntity<>(id, HttpStatus.OK);
+		else return new ResponseEntity<>(dni, HttpStatus.OK);
 	}
-	/*
-	@PutMapping(value = "/{id}")
-	public ResponseEntity<?> updateProduct(@PathVariable( "id" ) Long id, @RequestBody Product product) {
+	
+	@PutMapping(value = "/{DNI}")
+	public ResponseEntity<?> updateClient(@PathVariable("DNI") long dni, @RequestBody Client client) {
 		boolean ok = false;
-		if(product != null) {
-			ok = this.serviceProduct.update(product.getName(), product.getUnitPrice(), id);
+		if(client != null) {
+			ok = this.serviceClient.update(client.getDNI(), client.getName(), client.getLastname(), dni);
 		}
 		if(!ok) return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-		else return new ResponseEntity<>(id, HttpStatus.OK);
-	}*/
+		else return new ResponseEntity<>(dni, HttpStatus.OK);
+	}
 }

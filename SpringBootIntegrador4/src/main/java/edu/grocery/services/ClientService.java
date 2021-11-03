@@ -25,12 +25,13 @@ public class ClientService {
 		return true;
 	}
 	@Transactional
-	public boolean update() {
+	public boolean update(long newdni, String name, String lastname, long dni) {
+		this.clients.updateClient(newdni, name, lastname, dni);
 		return true;
 	}
 	@Transactional
-	public boolean delete(long id) {
-		this.clients.deleteById(id);
+	public boolean delete(long dni) {
+		this.clients.deleteById(dni);
 		return true;
 	}
 }

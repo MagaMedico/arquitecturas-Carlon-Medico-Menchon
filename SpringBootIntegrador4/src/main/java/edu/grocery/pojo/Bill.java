@@ -1,10 +1,13 @@
 package edu.grocery.pojo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,9 +24,10 @@ public class Bill{
 	//@description Atributos
 	@Id
     @Column(name = "bill_id")
+	@GeneratedValue(strategy=GenerationType.AUTO)
     private Long billId;
-	@Column(name = "client_id")
-    private Long clientId;
+	/*@Column(name = "client_id")
+    private Long clientId;*/
 	@ManyToOne
 	@MapsId("bill")
 	@JoinColumn(name = "client_DNI")
@@ -35,31 +39,39 @@ public class Bill{
     //@description Constructores
     public Bill() {	}
     
-    public Bill(Long clientId, Long billId) {
+	public Bill(Client client) {
 		super();
-		this.clientId = clientId;
-		this.billId = billId;
-	}
-
-	public Long getClientId() {
-		return clientId;
-	}
-
-	public void setClientId(Long clientId) {
-		this.clientId = clientId;
+		this.client = client;
+		this.billP = new ArrayList<BillProduct>();
 	}
 
 	public Long getBillId() {
 		return billId;
 	}
-
 	public void setBillId(Long billId) {
 		this.billId = billId;
+	}/*
+	public Long getClientId() {
+		return clientId;
+	}
+	public void setClientId(Long clientId) {
+		this.clientId = clientId;
+	}*/
+	public Client getClient() {
+		return client;
+	}
+	public void setClient(Client client) {
+		this.client = client;
+	}	public List<BillProduct> getBillP() {
+		return billP;
+	}
+	public void setBillP(List<BillProduct> billP) {
+		this.billP = billP;
 	}
 
 	@Override
 	public String toString() {
-		return "Bill [clientId=" + clientId + ", billId=" + billId + "]";
+		return "Bill [billId=" + billId + ", client=" + client + ", billP=" + billP + "]";
 	}
 
 	/*//@description se hace un override del equals para adaptarlo a esta clase.

@@ -46,5 +46,7 @@ public class Client {
 	public long getDNI() {
 		return DNI;
 	}	
-
+	public void setDNI(long dni) {
+		this.DNI = dni;
+	}	
 }

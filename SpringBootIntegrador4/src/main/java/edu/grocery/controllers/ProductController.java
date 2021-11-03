@@ -1,5 +1,7 @@
 package edu.grocery.controllers;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +20,9 @@ public class ProductController {
 	private ProductService serviceProduct;
 	
 	@GetMapping("")
-	public String getAll() {
+	public List<Product> getAll() {
 		LOG.info("Ejecutando");
-		return "Buenas noches";//this.serviceProduct.getProducts();
+		return this.serviceProduct.getProducts();
 	}
 	
 	@PostMapping("")

@@ -26,7 +26,7 @@ public class ProductService {
 	}
 	@Transactional
 	public boolean update(String name, int unitPrice, long id) {
-		this.products.setUserInfoById(name, unitPrice, id);
+		this.products.updateProduct(name, unitPrice, id);
 		return true;
 	}
 	@Transactional
@@ -35,7 +35,4 @@ public class ProductService {
 		return true;
 	}
 
-	public Product findProduct(long id) {
-		return this.products.getById(id);
-	}
 }
