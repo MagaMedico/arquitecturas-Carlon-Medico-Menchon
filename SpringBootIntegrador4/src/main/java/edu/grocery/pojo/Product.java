@@ -1,10 +1,11 @@
 package edu.grocery.pojo;
 
-import java.util.List;
-
 import javax.persistence.*;
 
+import lombok.Data;
+
 @Entity
+@Data
 public class Product {
 
 	@Id
@@ -24,6 +25,12 @@ public class Product {
 	
 	public String getName() {
 		return name;
+	}
+	public Product(long id, String name, int unitPrice) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.unitPrice = unitPrice;
 	}
 	public void setName(String name) {
 		this.name = name;
