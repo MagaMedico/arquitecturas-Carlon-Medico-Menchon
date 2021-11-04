@@ -27,11 +27,12 @@ public class DBFiller {
 				products.save(p);
 			});
 			IntStream.range(0, 10).forEach(i -> {
-				Client c = new Client(DNI, "C"+i, "LasName", null);
+				Client c = new Client(DNI, "C"+i, "LasName");
 				clients.save(c);
 				DNI = DNI + 100;
 			});
-			/*
+			
+			/*DNI = 1000;
 			long i = 1;
 			int quantityp = 5;
 			Bill b = new Bill (clients.getById(DNI));

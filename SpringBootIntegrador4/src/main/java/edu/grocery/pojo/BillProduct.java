@@ -1,7 +1,9 @@
 package edu.grocery.pojo;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,22 +21,34 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class BillProduct {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
+	
+	
 	@ManyToOne
     @MapsId("productId")
-	@JoinColumn(name = "product_Id")
+	@JoinColumn(name = "product_id")
 	@JsonBackReference
     private Product product;
+	
+	
     @ManyToOne
     @MapsId("billId")
     @JoinColumn(name = "bill_id")
     @JsonBackReference
     private Bill bill;
+    
+    
+    
     @Column
     private Date date;
     @Column 
     private int quantity;
+    
+    /*
+    @ManyToOne(mappedBy = "product", cascade = CascadeType.MERGE, orphanRemoval = true)
+	private List<BillProduct> bill;
+	*/
  
     //@description Constructores
 
@@ -80,9 +94,11 @@ public class BillProduct {
 
 	@Override
 	public String toString() {
-		return "Bill [producto=" + product + ", bill=" + bill + ", date=" + date + ", quantity=" + quantity + "]";
+		return "BillProduct [id=" + id + ", product=" + product + ", bill=" + bill + ", date=" + date + ", quantity="
+				+ quantity + "]";
 	}
-	
+
+
 	/*//@description se hace un override del equals para adaptarlo a esta clase.
 	@Override
     public boolean equals(Object o) {

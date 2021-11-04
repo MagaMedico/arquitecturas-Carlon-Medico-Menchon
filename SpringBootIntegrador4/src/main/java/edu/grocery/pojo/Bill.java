@@ -24,17 +24,19 @@ public class Bill{
 	//@description Atributos
 	@Id
     @Column(name = "bill_id")
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long billId;
+	
+	
 	/*@Column(name = "client_id")
     private Long clientId;*/
+	
+	
 	@ManyToOne
-	@MapsId("bill")
+	@MapsId("DNI")
 	@JoinColumn(name = "client_DNI")
 	@JsonBackReference
     private Client client;
-	@OneToMany(mappedBy = "bill", cascade = CascadeType.MERGE, orphanRemoval = true)
-	private List<BillProduct> billP;
 	
     //@description Constructores
     public Bill() {	}
@@ -42,7 +44,6 @@ public class Bill{
 	public Bill(Client client) {
 		super();
 		this.client = client;
-		this.billP = new ArrayList<BillProduct>();
 	}
 
 	public Long getBillId() {
@@ -62,17 +63,14 @@ public class Bill{
 	}
 	public void setClient(Client client) {
 		this.client = client;
-	}	public List<BillProduct> getBillP() {
-		return billP;
 	}
-	public void setBillP(List<BillProduct> billP) {
-		this.billP = billP;
-	}
+
 
 	@Override
 	public String toString() {
-		return "Bill [billId=" + billId + ", client=" + client + ", billP=" + billP + "]";
+		return "Bill [billId=" + billId + ", client=" + client + "]";
 	}
+
 
 	/*//@description se hace un override del equals para adaptarlo a esta clase.
 	@Override
