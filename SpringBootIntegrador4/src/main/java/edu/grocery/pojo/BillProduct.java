@@ -1,6 +1,6 @@
 package edu.grocery.pojo;
 
-import java.util.Date;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,25 +16,23 @@ import lombok.Data;
 @Table(name = "bill_product")
 public class BillProduct {
 
+	//Atributos
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long id;
-	
-	
+	private long id;	
 	@ManyToOne
-    private Product product;
-	
+    private Product product;	
     @ManyToOne
-    private Bill bill;
-    
+    private Bill bill;   
     @Column
-    private Date date;
+    private LocalDate date;
     @Column 
     private int quantity;
     
-    //@description Constructores
-
-	public BillProduct(Product product, Bill bill, Date date, int quantity) {
+    //Constructores   
+    public BillProduct() { }
+    
+	public BillProduct(Product product, Bill bill, LocalDate date, int quantity) {
 		super();
 		this.product = product;
 		this.bill = bill;
@@ -42,7 +40,7 @@ public class BillProduct {
 		this.quantity = quantity;
 	}
 
-	public BillProduct(long id, Product product, Bill bill, Date date, int quantity) {
+	public BillProduct(long id, Product product, Bill bill, LocalDate date, int quantity) {
 		super();
 		this.id = id;
 		this.product = product;
@@ -51,38 +49,34 @@ public class BillProduct {
 		this.quantity = quantity;
 	}
 
+	//Getters y Setters
 	public Product getProduct() {
 		return product;
 	}
-
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-
 	public Bill getBill() {
 		return bill;
 	}
-
 	public void setBill(Bill bill) {
 		this.bill = bill;
 	}
-
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
-
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 
 	public int getQuantity() {
 		return quantity;
 	}
-
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
 
+	//Metodo para visualizar los datos
 	@Override
 	public String toString() {
 		return "BillProduct [id=" + id + ", product=" + product + ", bill=" + bill + ", date=" + date + ", quantity="

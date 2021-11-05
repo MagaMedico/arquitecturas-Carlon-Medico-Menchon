@@ -1,6 +1,6 @@
 package edu.grocery.filler;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.stream.IntStream;
 
 import org.springframework.boot.CommandLineRunner;
@@ -23,24 +23,31 @@ public class DBFiller {
 	@Bean
 	public CommandLineRunner initDB(ProductRepository products, ClientRepository clients, BillRepository billDeId, BillProductRepository bills) {
 		return args ->{
+			//Se insertan 10 productos
 			IntStream.range(0, 10).forEach(i -> {
 				Product p = new Product("P"+i, 100);
 				products.save(p);
 			});
+			//Se insertan 10 clientes
 			IntStream.range(0, 10).forEach(i -> {
 				Client c = new Client(DNI, "C"+i, "LasName");
 				clients.save(c);
 				DNI = DNI + 100;
 			});
-			
 			DNI = 1000;
-			long i = 1;
-			int quantityp = 5;
-			Bill b = new Bill (clients.getById(DNI));
-			billDeId.save(b);
-			Date d = new Date(2014, 02, 11);
-			BillProduct bp = new BillProduct(products.getById((long)i), b, d, quantityp);
-			bills.save(bp);
+			//Se insertan 10 facturas
+			IntStream.range(0, 10).forEach(i -> {
+				Bill b = new Bill (clients.getById(DNI));
+				billDeId.save(b);
+				DNI += 100;
+			});
+			//Se insertan 10 facturaProducto
+			IntStream.range(0, 10).forEach(i -> {
+				long id = i + 1; 
+				LocalDate d = LocalDate.of(2020, 1, 8);
+				BillProduct bp = new BillProduct(products.getById(id), billDeId.getById(id), d, 50);
+				bills.save(bp);
+			});
 		};
 	}
 }
