@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.grocery.dto.BestProductDTO;
 import edu.grocery.dto.ReportDailySalesDTO;
 import edu.grocery.dto.ReportEntireAmount;
 import edu.grocery.pojo.BillProduct;
@@ -26,13 +27,15 @@ import edu.grocery.services.BillProductService;
 @RestController
 @RequestMapping("/bills")
 public class BillProductController {
-	
-	//Atributos
+	/**Atributos
+	 */
 	public static Logger LOG = LoggerFactory.getLogger(BillProductController.class); 
 	@Autowired
 	private BillProductService serviceBill;
 	
-	//Metodo para obtener todas las facturas
+	/**Metodo para obtener todas las facturas
+	 * @return una lista de @see BillProduct
+	 */
 	@GetMapping("")
 	public List<BillProduct> getAll() {
 		return this.serviceBill.getBills();
@@ -111,9 +114,16 @@ public class BillProductController {
 	/**
 	 * 4) Genere un reporte con las ventas por día.
 	 */
-	@GetMapping("report/dailySales")
+	@GetMapping("/report/dailySales")
 	public List<ReportDailySalesDTO> getReportDailySales() {
-			return this.serviceBill.getDailySales();
+		return this.serviceBill.getDailySales();
 	}
-	
+	/**
+	 * Metodo que hace el get a la base de datos para traerse
+	 * la lista de productos
+	 */
+	@GetMapping("/best")
+	public List<BestProductDTO> getBestProduct(){
+		return this.serviceBill.getBestProduct();
+	}
 }

@@ -19,6 +19,7 @@ import edu.grocery.pojo.Product;
 public class DBFiller {
 	
 	long DNI = 1000;
+	int QUANTITY = 50;
 	
 	@Bean
 	public CommandLineRunner initDB(ProductRepository products, ClientRepository clients, BillRepository bills, BillProductRepository billProducts) {
@@ -45,8 +46,9 @@ public class DBFiller {
 			IntStream.range(0, 10).forEach(i -> {
 				long id = i + 1; 
 				LocalDate d = LocalDate.of(2020, 1, 8);
-				BillProduct bp = new BillProduct(products.getById(id), bills.getById(id), d, 50);
+				BillProduct bp = new BillProduct(products.getById(id), bills.getById(id), d, QUANTITY);
 				billProducts.save(bp);
+				QUANTITY+=20;
 			});
 		};
 	}
