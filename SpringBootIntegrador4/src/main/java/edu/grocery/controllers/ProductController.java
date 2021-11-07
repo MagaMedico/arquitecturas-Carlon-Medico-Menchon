@@ -29,14 +29,14 @@ public class ProductController {
 	public ResponseEntity<?> addProduct(@RequestBody Product product) {
 		boolean ok = this.serviceProduct.insert(product);
 		if(!ok) return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-		else return new ResponseEntity<>(product, HttpStatus.OK);
+		else return new ResponseEntity<>(product, HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<?> deleteProduct(@PathVariable("id") Long id) {
 		boolean ok = this.serviceProduct.delete(id);
 		if(!ok) return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-		else return new ResponseEntity<>(id, HttpStatus.OK);
+		else return new ResponseEntity<>(id, HttpStatus.NO_CONTENT);
 	}
 	
 	@PutMapping(value = "/{id}")

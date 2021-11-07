@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.grocery.dto.ReportDailySalesDTO;
 import edu.grocery.irepositories.BillProductRepository;
 import edu.grocery.pojo.Bill;
 import edu.grocery.pojo.BillProduct;
@@ -55,5 +56,10 @@ public class BillProductService {
 	//Metodo para obtener las facturas de un cliente dado
 	public List<BillProduct> getBillProductOfClient(Client client){
 		return this.bills.getBillProductOfClient(client);
+	}
+
+	public List<ReportDailySalesDTO> getDailySales() {
+		// TODO Auto-generated method stub
+		return this.bills.getDailySales();
 	}
 }

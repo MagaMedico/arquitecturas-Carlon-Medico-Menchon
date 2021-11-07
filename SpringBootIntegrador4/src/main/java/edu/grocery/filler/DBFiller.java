@@ -21,7 +21,7 @@ public class DBFiller {
 	long DNI = 1000;
 	
 	@Bean
-	public CommandLineRunner initDB(ProductRepository products, ClientRepository clients, BillRepository billDeId, BillProductRepository bills) {
+	public CommandLineRunner initDB(ProductRepository products, ClientRepository clients, BillRepository bills, BillProductRepository billProducts) {
 		return args ->{
 			//Se insertan 10 productos
 			IntStream.range(0, 10).forEach(i -> {
@@ -38,15 +38,15 @@ public class DBFiller {
 			//Se insertan 10 facturas
 			IntStream.range(0, 10).forEach(i -> {
 				Bill b = new Bill (clients.getById(DNI));
-				billDeId.save(b);
+				bills.save(b);
 				DNI += 100;
 			});
 			//Se insertan 10 facturaProducto
 			IntStream.range(0, 10).forEach(i -> {
 				long id = i + 1; 
 				LocalDate d = LocalDate.of(2020, 1, 8);
-				BillProduct bp = new BillProduct(products.getById(id), billDeId.getById(id), d, 50);
-				bills.save(bp);
+				BillProduct bp = new BillProduct(products.getById(id), bills.getById(id), d, 50);
+				billProducts.save(bp);
 			});
 		};
 	}

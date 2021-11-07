@@ -10,7 +10,11 @@ import edu.grocery.pojo.Client;
 
 public interface ClientRepository extends JpaRepository<Client, Object>  {
 
+	static final String NEWDNI = "newdni",
+						NAME = "name",
+						LASTNAME = "lastname",
+						DNI = "dni";
 	@Modifying
 	@Query(value="UPDATE Client SET dni = :newdni, name = :name, lastname = :lastname WHERE dni = :dni", nativeQuery = true)
-	public void updateClient(@Param("newdni") long newdni, @Param("name") String name, @Param("lastname") String lastname, @Param("dni") long dni);
+	public void updateClient(@Param(NEWDNI) long newdni, @Param(NAME) String name, @Param(LASTNAME) String lastname, @Param(DNI) long dni);
 }

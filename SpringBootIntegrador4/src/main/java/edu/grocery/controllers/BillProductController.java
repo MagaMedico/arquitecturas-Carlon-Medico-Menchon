@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.grocery.dto.ReportDailySalesDTO;
 import edu.grocery.dto.ReportEntireAmount;
 import edu.grocery.pojo.BillProduct;
 import edu.grocery.pojo.Client;
@@ -44,7 +45,7 @@ public class BillProductController {
 		boolean ok = this.serviceBill.insert(bp);
 		//Chequea el estado de la consulta y lo informa
 		if(!ok) return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-		else return new ResponseEntity<>(bp, HttpStatus.OK);
+		else return new ResponseEntity<>(bp, HttpStatus.CREATED);
 	}
 	
 	//Metodo para eliminar la factura que conicida con el id pasado por url
@@ -54,7 +55,7 @@ public class BillProductController {
 		boolean ok = this.serviceBill.delete(id);
 		//Chequea el estado de la consulta y lo informa
 		if(!ok) return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-		else return new ResponseEntity<>(id, HttpStatus.OK);
+		else return new ResponseEntity<>(id, HttpStatus.NO_CONTENT);
 	}
 	
 	//Metodo para reemplazar los datos de la factura que coincida con el id pasado por url por los nuevos datos 
@@ -106,4 +107,13 @@ public class BillProductController {
 		}//Retorna todos los reportes existentes.
 		return reportes.toString();
 	}
+	
+	/**
+	 * 4) Genere un reporte con las ventas por día.
+	 */
+	@GetMapping("report/dailySales")
+	public List<ReportDailySalesDTO> getReportDailySales() {
+			return this.serviceBill.getDailySales();
+	}
+	
 }

@@ -35,14 +35,14 @@ public class ClientController {
 	public ResponseEntity<?> addClient(@RequestBody Client client) {
 		boolean ok = this.serviceClient.insert(client);
 		if(!ok) return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-		else return new ResponseEntity<>(client, HttpStatus.OK);
+		else return new ResponseEntity<>(client, HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping(value = "/{DNI}")
 	public ResponseEntity<?> deleteClient(@PathVariable("DNI") Long dni) {
 		boolean ok = this.serviceClient.delete(dni);
 		if(!ok) return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-		else return new ResponseEntity<>(dni, HttpStatus.OK);
+		else return new ResponseEntity<>(dni, HttpStatus.NO_CONTENT);
 	}
 	
 	@PutMapping(value = "/{DNI}")
