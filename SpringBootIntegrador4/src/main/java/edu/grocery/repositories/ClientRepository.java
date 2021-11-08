@@ -1,4 +1,4 @@
-package edu.grocery.irepositories;
+package edu.grocery.repositories;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import edu.grocery.pojo.Client;
+import edu.grocery.model.Client;
 
 public interface ClientRepository extends JpaRepository<Client, Object>  {
 

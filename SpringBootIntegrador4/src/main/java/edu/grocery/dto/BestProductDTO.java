@@ -12,18 +12,18 @@ public class BestProductDTO {
 	 * Atributos
 	 */
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	@Column
 	private String name;
 	@Column
-	private int quantity;
+	private long quantity;
 	/**
 	 * Constructores
 	 */
 	public BestProductDTO() { }
 	
-	public BestProductDTO(String name, int quantity) {
+	public BestProductDTO(String name, long quantity) {
 		super();
 		this.name = name;
 		this.quantity = quantity;
@@ -34,7 +34,7 @@ public class BestProductDTO {
 	public String getName() {
 		return name;
 	}
-	public int getQuantity() {
+	public long getQuantity() {
 		return quantity;
 	}
 	/**
@@ -42,6 +42,6 @@ public class BestProductDTO {
 	 */
 	@Override
 	public String toString() {
-		return "[BestProduct=" + name + ", quantity=" + quantity + "]";
+		return "[BestProduct=" + id + ", nombre=" + name + ", cantidad=" + quantity + "]";
 	}
 }

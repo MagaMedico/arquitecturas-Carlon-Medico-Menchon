@@ -1,6 +1,5 @@
 package edu.grocery.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -20,8 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.grocery.dto.BestProductDTO;
 import edu.grocery.dto.ReportDailySalesDTO;
 import edu.grocery.dto.ReportEntireAmount;
-import edu.grocery.pojo.BillProduct;
-import edu.grocery.pojo.Client;
+import edu.grocery.model.BillProduct;
 import edu.grocery.services.BillProductService;
 
 @RestController
@@ -45,7 +43,7 @@ public class BillProductController {
 	@PostMapping("")
 	public ResponseEntity<?> addBillProduct(@RequestBody BillProduct bp) {
 		//Agrega la factura a la DB
-		boolean ok = this.serviceBill.insert(bp);
+		boolean ok = this.serviceBill.insert(bp.getProduct().getId(), bp.getBill().getBillId(), bp.getDate(), bp.getQuantity());
 		//Chequea el estado de la consulta y lo informa
 		if(!ok) return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		else return new ResponseEntity<>(bp, HttpStatus.CREATED);
@@ -76,45 +74,15 @@ public class BillProductController {
 	}
 	
 	//Metodo para obtener el reporte del total de las facturas de los clientes
-	@GetMapping("report/clients/entireAmount")
-	public String getReportClientsEntireAmount() {
-		List<ReportEntireAmount> reportes = new ArrayList<ReportEntireAmount>();
-		List<Client> clients = new ArrayList<Client>();
-		//Obtiene todos los clientes que tengan facturas
-		List<Client> allClients = this.serviceBill.getClients();
-		//Recorre todos los clientes con facturas
-		for(int i=0; i < allClients.size(); i++) {
-			//Si el cliente ya tiene un reporte, es decir, mas de una factura
-			if(clients.contains(allClients.get(i))){
-				//Recorre los reportes
-				for(int j=0; j < reportes.size(); j++) {
-					//Si el cliente del reporte coincide con el cliente actual
-					if(reportes.get(j).getClient().equals(allClients.get(i))) {
-						//Obtiene las facturas del cliente
-						List<BillProduct> bills = this.serviceBill.getBillProductOfClient(allClients.get(i));
-						//Las agrega al reporte ya existente
-						reportes.get(j).addBills(bills);
-						//Vuelve a calcular el total
-						reportes.get(j).calculateEntireAmount();
-					}
-				}
-			}//Si el cliente todavia no tiene un reporte
-			else {
-				//Agrega al cliente a la lista de clientes (no repetidos)
-				clients.add(allClients.get(i));
-				//Obtiene las facturas del cliente
-				List<BillProduct> bills = this.serviceBill.getBillProductOfClient(allClients.get(i));
-				//Crea el reporte del cliente
-				reportes.add(new ReportEntireAmount(allClients.get(i), bills));
-			}
-		}//Retorna todos los reportes existentes.
-		return reportes.toString();
+	@GetMapping("/reportClientAmount")
+	public List<ReportEntireAmount> getReportClientsEntireAmount() {
+		return this.serviceBill.getBillProductOfClient();
 	}
 	
 	/**
 	 * 4) Genere un reporte con las ventas por día.
 	 */
-	@GetMapping("/report/dailySales")
+	@GetMapping("/reportDailySales")
 	public List<ReportDailySalesDTO> getReportDailySales() {
 		return this.serviceBill.getDailySales();
 	}
@@ -122,8 +90,8 @@ public class BillProductController {
 	 * Metodo que hace el get a la base de datos para traerse
 	 * la lista de productos
 	 */
-	@GetMapping("/best")
-	public List<BestProductDTO> getBestProduct(){
+	@GetMapping("/mostSoldProduct")
+	public BestProductDTO getBestProduct(){
 		return this.serviceBill.getBestProduct();
 	}
 }

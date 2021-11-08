@@ -1,4 +1,4 @@
-package edu.grocery.pojo;
+package edu.grocery.model;
 
 import java.time.LocalDate;
 import javax.persistence.Column;

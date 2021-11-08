@@ -1,7 +1,9 @@
-package edu.grocery.irepositories;
+package edu.grocery.repositories;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -10,10 +12,11 @@ import org.springframework.data.repository.query.Param;
 
 import edu.grocery.dto.BestProductDTO;
 import edu.grocery.dto.ReportDailySalesDTO;
-import edu.grocery.pojo.Bill;
-import edu.grocery.pojo.BillProduct;
-import edu.grocery.pojo.Client;
-import edu.grocery.pojo.Product;
+import edu.grocery.dto.ReportEntireAmount;
+import edu.grocery.model.Bill;
+import edu.grocery.model.BillProduct;
+import edu.grocery.model.Client;
+import edu.grocery.model.Product;
 
 public interface BillProductRepository extends JpaRepository<BillProduct, Object>  {
 	/**
@@ -25,6 +28,22 @@ public interface BillProductRepository extends JpaRepository<BillProduct, Object
 						QUANTITY = "quantity",
 						ID = "id",
 						CLIENT = "client";
+	static final int MAX = 3;
+	/**
+	 * 
+	 * @param product
+	 * @param bill
+	 * @param date
+	 * @param quantity
+	 */
+	@Transactional
+	@Modifying
+	@Query(value = "INSERT INTO bill_product(DATE, QUANTITY, BILL_BILL_ID, PRODUCT_ID) VALUES (?1, ?2, ?3, ?4) " 
+	+ "WHERE (SELECT dni FROM bill) = ?5 "
+	//+ "AND date = ?1 AND SUM(quantity + ?2) < MAX"
+	, nativeQuery = true)
+	public void insertBillProduct(LocalDate date, int quantity,
+			long bill, long product, long client);
 	
 	/**Metodo para actualizar los datos pasados por parametro en la tabla BillProduct
 	 * @param product
@@ -38,20 +57,15 @@ public interface BillProductRepository extends JpaRepository<BillProduct, Object
 	public void updateBillProduct(@Param(PRODUCT) Product product, @Param(BILL) Bill bill, 
 								  @Param(DATE) LocalDate date, @Param(QUANTITY) int quantity, @Param(ID) long id);
 	
-	/**Metodo para obtener todos los clientes que tengan facturas
-	 * @return una lista de @see Client
-	 */
-	@Modifying
-	@Query("SELECT b.client FROM BillProduct AS bp JOIN Bill AS b ON bp.bill = b")
-	public List<Client> getAllClients();
-	
 	/**Metodo para obtener las facturas de un cliente dado
 	 * @param client
 	 * @return una lista de @see BillProduct
 	 */
 	@Modifying
-	@Query("SELECT bp FROM BillProduct AS bp JOIN Bill AS b ON bp.bill = b WHERE b.client = :client")
-	public List<BillProduct> getBillProductOfClient(@Param(CLIENT) Client client);
+	@Query("SELECT new ReportEntireAmount(bp.bill.client.name, SUM(bp.quantity*bp.product.unitPrice)) "
+			+ "FROM BillProduct AS bp "
+			+ "GROUP BY bp.bill.client.name ")
+	public List<ReportEntireAmount> getBillProductOfClient();
 
 	
 	/**
@@ -74,8 +88,9 @@ public interface BillProductRepository extends JpaRepository<BillProduct, Object
 	 * @return una lista @see Product
 	 */
 	@Modifying
-	@Query("SELECT new BestProductDTO(bp.product.name, bp.quantity) "
+	@Query("SELECT new BestProductDTO(bp.product.name, SUM(bp.quantity)) "
 			+ "FROM BillProduct AS bp "
+			+ "GROUP BY bp.product.name "
 			+ "ORDER BY bp.quantity DESC ")
 	public List<BestProductDTO> getBestProduct();
 }

@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 
 import edu.grocery.dto.BestProductDTO;
 import edu.grocery.dto.ReportDailySalesDTO;
-import edu.grocery.irepositories.BillProductRepository;
-import edu.grocery.pojo.Bill;
-import edu.grocery.pojo.BillProduct;
-import edu.grocery.pojo.Client;
-import edu.grocery.pojo.Product;
+import edu.grocery.dto.ReportEntireAmount;
+import edu.grocery.model.Bill;
+import edu.grocery.model.BillProduct;
+import edu.grocery.model.Product;
+import edu.grocery.repositories.BillProductRepository;
 
 @Service
 public class BillProductService {
@@ -34,8 +34,8 @@ public class BillProductService {
 	 * @return un booleano
 	 */
 	@Transactional
-	public boolean insert(BillProduct bp) {
-		this.bills.save(bp);
+	public boolean insert(long product, long bill, LocalDate date, int quantity, long client) {
+		this.bills.insertBillProduct(date, quantity, product, bill, client);
 		return true;
 	}
 	/**Metodo para reemplazar los datos de una factura dada
@@ -62,19 +62,12 @@ public class BillProductService {
 		return true;
 	}
 	
-	/**Metodo para obtener todos los clientes que tengan facturas
-	 * @return una lista de @see Client
-	 */
-	public List<Client> getClients(){
-		return this.bills.getAllClients();
-	}
-	
 	/**Metodo para obtener las facturas de un cliente dado
 	 * @param client
 	 * @return una lista de @see BillProduct
 	 */
-	public List<BillProduct> getBillProductOfClient(Client client){
-		return this.bills.getBillProductOfClient(client);
+	public List<ReportEntireAmount> getBillProductOfClient(){
+		return this.bills.getBillProductOfClient();
 	}
 	/**
 	 * Metodo para obtener las salidas diarias
@@ -88,7 +81,7 @@ public class BillProductService {
 	 * de productos vendidos
 	 * @return una lista de @see Product
 	 */
-	public List<BestProductDTO> getBestProduct(){
-		return this.bills.getBestProduct(); 
+	public BestProductDTO getBestProduct(){
+		return this.bills.getBestProduct().get(0); 
 	}
 }

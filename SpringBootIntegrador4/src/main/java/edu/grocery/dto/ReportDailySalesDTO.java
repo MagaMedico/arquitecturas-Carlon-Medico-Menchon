@@ -8,10 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import lombok.Data;
-
 @Entity
-@Data
 public class ReportDailySalesDTO {
 
 	//ver porqué no genera la id (siempre es 0),
@@ -72,15 +69,6 @@ public class ReportDailySalesDTO {
 	public void setTotalQuantity(int totalQuantity) {
 		this.totalQuantity = totalQuantity;
 	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
 	@Override
 	public String toString() {
 		return "ReportDailySalesDTO [date=" + date + ", nameProduct=" + nameProduct + ", totalPriceSale="

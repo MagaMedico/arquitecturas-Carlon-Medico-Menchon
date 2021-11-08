@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import edu.grocery.pojo.Product;
+import edu.grocery.model.Product;
 import edu.grocery.services.ProductService;
 
 @RestController

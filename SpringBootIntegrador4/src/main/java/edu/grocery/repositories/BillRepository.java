@@ -1,8 +1,8 @@
-package edu.grocery.irepositories;
+package edu.grocery.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import edu.grocery.pojo.Bill;
+import edu.grocery.model.Bill;
 
 public interface BillRepository extends JpaRepository<Bill, Object> {
 

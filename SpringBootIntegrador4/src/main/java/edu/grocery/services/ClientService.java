@@ -7,8 +7,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import edu.grocery.irepositories.ClientRepository;
-import edu.grocery.pojo.Client;
+import edu.grocery.model.Client;
+import edu.grocery.repositories.ClientRepository;
 
 @Service
 public class ClientService {
