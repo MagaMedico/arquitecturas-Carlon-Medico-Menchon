@@ -34,9 +34,12 @@ public class BillProductService {
 	 * @return un booleano
 	 */
 	@Transactional
-	public boolean insert(long product, long bill, LocalDate date, int quantity, long client) {
-		this.bills.insertBillProduct(date, quantity, product, bill, client);
-		return true;
+	public boolean insert(BillProduct bp) {
+		/*long total = this.bills.cumpleCondicion(bp);
+		if(total != 0) {*/
+			this.bills.save(bp); 
+			return true;
+		//}else return false;
 	}
 	/**Metodo para reemplazar los datos de una factura dada
 	 * @param product

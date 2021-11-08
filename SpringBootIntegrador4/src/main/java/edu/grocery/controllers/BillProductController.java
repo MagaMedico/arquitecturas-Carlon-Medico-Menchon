@@ -43,7 +43,7 @@ public class BillProductController {
 	@PostMapping("")
 	public ResponseEntity<?> addBillProduct(@RequestBody BillProduct bp) {
 		//Agrega la factura a la DB
-		boolean ok = this.serviceBill.insert(bp.getProduct().getId(), bp.getBill().getBillId(), bp.getDate(), bp.getQuantity());
+		boolean ok = this.serviceBill.insert(bp);
 		//Chequea el estado de la consulta y lo informa
 		if(!ok) return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		else return new ResponseEntity<>(bp, HttpStatus.CREATED);

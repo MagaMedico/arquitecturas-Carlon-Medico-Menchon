@@ -15,7 +15,6 @@ import edu.grocery.dto.ReportDailySalesDTO;
 import edu.grocery.dto.ReportEntireAmount;
 import edu.grocery.model.Bill;
 import edu.grocery.model.BillProduct;
-import edu.grocery.model.Client;
 import edu.grocery.model.Product;
 
 public interface BillProductRepository extends JpaRepository<BillProduct, Object>  {
@@ -27,7 +26,8 @@ public interface BillProductRepository extends JpaRepository<BillProduct, Object
 						DATE = "date",
 						QUANTITY = "quantity",
 						ID = "id",
-						CLIENT = "client";
+						CLIENT = "client",
+						BILL_PRODUCT = "billProduct";
 	static final int MAX = 3;
 	/**
 	 * 
@@ -35,15 +35,21 @@ public interface BillProductRepository extends JpaRepository<BillProduct, Object
 	 * @param bill
 	 * @param date
 	 * @param quantity
-	 */
+	 * @return 
+	 
 	@Transactional
 	@Modifying
 	@Query(value = "INSERT INTO bill_product(DATE, QUANTITY, BILL_BILL_ID, PRODUCT_ID) VALUES (?1, ?2, ?3, ?4) " 
 	+ "WHERE (SELECT dni FROM bill) = ?5 "
 	//+ "AND date = ?1 AND SUM(quantity + ?2) < MAX"
 	, nativeQuery = true)
-	public void insertBillProduct(LocalDate date, int quantity,
-			long bill, long product, long client);
+	public void insertBillProduct(LocalDate date, int quantity, long bill, long product, long client);*/
+	
+	@Transactional
+	@Modifying
+	@Query("SELECT SUM(bp.quantity + :billProduct.quantity) AS total FROM BillProduct bp "
+			+ "WHERE bp.bill.client.DNI = :billProduct.client AND bp.date = :billProduct.date AND total <= 3")
+	public void cumpleCondicion(@Param(BILL_PRODUCT) BillProduct billProduct);
 	
 	/**Metodo para actualizar los datos pasados por parametro en la tabla BillProduct
 	 * @param product
