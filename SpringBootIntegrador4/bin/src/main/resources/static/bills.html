@@ -1,0 +1,52 @@
+<html>
+	<body>
+		<h2>Tabla de facturas</h2>
+	
+		<table>
+			<thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Fecha</th>
+                    <th>Cantidad</th>
+                    <th>ID Factura Cliente</th>
+                    <th>ID Producto</th>
+                    <th>Borrar</th>
+                    <th>Editar</th>
+                </tr>
+            </thead>
+            <tbody id="body">
+
+            </tbody>
+        </table>
+        <br>
+        <p id="contenedorBorrar"></p>
+        <br>
+		<form id="editar">
+		</form>
+		<p id=contenedorEditar></p>
+		<br>
+		<form>
+			<div>
+				<br>
+				<label>Insertar una factura:</label>
+				<br>
+				<input type="date" name="date" id="date" placeholder="Fecha" required>
+				<br>
+				<input type="number" name="quantity" id="quantity" placeholder="Cantidad" required>
+				<br>
+				<br>
+				<input type="text" name="bill_bill_id" id="bill_bill_id" placeholder="ID Factura Cliente" required>
+				<br>
+				<br>
+				<input type="text" name="product_id" id="product_id" placeholder="ID Producto" required>
+				<br>
+				<input type="button" id="btnInsertBillProduct" value="ENVIAR">
+			</div>
+		</form>
+		<p id="contenedorInsert"></p>
+		<br>
+			
+		<footer>Developed by Cecilia Carlón, Magalí Menchon y Magalí Médico</footer>
+		<script type="text/javascript" src="bills.js"></script>
+	</body>
+</html>

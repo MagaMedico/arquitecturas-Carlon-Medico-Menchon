@@ -1,0 +1,45 @@
+<html>
+	<body>
+		<h2>Tabla de clientes</h2>
+	
+		<table>
+			<thead>
+                <tr>
+                    <th>DNI</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Borrar</th>
+                    <th>Editar</th>
+                </tr>
+            </thead>
+            <tbody id="body">
+
+            </tbody>
+        </table>
+        <br>
+        <p id="contenedorBorrar"></p>
+        <br>
+		<form id="editar">
+		</form>
+		<p id=contenedorEditar></p>
+		<br>
+		<form>
+			<div>
+				<label>Insertar un cliente:</label>
+				<br>
+				<input type="text" name="dni" id="dni" placeholder="DNI del cliente" required>
+				<br>
+				<input type="text" name="name" id="name" placeholder="nombre del cliente" required>
+				<br>
+				<input type="text" name="lastName" id="lastName" placeholder="apellido del cliente" required>
+				<br>
+				<input type="button" id="btnInsertClient" value="ENVIAR">
+			</div>
+		</form>
+		<p id="contenedorInsert"></p>
+		<br>
+			
+		<footer>Developed by Cecilia Carlón, Magalí Menchon y Magalí Médico</footer>
+		<script type="text/javascript" src="client.js"></script>
+	</body>
+</html>

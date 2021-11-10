@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.grocery.model.Bill;
 import edu.grocery.model.Product;
 import edu.grocery.repositories.ProductRepository;
 
@@ -33,6 +34,12 @@ public class ProductService {
 	public boolean delete(Long id) {
 		this.products.deleteById(id);
 		return true;
+	}
+	
+	@Transactional
+	public Product findById(Long id) {
+		// TODO Auto-generated method stub
+		return this.products.findById(id).get();
 	}
 
 }

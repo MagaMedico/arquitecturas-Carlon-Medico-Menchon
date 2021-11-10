@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import edu.grocery.model.Bill;
 import edu.grocery.model.Product;
 import edu.grocery.services.ProductService;
 
@@ -47,5 +48,11 @@ public class ProductController {
 		}
 		if(!ok) return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		else return new ResponseEntity<>(id, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/{id}")
+	public Product getProductById(@PathVariable("id") Long id) {
+		
+		return this.serviceProduct.findById(id);
 	}
 }

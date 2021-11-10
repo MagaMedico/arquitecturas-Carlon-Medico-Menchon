@@ -18,7 +18,7 @@ public class BillProduct {
 
 	//Atributos
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;	
 	@ManyToOne
     private Product product;	
@@ -47,6 +47,14 @@ public class BillProduct {
 		this.bill = bill;
 		this.date = date;
 		this.quantity = quantity;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	//Getters y Setters
