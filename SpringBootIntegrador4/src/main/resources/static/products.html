@@ -1,0 +1,41 @@
+<html>
+	<body>
+		<h2>Tabla de productos</h2>
+	
+		<table>
+			<thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Precio por Unidad</th>
+                </tr>
+            </thead>
+            <tbody id="body">
+
+            </tbody>
+        </table>
+        <br>
+        <p id="contenedorBorrar"></p>
+        <br>
+		<form id="editar">
+		</form>
+		<p id=contenedorEditar></p>
+		<br>
+		<form>
+			<div>
+				<label>Insertar un producto:</label>
+				<br>
+				<input type="text" name="name" id="name" placeholder="nombre del producto" required>
+				<br>
+				<input type="number" name="unitPrice" id="unitPrice" placeholder="precio por unidad del producto" required>
+				<br>
+				<input type="button" id="btnInsertProduct" value="ENVIAR">
+			</div>
+		</form>
+		<p id="contenedorInsert"></p>
+		<br>
+			
+		<footer>Developed by Cecilia Carlon, Magali Menchon y Magali Medico</footer>
+		<script type="text/javascript" src="product.js"></script>
+	</body>
+</html>
