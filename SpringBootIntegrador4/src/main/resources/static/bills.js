@@ -3,16 +3,77 @@
 function inicio() {
 	mostrarTabla();
 	document.getElementById("btnInsertBillProduct").addEventListener("click", ()=>{
-		let date = document.getElementById("date").value;
-		let quantity = document.getElementById("quantity").value;
 		let bill_bill_id = document.getElementById("bill_bill_id").value;
 		let product_id = document.getElementById("product_id").value;
+		let date = document.getElementById("date").value;
+		let quantity = document.getElementById("quantity").value;
+		let bill = {
+			"billId": bill_bill_id,
+			"client": {
+				"dni": 0,
+				"lastname": "",
+				"name": ""
+			}	
+		};
+		//Obtenemos la bill mediante el id
+		fetch("http://localhost:8080/b/" + bill_bill_id, {
+	        method: "GET",
+	        mode: 'cors',
+	    }).then(respuesta => {
+	        if (respuesta.ok) {
+	            respuesta.json().then(json => { 
+											bill = {
+												"billId": json.billId,
+												"client": {
+													"dni": json.client.dni,
+													"lastname": json.client.lastname,
+													"name": json.client.name
+												}}
+												obtenerProducto(null, bill, product_id, date, quantity, "POST");})
+	        }
+	    }).catch(error => {
+	        console.log(error);
+	        contenedor.innerHTML = "<h1>Error - Conection Failed!</h1>";
+		})});
 		
-		let item = {
+}
+
+function obtenerProducto(idBillProduct, bill, product_id, date, quantity, verbo){
+	let product = {
+			"id": product_id,
+			"name": "",
+			"unitPrice": 0
+		};
+	//Obtenemos el product mediante el id
+	fetch("http://localhost:8080/products/" + product_id, {
+        method: "GET",
+        mode: 'cors',
+    }).then(respuesta => {
+        if (respuesta.ok) {
+			respuesta.json().then(json => { 
+				console.log(json);
+				product = {
+					"id": json.id,
+					"name": json.name,
+					"unitPrice": json.unitPrice
+				};
+			if(verbo == "POST") insertarBillProduct(bill, product, date, quantity);
+			else editarBillProduct(idBillProduct, bill, product, date, quantity);
+			})
+        }
+    }).catch(error => {
+        console.log(error);
+        contenedor.innerHTML = "<h1>Error - Conection Failed!</h1>";
+	});
+}
+
+function insertarBillProduct(bill, product, date, quantity){
+	console.log(JSON.stringify(product));
+	let item = {
+			  "bill": bill,
 		      "date": date,	  
 			  "quantity": quantity,
-			  "bill.billId": bill_bill_id,
-			  "product.id": product_id
+			  "product": product
 		};
 		
 		let url = "http://localhost:8080/bills";
@@ -39,7 +100,6 @@ function inicio() {
 	      .catch((e) => {
 	        console.log(e);
 	      });
-	 });
 }
 
 function mostrarTabla() {
@@ -69,6 +129,7 @@ function mostrarTabla() {
                     btnBorrar.innerHTML = "borrar";
                     let btnEditar = document.createElement("button");
                     btnEditar.innerHTML = "editar";
+                    console.log(data.id);
                     let id = data.id;
                     btnBorrar.addEventListener("click", () => borrar(id));
                     btnEditar.addEventListener("click", () => editar(id));
@@ -175,7 +236,6 @@ function editar(id){
 	form.appendChild(boton);
 	
 	document.getElementById("enviar").addEventListener("click", () => {
-		let contenedor = document.getElementById("contenedorEditar");
 		
 		let idBillProduct = id;
 		let date = document.getElementById("dateI").value;
@@ -183,16 +243,46 @@ function editar(id){
 		let bill_bill_id = document.getElementById("bill_bill_idI").value;
 		let product_id = document.getElementById("product_idI").value;
 	
-		let b = getBill(bill_bill_id);
-		let p = getProduct(product_id);
-		console.log(b);
-		console.log(p);
-		let item = {
+		let bill = {
+			"billId": bill_bill_id,
+			"client": {
+				"dni": 0,
+				"lastname": "",
+				"name": ""
+			}	
+		};
+		//Obtenemos la bill mediante el id
+		fetch("http://localhost:8080/b/" + bill_bill_id, {
+	        method: "GET",
+	        mode: 'cors',
+	    }).then(respuesta => {
+	        if (respuesta.ok) {
+	            respuesta.json().then(json => { 
+											bill = {
+												"billId": json.billId,
+												"client": {
+													"dni": json.client.dni,
+													"lastname": json.client.lastname,
+													"name": json.client.name
+												}}
+												obtenerProducto(idBillProduct, bill, product_id, date, quantity, "PUT");})
+	        }
+	    }).catch(error => {
+	        console.log(error);
+	        contenedor.innerHTML = "<h1>Error - Conection Failed!</h1>";
+		})
+	});
+}
+
+function editarBillProduct(idBillProduct, bill, product, date, quantity){
+	let contenedor = document.getElementById("contenedorEditar");
+	let form = document.getElementById("editar");
+	let item = {
 		      "id": idBillProduct,	  
 			  "date": date,
 			  "quantity": quantity,
-			  "bill": b,
-			  "product": p
+			  "bill": bill,
+			  "product": product
 		};
 		let url = "http://localhost:8080/bills";
 		
@@ -214,7 +304,6 @@ function editar(id){
 	      .catch((e) => {
 	        console.log(e);
 	      });
-	});
 }
 
 function getBill(id){

@@ -12,7 +12,7 @@ function inicio() {
 			  "name": name,
 			  "lastname": lastName
 		};
-		
+		console.log(item);
 		let url = "http://localhost:8080/clients";
 		let contenedor = document.getElementById("contenedorInsert");
 		

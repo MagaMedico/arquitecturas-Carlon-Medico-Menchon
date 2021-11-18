@@ -44,13 +44,16 @@ public interface BillProductRepository extends JpaRepository<BillProduct, Object
 	//+ "AND date = ?1 AND SUM(quantity + ?2) < MAX"
 	, nativeQuery = true)
 	public void insertBillProduct(LocalDate date, int quantity, long bill, long product, long client);
-	
-	/*@Transactional
+	/*
+	@Transactional
 	@Modifying
-	@Query("SELECT SUM(bp.quantity + :billProduct.quantity) AS total FROM BillProduct bp "
-			+ "WHERE bp.bill.client.DNI = :billProduct.client AND bp.date = :billProduct.date AND total <= 3")
-	public void cumpleCondicion(@Param(BILL_PRODUCT) BillProduct billProduct);*/
-	
+	@Query(value = "INSERT INTO Bill_Product (DATE, QUANTITY, BILL_BILL_ID, PRODUCT_ID)"
+			+ "VALUES(?3, ?1, ?5, ?4) WHERE (SELECT SUM(quantity + ?1) AS total "
+			+ "FROM Bill_Product bp JOIN Bill b ON (bp.bill_bill_id = b.bill_id ) "
+			+ "WHERE b.client_dni = ?2 AND bp.date =  ?3 AND "
+			+ "bp.product_id= ?4) <= 3", nativeQuery = true)
+	public long cumpleCondicion(int quant, long dniClient, LocalDate date, long idProduct, long bill);
+	*/
 	/**Metodo para actualizar los datos pasados por parametro en la tabla BillProduct
 	 * @param product
 	 * @param bill

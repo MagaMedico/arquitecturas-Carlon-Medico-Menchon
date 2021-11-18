@@ -35,8 +35,8 @@ public class BillProductService {
 	 */
 	@Transactional
 	public boolean insert(BillProduct bp) {
-		/*long total = this.bills.cumpleCondicion(bp);
-		if(total != 0) {*/
+		/*long total = this.bills.cumpleCondicion(bp.getQuantity(), bp.getBill().getClient().getDNI(), bp.getDate(), bp.getProduct().getId(), bp.getBill().getBillId());
+		if(total < 4) {*/
 			this.bills.save(bp); 
 			return true;
 		//}else return false;
