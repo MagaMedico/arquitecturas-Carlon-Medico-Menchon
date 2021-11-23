@@ -18,19 +18,38 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.grocery.model.Client;
 import edu.grocery.services.ClientService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/clients")
+@Api(value= "ClientController", description= "Api of the client controller")
 public class ClientController {
 	public static Logger LOG = LoggerFactory.getLogger(ClientController.class); 
 	@Autowired
 	private ClientService serviceClient;
 	
+	@ApiOperation(value="Get all clients", response= List.class)
+	@ApiResponses(value= {
+		@ApiResponse(code= 200, message= "Succesfuly, OK"),
+		@ApiResponse(code= 401, message= "Check the autentication!, Unauthorized"),
+		@ApiResponse(code= 403, message= "Denied access!, Forbidden"),
+		@ApiResponse(code= 400, message= "Error!, Not Found")
+	})
 	@GetMapping("")
 	public List<Client> getAll() {
 		return this.serviceClient.getClients();
 	}
 	
+	@ApiOperation(value="Add a client", response= ResponseEntity.class)
+	@ApiResponses(value= {
+		@ApiResponse(code= 200, message= "Succesfuly, OK"),
+		@ApiResponse(code= 401, message= "Check the autentication!, Unauthorized"),
+		@ApiResponse(code= 403, message= "Denied access!, Forbidden"),
+		@ApiResponse(code= 400, message= "Error!, Not Found")
+	})
 	@PostMapping("")
 	public ResponseEntity<?> addClient(@RequestBody Client client) {
 		boolean ok = this.serviceClient.insert(client);
@@ -38,6 +57,13 @@ public class ClientController {
 		else return new ResponseEntity<>(client, HttpStatus.CREATED);
 	}
 	
+	@ApiOperation(value="Delete a client", response= ResponseEntity.class)
+	@ApiResponses(value= {
+		@ApiResponse(code= 200, message= "Succesfuly, OK"),
+		@ApiResponse(code= 401, message= "Check the autentication!, Unauthorized"),
+		@ApiResponse(code= 403, message= "Denied access!, Forbidden"),
+		@ApiResponse(code= 400, message= "Error!, Not Found")
+	})
 	@DeleteMapping(value = "/{DNI}")
 	public ResponseEntity<?> deleteClient(@PathVariable("DNI") Long dni) {
 		boolean ok = this.serviceClient.delete(dni);
@@ -45,6 +71,13 @@ public class ClientController {
 		else return new ResponseEntity<>(dni, HttpStatus.NO_CONTENT);
 	}
 	
+	@ApiOperation(value="Update a client", response= ResponseEntity.class)
+	@ApiResponses(value= {
+		@ApiResponse(code= 200, message= "Succesfuly, OK"),
+		@ApiResponse(code= 401, message= "Check the autentication!, Unauthorized"),
+		@ApiResponse(code= 403, message= "Denied access!, Forbidden"),
+		@ApiResponse(code= 400, message= "Error!, Not Found")
+	})
 	@PutMapping(value = "/{DNI}")
 	public ResponseEntity<?> updateClient(@PathVariable("DNI") long dni, @RequestBody Client client) {
 		boolean ok = false;

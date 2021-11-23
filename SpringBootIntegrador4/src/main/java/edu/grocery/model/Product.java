@@ -2,6 +2,7 @@ package edu.grocery.model;
 
 import javax.persistence.*;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Entity
@@ -10,10 +11,16 @@ public class Product {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@ApiModelProperty(notes= "Id of the Product", name="id", required=true
+	,value="1", example="1")
 	private long id;
 	@Column(nullable=false)
+	@ApiModelProperty(notes= "Name of the Product", name="name", required=true,
+	value="Coca-Cola", example="Coca-Cola")
 	private String name;
 	@Column
+	@ApiModelProperty(notes= "Unit price of the Product", name="unitPrice", required=true,
+	value="150", example="150")
 	private int unitPrice;
 	
 	public Product() { }

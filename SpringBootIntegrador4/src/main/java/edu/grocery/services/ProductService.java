@@ -7,7 +7,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import edu.grocery.model.Bill;
 import edu.grocery.model.Product;
 import edu.grocery.repositories.ProductRepository;
 

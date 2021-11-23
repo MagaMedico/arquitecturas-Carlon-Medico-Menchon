@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 public class BestProductDTO {
 	/**
@@ -13,10 +15,13 @@ public class BestProductDTO {
 	 */
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@ApiModelProperty(notes= "Id of the best product", name="id", required=true, value="1")
 	private long id;
 	@Column
+	@ApiModelProperty(notes= "Name of the best product", name="name", required=true, value="Doritos")
 	private String name;
 	@Column
+	@ApiModelProperty(notes= "Product quantity", name="quantity", required=true, value="32")
 	private long quantity;
 	/**
 	 * Constructores

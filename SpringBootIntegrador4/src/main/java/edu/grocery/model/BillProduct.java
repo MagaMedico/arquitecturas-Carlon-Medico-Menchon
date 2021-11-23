@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Entity
@@ -19,14 +20,22 @@ public class BillProduct {
 	//Atributos
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@ApiModelProperty(notes= "Id of the BillProduct", name="id", required=true,
+	value="1", example="1")
 	private long id;	
 	@ManyToOne
+	@ApiModelProperty(notes= "Product of the BillProduct", name="product", required=true)
     private Product product;	
     @ManyToOne
+    @ApiModelProperty(notes= "Bill of the BillProduct", name="bill", required=true)
     private Bill bill;   
     @Column
+    @ApiModelProperty(notes= "Product purchase day", name="date", required=true, 
+    value="2021-11-23", example="2021-11-23")
     private LocalDate date;
     @Column 
+    @ApiModelProperty(notes= "Product quantity", name="quantity", required=true, 
+    value="18" ,example="18")
     private int quantity;
     
     //Constructores   

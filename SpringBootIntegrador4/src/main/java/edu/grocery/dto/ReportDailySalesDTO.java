@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 public class ReportDailySalesDTO {
 
@@ -15,14 +17,23 @@ public class ReportDailySalesDTO {
 	//aunque no causa conflicto. Revisar si puede quitarse directamente
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@ApiModelProperty(notes= "Id of the daily sales report", name="id", required=true, value="5")
 	private long id; 
 	@Column
+	@ApiModelProperty(notes= "Date of the daily sales report", name="date", required=true,
+	value="2021-07-14")
 	private LocalDate date;
 	@Column
+	@ApiModelProperty(notes= "Name of the product", name="nameProduct", required=true,
+	value="Oreos")
 	private String nameProduct;
 	@Column
+	@ApiModelProperty(notes= "Total price of the daily sales report", name="totalPriceSale", 
+	required=true, value="1000")
 	private long totalPriceSale;
 	@Column
+	@ApiModelProperty(notes= "Total quantity of the daily sales report", name="totalQuantity", 
+	required=true, value="10")
 	private long totalQuantity;
 	
 	public ReportDailySalesDTO() {

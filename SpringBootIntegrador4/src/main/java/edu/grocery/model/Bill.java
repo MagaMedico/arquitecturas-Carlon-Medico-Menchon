@@ -8,8 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Entity
@@ -20,9 +19,10 @@ public class Bill implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@ApiModelProperty(notes= "Id of the Bill", name="billId", required=true, value="22", example="22")
     private Long billId;	
 	@ManyToOne
-	//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@ApiModelProperty(notes= "Client of the Bill", name="client", required=true)
     private Client client;
 	
     //Constructores
