@@ -15,39 +15,53 @@ import edu.grocery.model.Bill;
 import edu.grocery.model.BillProduct;
 import edu.grocery.model.Product;
 import edu.grocery.repositories.BillProductRepository;
-
+/**
+ * 
+ * @author Cecilia Carlón: ceciliacarlon2@gmail.com
+		   Magalí Médico: magamedico@gmail.com
+		   Magalí Menchón: mamenchon@alumnos.exa.unicen.edu.ar	
+ * @version 2.0
+ * @since 22/11/2021
+ * Permite acceder al repositorio @see BillProductRepository
+ * a fin de desacoplar la implementación del mismo y posibilitar
+ * el acceso a los servicios que brindaría la aplicación
+ * relacionados a la entidad @see BillProduct
+ */
 @Service
 public class BillProductService {
-	/**Atributo
+	/**
+	 * Atributo instanciado por única vez y automáticamente
+	 * @see Autowired
 	 */
 	@Autowired
 	private BillProductRepository bills;
 	
-	/**Metodo para obtener todas las facturas
+	/**Obtiene todas las facturas
 	 * @return una lista de @see BillProduct
+	 * @see List
 	 */
 	public List<BillProduct> getBills() {
 		return this.bills.findAll();
-	}	
-	/**Metodo para agregar la factura pasada por parametro
-	 * @param bp
-	 * @return un booleano
+	}
+	
+	/**Agrega la factura pasada por parametro
+	 * @param bp entidad de tipo @see BillProduct
+	 * @return boolean del resultado de la transacción
 	 */
 	@Transactional
 	public boolean insert(BillProduct bp) {
-		/*long total = this.bills.cumpleCondicion(bp.getQuantity(), bp.getBill().getClient().getDNI(), bp.getDate(), bp.getProduct().getId(), bp.getBill().getBillId());
-		if(total < 4) {*/
 			this.bills.save(bp); 
 			return true;
-		//}else return false;
 	}
-	/**Metodo para reemplazar los datos de una factura dada
-	 * @param product
-	 * @param bill
-	 * @param date
-	 * @param quantity
-	 * @param id
-	 * @return un booleano
+	
+	/**Reemplaza los datos de una factura identificada
+	 * por su id con los datos recibidos por parámetro
+	 * @param product entidad del tipo @see Product
+	 * @param bill entidad del tipo @see Bill
+	 * @param date fecha de generación de factura @see Date
+	 * @param quantity int con los datos de cantidad de producto en esa factura
+	 * @param id identificador único de @see BillProduct a modificar
+	 * @return boolean del resultado de la transacción
 	 */
 	@Transactional
 	public boolean update(Product product, Bill bill, LocalDate date, int quantity, long id) {
@@ -55,9 +69,9 @@ public class BillProductService {
 		return true;
 	}
 	
-	/**Metodo para eliminar la factura que conicida con el id pasado por parametro
-	 * @param id
-	 * @return un booleano
+	/**Elimina la factura que coincida con el id pasado por parametro
+	 * @param id long del identificador único de la facutura a borrar
+	 * @return boolean del resultado de la transacción
 	 */
 	@Transactional
 	public boolean delete(long id) {
@@ -65,22 +79,28 @@ public class BillProductService {
 		return true;
 	}
 	
-	/**Metodo para obtener las facturas de un cliente dado
-	 * @param client
-	 * @return una lista de @see BillProduct
+	/**Obtiene las facturas de un cliente dado
+	 * @param client entidad de @see Client
+	 * @return una lista con los reportes generados
+	 * @see ReportEntireAmount
+	 * @see List
 	 */
 	public List<ReportEntireAmount> getBillProductOfClient(){
 		return this.bills.getBillProductOfClient();
 	}
+	
 	/**
-	 * Metodo para obtener las salidas diarias
-	 * @return una lista de @see ReportDailySalesDTO
+	 * Obtiene las ventas por día
+	 * @return una lista con los reportes generados
+	 * @see ReportDailySalesDTO
+	 * @see List
 	 */
 	public List<ReportDailySalesDTO> getDailySales() {
 		return this.bills.getDailySales();
 	}
+	
 	/**
-	 * Metodo que retorna una lista de productos ordenada por cantidad
+	 * Retorna una lista de productos ordenada por cantidad
 	 * de productos vendidos
 	 * @return una lista de @see Product
 	 */

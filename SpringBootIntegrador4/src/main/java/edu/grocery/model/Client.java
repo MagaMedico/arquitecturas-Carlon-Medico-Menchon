@@ -4,11 +4,23 @@ import javax.persistence.*;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
+/**
+ * 
+ * @author Cecilia Carlón: ceciliacarlon2@gmail.com
+		   Magalí Médico: magamedico@gmail.com
+		   Magalí Menchón: mamenchon@alumnos.exa.unicen.edu.ar	
+ * @version 2.0
+ * @since 22/11/2021
+ * Plain Old Java Object / Entidad que plasma los datos que contendrá
+ * un cliente dentro de la aplicación y utilizando el ORM de JPA:
+ * identificador único coincidente con su DNI, nombre y apellido.
+ */
 @Entity
 @Data
 public class Client {
-	
+	/**
+	 * Atributos
+	 */
 	@Id
 	@ApiModelProperty(notes= "DNI of the Client", name="DNI", required=true, 
 	value="21460139", example="21460139")
@@ -22,6 +34,9 @@ public class Client {
 	value="Cejas", example="Cejas")
 	private String lastname;
 	
+	/**
+	 * Constructores
+	 */
 	public Client() { }
 	public Client(long DNI, String name, String lastname) {
 		super();
@@ -30,6 +45,9 @@ public class Client {
 		this.lastname = lastname;
 	}
 
+	/**
+	 * Getters y Setters
+	 */
 	public String getName() {
 		return name;
 	}

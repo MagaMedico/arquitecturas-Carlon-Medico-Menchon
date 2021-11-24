@@ -25,7 +25,16 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-
+/**
+ * @author Cecilia Carlón: ceciliacarlon2@gmail.com
+		   Magalí Médico: magamedico@gmail.com
+		   Magalí Menchón: mamenchon@alumnos.exa.unicen.edu.ar	
+ * @version 2.0
+ * @since 22/11/2021
+ * El RestController de @see BillProduct da acceso al manejo de operaciones
+ * CRUD por medio de las URLs donde cada método retorna el tipo de respuesta
+ * obtenida luego de cada transacción mediante el servicio @see BillProductService
+ */
 @RestController
 @RequestMapping("/bills")
 @Api(value= "BillProductController", description= "Api of the bill product controller")
@@ -36,7 +45,7 @@ public class BillProductController {
 	@Autowired
 	private BillProductService serviceBill;
 	
-	/**Metodo para obtener todas las facturas
+	/**Obtener todas las facturas
 	 * @return una lista de @see BillProduct
 	 */
 	@ApiOperation(value="Get all bill products", response= List.class)
@@ -51,7 +60,12 @@ public class BillProductController {
 		return this.serviceBill.getBills();
 	}
 	
-	//Metodo para agregar la factura pasada mediante el requestBody
+	/**
+	 * Agrega la factura pasada mediante el requestBody
+	 * @param bp entidad del tipo @see BillProduct
+	 * @return HTTP response, incluyendo headers, body y status.
+	 * @see ResposeEntity
+	 */
 	@ApiOperation(value="Add a bill product", response= ResponseEntity.class)
 	@ApiResponses(value= {
 		@ApiResponse(code= 200, message= "Succesfuly, OK"),
@@ -68,7 +82,12 @@ public class BillProductController {
 		else return new ResponseEntity<>(bp, HttpStatus.CREATED);
 	}
 	
-	//Metodo para eliminar la factura que conicida con el id pasado por url
+	/**
+	 * Elimina la factura que coincida con el id pasado por url
+	 * @param id identificador único de la factura a borrar
+	 * @return HTTP response, incluyendo headers, body y status.
+	 * @see ResposeEntity
+	 */
 	@ApiOperation(value="Delete a bill product", response= ResponseEntity.class)
 	@ApiResponses(value= {
 		@ApiResponse(code= 200, message= "Succesfuly, OK"),
@@ -85,8 +104,14 @@ public class BillProductController {
 		else return new ResponseEntity<>(id, HttpStatus.NO_CONTENT);
 	}
 	
-	//Metodo para reemplazar los datos de la factura que coincida con el id pasado por url por los nuevos datos 
-	//pasados mediante el requestBody
+	/**
+	 * Reemplaza los datos de la factura que coincida con el id pasado por url
+	 * por los nuevos datos pasados mediante el requestBody
+	 * @param id long identificador único de la factura a modificar
+	 * @param bp del tipo @see BillProduct con los datos de la factura
+	 * @return HTTP response, incluyendo headers, body y status.
+	 * @see ResposeEntity
+	 */
 	@ApiOperation(value="Update a bill product", response= ResponseEntity.class)
 	@ApiResponses(value= {
 		@ApiResponse(code= 200, message= "Succesfuly, OK"),
@@ -106,7 +131,10 @@ public class BillProductController {
 		else return new ResponseEntity<>(id, HttpStatus.OK);
 	}
 	
-	//Metodo para obtener el reporte del total de las facturas de los clientes
+	/**
+	 * Obtiene los reportes con el total de las facturas de cada cliente
+	 * @return lista de @see ReportEntireAmount
+	 */
 	@ApiOperation(value="Get reports of the entire amout of the clients", response= List.class)
 	@ApiResponses(value= {
 		@ApiResponse(code= 200, message= "Succesfuly, OK"),
@@ -119,6 +147,10 @@ public class BillProductController {
 		return this.serviceBill.getBillProductOfClient();
 	}
 	
+	/**
+	 * Obtiene los reportes con el total de ventas por día
+	 * @return lista de @see ReportEntireAmount
+	 */
 	@ApiOperation(value="Get reports of the daily sales", response= List.class)
 	@ApiResponses(value= {
 		@ApiResponse(code= 200, message= "Succesfuly, OK"),
@@ -131,6 +163,10 @@ public class BillProductController {
 		return this.serviceBill.getDailySales();
 	}
 	
+	/**
+	 * Obtiene el reporte del producto más vendido
+	 * @return entidad del tipo @see BestProductDTO 
+	 */
 	@ApiOperation(value="Get report of the best product", response= BestProductDTO.class)
 	@ApiResponses(value= {
 		@ApiResponse(code= 200, message= "Succesfuly, OK"),

@@ -14,7 +14,19 @@ import edu.grocery.repositories.BillRepository;
 import edu.grocery.repositories.ClientRepository;
 import edu.grocery.repositories.ProductRepository;
 import edu.grocery.services.BillProductService;
-
+/**
+ * 
+ * @author Cecilia Carlón: ceciliacarlon2@gmail.com
+		   Magalí Médico: magamedico@gmail.com
+		   Magalí Menchón: mamenchon@alumnos.exa.unicen.edu.ar	
+ * @version 2.0
+ * @since 22/11/2021
+ * Carga diferentes registros a la base de datos para desarrollo H2,
+ * de cada entidad definida mediante sus repositorios, haciendo uso de la
+ * interfaz que provee Spring Boot para ejecutar el Bean automáticamente
+ * luego que se inició el contexto de la aplicación
+ * @see CommandLineRunner
+ */
 @Configuration
 public class DBFiller {
 	

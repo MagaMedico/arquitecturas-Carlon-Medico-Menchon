@@ -5,10 +5,10 @@
 		<table>
 			<thead>
                 <tr>
-                    <th>ID</th>
+                    <th>ID FacturaProducto</th>
                     <th>Fecha</th>
                     <th>Cantidad</th>
-                    <th>ID Factura Cliente</th>
+                    <th>ID Factura</th>
                     <th>ID Producto</th>
                     <th>Borrar</th>
                     <th>Editar</th>
@@ -28,9 +28,12 @@
 		<form>
 			<div>
 				<br>
+				<br>
 				<label>Insertar una factura:</label>
 				<br>
+				<br>
 				<input type="date" name="date" id="date" placeholder="Fecha" required>
+				<br>
 				<br>
 				<input type="number" name="quantity" id="quantity" placeholder="Cantidad" required>
 				<br>
@@ -40,13 +43,14 @@
 				<br>
 				<input type="text" name="product_id" id="product_id" placeholder="ID Producto" required>
 				<br>
+				<br>
 				<input type="button" id="btnInsertBillProduct" value="ENVIAR">
 			</div>
 		</form>
 		<p id="contenedorInsert"></p>
 		<br>
 			
-		<footer>Developed by Cecilia Carlón, Magalí Menchon y Magalí Médico</footer>
+		<footer>Developed by Cecilia Carlon, Magali Menchon y Magali Medico</footer>
 		<script type="text/javascript" src="bills.js"></script>
 	</body>
 </html>

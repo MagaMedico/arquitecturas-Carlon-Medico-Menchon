@@ -22,15 +22,38 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-
+/**
+ * @author Cecilia Carlón: ceciliacarlon2@gmail.com
+		   Magalí Médico: magamedico@gmail.com
+		   Magalí Menchón: mamenchon@alumnos.exa.unicen.edu.ar	
+ * @version 2.0
+ * @since 22/11/2021
+ * El RestController de @see Client da acceso al manejo de operaciones
+ * CRUD por medio de las URLs donde cada método retorna el tipo de respuesta
+ * obtenida luego de cada transacción mediante el servicio @see ClientService
+ */
 @RestController
 @RequestMapping("/clients")
 @Api(value= "ClientController", description= "Api of the client controller")
 public class ClientController {
+	/**
+	 * Atributos
+	 */
+	/**
+	 * Logs interno de la aplicación reflejados en consola
+	 * @see Logger
+	 */
 	public static Logger LOG = LoggerFactory.getLogger(ClientController.class); 
+	/**
+	 * Atributo instanciado por única vez y automáticamente
+	 */
 	@Autowired
 	private ClientService serviceClient;
 	
+	/**
+	 * Obtiene todos los clientes de la base de datos mediante el servicio
+	 * @return Lista de @see Client
+	 */
 	@ApiOperation(value="Get all clients", response= List.class)
 	@ApiResponses(value= {
 		@ApiResponse(code= 200, message= "Succesfuly, OK"),
@@ -43,6 +66,12 @@ public class ClientController {
 		return this.serviceClient.getClients();
 	}
 	
+	/**
+	 * Retorna la respuesta HTTP al pedido de inserción de un cliente
+	 * @param client entidad del tipo @see Client dada en el body de la petición
+	 * @return HTTP response, incluyendo headers, body y status.
+	 * @see ResposeEntity
+	 */
 	@ApiOperation(value="Add a client", response= ResponseEntity.class)
 	@ApiResponses(value= {
 		@ApiResponse(code= 200, message= "Succesfuly, OK"),
@@ -57,6 +86,12 @@ public class ClientController {
 		else return new ResponseEntity<>(client, HttpStatus.CREATED);
 	}
 	
+	/**
+	 * Retorna la respuesta HTTP al pedido de eliminación de un cliente
+	 * @param dni identificador único del cliente a eliminar dado por el path de la URL
+	 * @return HTTP response, incluyendo headers, body y status.
+	 * @see ResposeEntity
+	 */
 	@ApiOperation(value="Delete a client", response= ResponseEntity.class)
 	@ApiResponses(value= {
 		@ApiResponse(code= 200, message= "Succesfuly, OK"),
@@ -71,6 +106,13 @@ public class ClientController {
 		else return new ResponseEntity<>(dni, HttpStatus.NO_CONTENT);
 	}
 	
+	/**
+	 * Retorna la respuesta HTTP al pedido de edición de un cliente
+	 * @param dni long identificador único del cliente a eliminar dado por el path de la URL
+	 * @param client entidad del tipo @see Client dada en el body de la petición
+	 * @return HTTP response, incluyendo headers, body y status.
+	 * @see ResposeEntity
+	 */
 	@ApiOperation(value="Update a client", response= ResponseEntity.class)
 	@ApiResponses(value= {
 		@ApiResponse(code= 200, message= "Succesfuly, OK"),

@@ -9,12 +9,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import io.swagger.annotations.ApiModelProperty;
-
+/**
+ * @author Cecilia Carlón: ceciliacarlon2@gmail.com
+		   Magalí Médico: magamedico@gmail.com
+		   Magalí Menchón: mamenchon@alumnos.exa.unicen.edu.ar	
+ * @version 2.0
+ * @since 22/11/2021
+ * Data Transfer Object para generar un reporte con las ventas por día
+ */
 @Entity
 public class ReportDailySalesDTO {
-
-	//ver porqué no genera la id (siempre es 0),
-	//aunque no causa conflicto. Revisar si puede quitarse directamente
+	/**
+	 * Atributos
+	 */
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@ApiModelProperty(notes= "Id of the daily sales report", name="id", required=true, value="5")
@@ -36,6 +43,9 @@ public class ReportDailySalesDTO {
 	required=true, value="10")
 	private long totalQuantity;
 	
+	/**
+	 * Constructores
+	 */
 	public ReportDailySalesDTO() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -49,6 +59,9 @@ public class ReportDailySalesDTO {
 		this.totalQuantity = totalQuantity;
 	}
 	
+	/**
+	 * Getters & Setters
+	 */
 	public LocalDate getDate() {
 		return date;
 	}
@@ -80,6 +93,10 @@ public class ReportDailySalesDTO {
 	public void setTotalQuantity(int totalQuantity) {
 		this.totalQuantity = totalQuantity;
 	}
+	
+	/**
+	 * Overrides
+	 */
 	@Override
 	public String toString() {
 		return "ReportDailySalesDTO [date=" + date + ", nameProduct=" + nameProduct + ", totalPriceSale="

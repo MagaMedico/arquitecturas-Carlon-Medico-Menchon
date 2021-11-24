@@ -10,12 +10,25 @@ import javax.persistence.ManyToOne;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
+/**
+ * 
+ * @author Cecilia Carlón: ceciliacarlon2@gmail.com
+		   Magalí Médico: magamedico@gmail.com
+		   Magalí Menchón: mamenchon@alumnos.exa.unicen.edu.ar	
+ * @version 2.0
+ * @since 22/11/2021
+ * Plain Old Java Object / Entidad que plasma los datos que contendrá
+ * una factura dentro de la aplicación y utilizando el ORM de JPA:
+ * identificador único autogenerado y cliente asociado a esa factura.
+ * @see Serializable
+ */
 @Entity
 @Data
 public class Bill implements Serializable{
  
-	//Atributos
+	/**
+	 * Atributos
+	 */
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -25,20 +38,25 @@ public class Bill implements Serializable{
 	@ApiModelProperty(notes= "Client of the Bill", name="client", required=true)
     private Client client;
 	
-    //Constructores
+    /**
+     * Constructores
+     */
     public Bill() {	}
     
 	public Bill(Client client) {
 		super();
 		this.client = client;
 	}
+	
 	public Bill(Long billId, Client client) {
 		super();
 		this.billId = billId;
 		this.client = client;
 	}
 
-	//Getters y Setters
+	/**
+	 * Getters y Setters
+	 */
 	public Long getBillId() {
 		return billId;
 	}
@@ -52,11 +70,11 @@ public class Bill implements Serializable{
 		this.client = client;
 	}
 	
-	//Metodo para visualizar los datos
+	/**
+	 * Visualizar los datos
+	 */
 	@Override
 	public String toString() {
 		return "Bill [billId=" + billId + ", client=" + client + "]";
 	}
-
-    
 }

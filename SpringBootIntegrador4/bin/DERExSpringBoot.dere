@@ -1,0 +1,26 @@
+<DERExt>
+ <Entity y="143" name="BillProduct" isAssociative="0" subtype="0" x="-509" width="75">
+  <Simple cant1="20" name="id" cant2="0" null="0" cant3="2" mult="0" optionSQL="1" sk="0" pk="1" type="integer" parent=""/>
+  <Simple cant1="20" name="product" cant2="0" null="0" cant3="2" mult="0" optionSQL="1" sk="1" pk="0" type="integer" parent=""/>
+  <Simple cant1="20" name="bill" cant2="0" null="0" cant3="2" mult="0" optionSQL="1" sk="1" pk="0" type="integer" parent=""/>
+  <Simple cant1="20" name="date" cant2="0" null="0" cant3="2" mult="0" optionSQL="1" sk="0" pk="0" type="integer" parent=""/>
+  <Simple cant1="20" name="quantity" cant2="0" null="0" cant3="2" mult="0" optionSQL="1" sk="0" pk="0" type="integer" parent=""/>
+ </Entity>
+ <Entity y="142" name="Bill" isAssociative="0" subtype="0" x="-54" width="40">
+  <Simple cant1="20" name="billId" cant2="0" null="0" cant3="2" mult="0" optionSQL="1" sk="0" pk="1" type="integer" parent=""/>
+  <Simple cant1="20" name="client" cant2="0" null="0" cant3="2" mult="0" optionSQL="1" sk="1" pk="0" type="integer" parent=""/>
+ </Entity>
+ <Entity y="-71" name="Client" isAssociative="0" subtype="0" x="-58" width="50">
+  <Simple cant1="20" name="DNI" cant2="0" null="0" cant3="2" mult="0" optionSQL="1" sk="0" pk="1" type="integer" parent=""/>
+  <Simple cant1="20" name="name" cant2="0" null="0" cant3="2" mult="0" optionSQL="1" sk="0" pk="0" type="integer" parent=""/>
+  <Simple cant1="20" name="lastname" cant2="0" null="0" cant3="2" mult="0" optionSQL="1" sk="0" pk="0" type="integer" parent=""/>
+ </Entity>
+ <Entity y="-73" name="Product" isAssociative="0" subtype="0" x="-499" width="55">
+  <Simple cant1="20" name="id" cant2="0" null="0" cant3="2" mult="0" optionSQL="1" sk="0" pk="1" type="integer" parent=""/>
+  <Simple cant1="20" name="name" cant2="0" null="0" cant3="2" mult="0" optionSQL="1" sk="0" pk="0" type="integer" parent=""/>
+  <Simple cant1="20" name="unitPrice" cant2="0" null="0" cant3="2" mult="0" optionSQL="1" sk="0" pk="0" type="integer" parent=""/>
+ </Entity>
+ <RBinary max0="N" width="105" match0="simple" match1="simple" dep="0" onUpdate1="restrict" min1="1" name1="Bill" y="163" min0="1" firstWeak="0" name0="BillProduct" onUpdate0="restrict" rolename="" onDelete1="restrict" max1="1" onDelete0="restrict" x="-220.5" name="FK_billProduct_bill"/>
+ <RBinary max0="N" width="120" match0="simple" match1="simple" dep="0" onUpdate1="restrict" min1="1" name1="Product" y="48" min0="1" firstWeak="0" name0="BillProduct" onUpdate0="restrict" rolename="" onDelete1="restrict" max1="1" onDelete0="restrict" x="-472" name="FK_billProduct_product"/>
+ <RBinary max0="N" width="80" match0="simple" match1="simple" dep="0" onUpdate1="restrict" min1="1" name1="Client" y="60" min0="1" firstWeak="0" name0="Bill" onUpdate0="restrict" rolename="" onDelete1="restrict" max1="1" onDelete0="restrict" x="-33" name="FK_bill_client"/>
+</DERExt>

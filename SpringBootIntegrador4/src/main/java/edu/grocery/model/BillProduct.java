@@ -11,13 +11,26 @@ import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
+/**
+ * 
+ * @author Cecilia Carlón: ceciliacarlon2@gmail.com
+		   Magalí Médico: magamedico@gmail.com
+		   Magalí Menchón: mamenchon@alumnos.exa.unicen.edu.ar	
+ * @version 2.0
+ * @since 22/11/2021
+ * Plain Old Java Object / Entidad que plasma los datos que contendrá
+ * una factura-producto dentro de la aplicación y utilizando el ORM de JPA:
+ * identificador único autogenerado, producto asociado, factura asociada @see Bill,
+ * fecha y cantidad de ese producto a comprar en la determinada factura
+ */
 @Entity
 @Data
 @Table(name = "bill_product")
 public class BillProduct {
 
-	//Atributos
+	/**
+	 * Atributos
+	 */
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@ApiModelProperty(notes= "Id of the BillProduct", name="id", required=true,
@@ -38,7 +51,9 @@ public class BillProduct {
     value="18" ,example="18")
     private int quantity;
     
-    //Constructores   
+    /**
+     * Constructores   
+     */
     public BillProduct() { }
     
 	public BillProduct(Product product, Bill bill, LocalDate date, int quantity) {
@@ -57,16 +72,16 @@ public class BillProduct {
 		this.date = date;
 		this.quantity = quantity;
 	}
-
+	
+	/**
+	 * Getters y Setters
+	 */
 	public long getId() {
 		return id;
 	}
-
 	public void setId(long id) {
 		this.id = id;
 	}
-
-	//Getters y Setters
 	public Product getProduct() {
 		return product;
 	}
@@ -93,7 +108,9 @@ public class BillProduct {
 		this.quantity = quantity;
 	}
 
-	//Metodo para visualizar los datos
+	/**
+	 * Visualizar los datos
+	 */
 	@Override
 	public String toString() {
 		return "BillProduct [id=" + id + ", product=" + product + ", bill=" + bill + ", date=" + date + ", quantity="

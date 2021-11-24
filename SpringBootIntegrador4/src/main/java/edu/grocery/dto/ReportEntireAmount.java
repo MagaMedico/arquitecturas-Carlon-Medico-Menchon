@@ -7,7 +7,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import io.swagger.annotations.ApiModelProperty;
-
+/**
+ * @author Cecilia Carlón: ceciliacarlon2@gmail.com
+		   Magalí Médico: magamedico@gmail.com
+		   Magalí Menchón: mamenchon@alumnos.exa.unicen.edu.ar	
+ * @version 2.0
+ * @since 22/11/2021
+ * Data Transfer Object para generar un reporte con el
+ * monto total de las compras de cada cliente
+ */
 @Entity
 public class ReportEntireAmount {
 	

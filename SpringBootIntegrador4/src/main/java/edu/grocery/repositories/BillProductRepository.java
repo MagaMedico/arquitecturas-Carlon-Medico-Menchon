@@ -16,10 +16,21 @@ import edu.grocery.dto.ReportEntireAmount;
 import edu.grocery.model.Bill;
 import edu.grocery.model.BillProduct;
 import edu.grocery.model.Product;
-
+/**
+ * 
+ * @author Cecilia Carlón: ceciliacarlon2@gmail.com
+		   Magalí Médico: magamedico@gmail.com
+		   Magalí Menchón: mamenchon@alumnos.exa.unicen.edu.ar	
+ * @version 2.0
+ * @since 22/11/2021
+ * Repositorio de la entidad @see BillProduct que implementa la interfaz
+ * propia de JPA @see JpaRepository que contiene las operaciones básicas
+ * que se pueden realizar a la base de datos por medio del ORM, además
+ * de consultas específicas que se definen en esta interfaz.
+ */
 public interface BillProductRepository extends JpaRepository<BillProduct, Object>  {
 	/**
-	 * Parametros
+	 * Constantes utilizadas en los parámetros
 	 */
 	static final String PRODUCT = "product",
 						BILL = "bill",
@@ -28,47 +39,39 @@ public interface BillProductRepository extends JpaRepository<BillProduct, Object
 						ID = "id",
 						CLIENT = "client",
 						BILL_PRODUCT = "billProduct";
-	static final int MAX = 3;
+
 	/**
-	 * 
-	 * @param product
-	 * @param bill
-	 * @param date
-	 * @param quantity
-	 * @return 
-	*/
+	 * Transacción para insertar registro correspondiente a la tabla
+	 * resultante del mapeo con la entidad @see BillProduct
+	 * mediante una consulta SQL (nativeQuery)
+	 * @param date fecha de la creación de la factura
+	 * @param quantity cantidad del producto que compró a detallar en la factura
+	 * @param bill long identificador de bill @see Bill
+	 * @param product long identificador del producto @see Product
+	 */
 	@Transactional
 	@Modifying
 	@Query(value = "INSERT INTO bill_product(DATE, QUANTITY, BILL_BILL_ID, PRODUCT_ID) VALUES (?1, ?2, ?3, ?4) " 
 	+ "WHERE (SELECT dni FROM bill) = ?5 "
-	//+ "AND date = ?1 AND SUM(quantity + ?2) < MAX"
 	, nativeQuery = true)
 	public void insertBillProduct(LocalDate date, int quantity, long bill, long product, long client);
-	/*
-	@Transactional
-	@Modifying
-	@Query(value = "INSERT INTO Bill_Product (DATE, QUANTITY, BILL_BILL_ID, PRODUCT_ID)"
-			+ "VALUES(?3, ?1, ?5, ?4) WHERE (SELECT SUM(quantity + ?1) AS total "
-			+ "FROM Bill_Product bp JOIN Bill b ON (bp.bill_bill_id = b.bill_id ) "
-			+ "WHERE b.client_dni = ?2 AND bp.date =  ?3 AND "
-			+ "bp.product_id= ?4) <= 3", nativeQuery = true)
-	public long cumpleCondicion(int quant, long dniClient, LocalDate date, long idProduct, long bill);
-	*/
-	/**Metodo para actualizar los datos pasados por parametro en la tabla BillProduct
-	 * @param product
-	 * @param bill
-	 * @param date
-	 * @param quantity
-	 * @param id
+
+	/**Actualiza los datos pasados por parámetro en la tabla BillProduct
+	 * mediante una consulta JPQL
+	 * @param product entidad del tipo @see Product
+	 * @param bill entidad del tipo @see Bill
+	 * @param date fecha a reemplazar
+	 * @param quantity cantidad a reemplazar
+	 * @param id long identificador único para buscar de @see BillProduct
 	 */
 	@Modifying
 	@Query("UPDATE BillProduct SET product = :product, bill = :bill, date = :date, quantity = :quantity WHERE id = :id")
 	public void updateBillProduct(@Param(PRODUCT) Product product, @Param(BILL) Bill bill, 
 								  @Param(DATE) LocalDate date, @Param(QUANTITY) int quantity, @Param(ID) long id);
 	
-	/**Metodo para obtener las facturas de un cliente dado
-	 * @param client
-	 * @return una lista de @see BillProduct
+	/**Obtiene las facturas de un cliente dado por medio de una consulta JPQL
+	 * @param client entidad de @see Client
+	 * @return una lista con cada reporte de tipo @see ReportEntireAmount
 	 */
 	@Modifying
 	@Query("SELECT new ReportEntireAmount(bp.bill.client.name, SUM(bp.quantity*bp.product.unitPrice)) "
@@ -78,10 +81,9 @@ public interface BillProductRepository extends JpaRepository<BillProduct, Object
 
 	
 	/**
-	 * Obtiene las ventas agrupadas y ordenadas descentemente por fecha,
+	 * Obtiene las ventas agrupadas y ordenadas descendentemente por fecha,
 	 * mostrando por cada una de ellas los productos con la cantidad y ganancia total en esa fecha
-	 * @return Listado con cada reporte de tipo DailySalesDTO
-	 * @see ReportDailySalesDTO
+	 * @return Listado con cada reporte de tipo @see ReportDailySalesDTO
 	 */
 	@Query("SELECT new ReportDailySalesDTO( "
 			+ "bp.date, "
@@ -92,9 +94,10 @@ public interface BillProductRepository extends JpaRepository<BillProduct, Object
 			+ "GROUP BY bp.date, bp.product.name "
 			+ "ORDER BY bp.date DESC ")
 	public List<ReportDailySalesDTO> getDailySales();
+	
 	/**
-	 * Metodo que obtiene los productos ordenados por cantidad de venta
-	 * @return una lista @see Product
+	 * Obtiene los productos ordenados por cantidad de venta
+	 * @return una lista @see BestProductDTO
 	 */
 	@Modifying
 	@Query("SELECT new BestProductDTO(bp.product.name, SUM(bp.quantity)) "
