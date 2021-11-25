@@ -1,17 +1,25 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Bills - REST Grocery</title>
+		<link rel="stylesheet" href="style.css">
+	</head>
 	<body>
-		<h2>Tabla de facturas</h2>
+		<h2>GET Bills</h2>
 	
 		<table>
 			<thead>
                 <tr>
-                    <th>ID FacturaProducto</th>
-                    <th>Fecha</th>
-                    <th>Cantidad</th>
-                    <th>ID Factura</th>
-                    <th>ID Producto</th>
-                    <th>Borrar</th>
-                    <th>Editar</th>
+                    <th>ID BillProduct</th>
+                    <th>Date</th>
+                    <th>Quantity</th>
+                    <th>ID Bill</th>
+                    <th>ID Product</th>
+                    <th>Delete</th>
+                    <th>Edit</th>
                 </tr>
             </thead>
             <tbody id="body">
@@ -29,19 +37,19 @@
 			<div>
 				<br>
 				<br>
-				<label>Insertar una factura:</label>
+				<label>Insert a bill:</label>
 				<br>
 				<br>
-				<input type="date" name="date" id="date" placeholder="Fecha" required>
+				<input type="date" name="date" id="date" placeholder="Date of the bill" required>
 				<br>
 				<br>
-				<input type="number" name="quantity" id="quantity" placeholder="Cantidad" required>
+				<input type="number" name="quantity" id="quantity" placeholder="Quantity of the bill" required>
 				<br>
 				<br>
-				<input type="text" name="bill_bill_id" id="bill_bill_id" placeholder="ID Factura Cliente" required>
+				<input type="text" name="bill_bill_id" id="bill_bill_id" placeholder="ID of the Bill" required>
 				<br>
 				<br>
-				<input type="text" name="product_id" id="product_id" placeholder="ID Producto" required>
+				<input type="text" name="product_id" id="product_id" placeholder="ID of the Product" required>
 				<br>
 				<br>
 				<input type="button" id="btnInsertBillProduct" value="ENVIAR">
@@ -50,7 +58,7 @@
 		<p id="contenedorInsert"></p>
 		<br>
 			
-		<footer>Developed by Cecilia Carlon, Magali Menchon y Magali Medico</footer>
+		<footer>Developed by Cecilia Carlón, Magalí Menchón y Magalí Médico</footer>
 		<script type="text/javascript" src="bills.js"></script>
 	</body>
 </html>

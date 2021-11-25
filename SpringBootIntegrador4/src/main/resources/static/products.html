@@ -1,13 +1,23 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Bills - REST Grocery</title>
+		<link rel="stylesheet" href="style.css">
+	</head>
 	<body>
-		<h2>Tabla de productos</h2>
+		<h2>GET Products</h2>
 	
 		<table>
 			<thead>
                 <tr>
                     <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Precio por Unidad</th>
+                    <th>Name</th>
+                    <th>UnitPrice</th>
+                    <th>Delete</th>
+                    <th>Edit</th>
                 </tr>
             </thead>
             <tbody id="body">
@@ -23,11 +33,13 @@
 		<br>
 		<form>
 			<div>
-				<label>Insertar un producto:</label>
+			<br>
+			<br>
+				<label>Insert a product:</label>
 				<br>
-				<input type="text" name="name" id="name" placeholder="nombre del producto" required>
+				<input type="text" name="name" id="name" placeholder="Name of the product" required>
 				<br>
-				<input type="number" name="unitPrice" id="unitPrice" placeholder="precio por unidad del producto" required>
+				<input type="number" name="unitPrice" id="unitPrice" placeholder="Unit price of the product" required>
 				<br>
 				<input type="button" id="btnInsertProduct" value="ENVIAR">
 			</div>
@@ -35,7 +47,7 @@
 		<p id="contenedorInsert"></p>
 		<br>
 			
-		<footer>Developed by Cecilia Carlon, Magali Menchon y Magali Medico</footer>
+		<footer>Developed by Cecilia Carlón, Magalí Menchón y Magalí Médico</footer>
 		<script type="text/javascript" src="product.js"></script>
 	</body>
 </html>

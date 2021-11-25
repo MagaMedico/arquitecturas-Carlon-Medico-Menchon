@@ -1,5 +1,8 @@
 "use strict"
-
+/**
+ * @description Interacción con AJAX con la entidad de BillProduct
+ * muestra la tabla y espera con un fetch a una petición POST de la URL
+ */
 function inicio() {
 	mostrarTabla();
 	document.getElementById("btnInsertBillProduct").addEventListener("click", ()=>{
@@ -38,6 +41,9 @@ function inicio() {
 		
 }
 
+/**
+ * @description Obtiene el producto de un BillProduct dado
+ */
 function obtenerProducto(idBillProduct, bill, product_id, date, quantity, verbo){
 	let product = {
 			"id": product_id,
@@ -67,6 +73,9 @@ function obtenerProducto(idBillProduct, bill, product_id, date, quantity, verbo)
 	});
 }
 
+/**
+ * @description Inserta una factura con los datos recibidos por POST en formato JSON
+ */
 function insertarBillProduct(bill, product, date, quantity){
 	console.log(JSON.stringify(product));
 	let item = {
@@ -102,6 +111,10 @@ function insertarBillProduct(bill, product, date, quantity){
 	      });
 }
 
+/**
+ * @description muestra la tabla realizando un GET y creando dinamicamente
+ * el renderizado del contenido obtenido del JSON
+ */
 function mostrarTabla() {
 	let url = "http://localhost:8080/bills";
 	let tbody = document.getElementById("body");
@@ -158,6 +171,10 @@ function mostrarTabla() {
     });
 }
 
+/**
+ * @description elimina una factura de la base de datos luego que se cumple
+ * la promesa del método DELETE con la url correspondiente al id a eliminar
+ */
 function borrar(id){
 	let url = "http://localhost:8080/bills";
 	let contenedor = document.getElementById("contenedorBorrar");
@@ -178,6 +195,10 @@ function borrar(id){
 	});
 }
 
+/**
+ * @description renderiza el formulario de edición de una factura, 
+ * y busca los datos de los ids dados de bill y de product en formato JSON
+ */
 function editar(id){
 
 	let form = document.getElementById("editar");
@@ -273,7 +294,9 @@ function editar(id){
 		})
 	});
 }
-
+/**
+ * @description edita los datos de un BillProduct determinado
+ */
 function editarBillProduct(idBillProduct, bill, product, date, quantity){
 	let contenedor = document.getElementById("contenedorEditar");
 	let form = document.getElementById("editar");
@@ -284,7 +307,6 @@ function editarBillProduct(idBillProduct, bill, product, date, quantity){
 			  "bill": bill,
 			  "product": product
 		};
-		let url = "http://localhost:8080/bills";
 		
 		fetch(url + "/" + idBillProduct, {
 	      method: "PUT",
@@ -306,36 +328,7 @@ function editarBillProduct(idBillProduct, bill, product, date, quantity){
 	      });
 }
 
-function getBill(id){
-	let url = "http://localhost:8080/b";
-	fetch(url + "/" + id, {
-        method: "GET",
-        mode: 'cors',
-    }).then(respuesta => {
-        if (respuesta.ok) {
-            return respuesta;
-        } else {
-            console.log("No existe una factura con ese id");
-						return null;
-        }
-    }).catch(error => {
-        console.log(error);
-	});
-}
-function getProduct(id){
-	let url = "http://localhost:8080/products";
-	fetch(url + "/" + id, {
-        method: "GET",
-        mode: 'cors',
-    }).then(respuesta => {
-        if (respuesta.ok) {
-            return respuesta;
-        } else {
-            console.log("No existe un producto con ese id");
-						return null;
-        }
-    }).catch(error => {
-        console.log(error);
-	});
-}
+/**
+ * @description evento del DOM que se ejecuta al cargar el inicio de la página
+ */
 document.addEventListener("DOMContentLoaded", inicio());

@@ -1,5 +1,8 @@
 "use strict"
-
+/**
+ * @description Interacción con AJAX con la entidad de Client
+ * muestra la tabla y espera con un fetch a una petición POST de la URL
+ */
 function inicio() {
 	mostrarTabla();
 	document.getElementById("btnInsertClient").addEventListener("click", ()=>{
@@ -39,6 +42,10 @@ function inicio() {
 	 });
 }
 
+/**
+ * @description muestra la tabla realizando un GET y creando dinamicamente
+ * el renderizado del contenido obtenido del JSON
+ */
 function mostrarTabla() {
 	let url = "http://localhost:8080/clients";
 	let tbody = document.getElementById("body");
@@ -88,6 +95,10 @@ function mostrarTabla() {
     });
 }
 
+/**
+ * @description elimina un cliente de la base de datos luego que se cumple
+ * la promesa del método DELETE con la url correspondiente al id a eliminar
+ */
 function borrar(id){
 	let url = "http://localhost:8080/clients";
 	let contenedor = document.getElementById("contenedorBorrar");
@@ -108,6 +119,10 @@ function borrar(id){
 	});
 }
 
+/**
+ * @description renderiza el formulario de edición de un cliente, 
+ * y queda a la espera de una petición de PUT por la url de un id del path a editar
+ */
 function editar(id){
 	let url = "http://localhost:8080/clients";
 	
@@ -181,4 +196,7 @@ function editar(id){
 	});
 }
 
+/**
+ * @description evento del DOM que se ejecuta al cargar el inicio de la página
+ */
 document.addEventListener("DOMContentLoaded", inicio());
