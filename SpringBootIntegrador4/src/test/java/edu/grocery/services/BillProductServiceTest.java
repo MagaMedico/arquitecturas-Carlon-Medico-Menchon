@@ -22,6 +22,12 @@ public class BillProductServiceTest {
 
 	@Autowired
 	BillProductService service;
+	@Autowired
+	ProductService servicep;
+	@Autowired
+	ClientService servicec;
+	@Autowired
+	BillService serviceb;
 	
 	@Test @Order(1)
 	public void testGet() {
@@ -32,9 +38,12 @@ public class BillProductServiceTest {
 	@Test @Order(2)
 	public void testPost() {
 		Product product = new Product("Harina", 150);
+		Assertions.assertTrue(servicep.insert(product));
 		Client client = new Client(14556332, "Caren", "Perez");
+		Assertions.assertTrue(servicec.insert(client));
 		Bill bill = new Bill(client);
-		BillProduct billP = new BillProduct(product, bill, LocalDate.of(2020, 1, 8), 5);
+		Assertions.assertTrue(serviceb.insert(bill));
+		BillProduct billP = new BillProduct(product, null, LocalDate.of(2020, 1, 8), 5);
 		
 		Assertions.assertTrue(service.insert(billP));
 	}
@@ -47,8 +56,12 @@ public class BillProductServiceTest {
 	@Test @Order(3)
 	public void testPut() {
 		Product product = new Product("Harina", 150);
+		Assertions.assertTrue(servicep.insert(product));
 		Client client = new Client(14556332, "Caren", "Perez");
+		Assertions.assertTrue(servicec.insert(client));
 		Bill bill = new Bill(client);
+		Assertions.assertTrue(serviceb.insert(bill));
+		
 		Assertions.assertTrue(service.update(product, bill, LocalDate.of(2021, 1, 8), 5, (long)11));
 	}
 }

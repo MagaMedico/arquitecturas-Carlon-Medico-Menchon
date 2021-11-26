@@ -50,8 +50,8 @@ public class BillProductService {
 	 */
 	@Transactional
 	public boolean insert(BillProduct bp) {
-			this.bills.save(bp); 
-			return true;
+		this.bills.save(bp); 
+		return true;
 	}
 	
 	/**Reemplaza los datos de una factura identificada
